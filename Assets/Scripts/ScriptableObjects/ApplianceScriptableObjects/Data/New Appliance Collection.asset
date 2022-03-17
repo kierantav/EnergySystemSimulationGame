@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 342a7ddb1ac2d4799826e1b49cc61603, type: 3}
+  m_Name: New Appliance Collection
+  m_EditorClassIdentifier: 
+  acSO: {fileID: 11400000, guid: d274b57d486fe4b368536f840401691d, type: 2}
+  lightSO: {fileID: 11400000, guid: db5fe4386c6a044909af8d63916a7d61, type: 2}
+  fridgeSO: {fileID: 11400000, guid: 49d8d2771e3214c6d87b77eeadf0d492, type: 2}
+  fanSO: {fileID: 11400000, guid: 28e3579627fc54d11afdfbf55f497397, type: 2}
+  washingMachineSO: {fileID: 11400000, guid: 0c472c5a22bc34fbfbc5224ded86dbd0, type: 2}
+  dryerSO: {fileID: 11400000, guid: b2010293195974ceb87f05ec0ebeb552, type: 2}
