@@ -17,6 +17,7 @@ public class UIController : MonoBehaviour
 {
     // Use delegate to inform the game manager about buttons clicked
     private Action<string> OnShopHandler;
+    private Action<string> OnApplianceHandler;
     private Action OnCancelHandler;
     private Action OnConfirmHandler;
     private Action OnSellActionHandler;
@@ -281,7 +282,16 @@ public class UIController : MonoBehaviour
         modifyPanel.SetActive(true);
         mainMenuPanel.SetActive(false);
         OnCloseShopMenuHandler();
-        OnShopHandler?.Invoke(objectName);// ? to check if it is null, will invoke the listener
+        List<EnergySystemGeneratorBaseSO> energyObjList = objectRepository.GetEnergySystemGeneratorObjects();
+        var foundObj = energyObjList.Find(obj => obj.objectName == objectName);
+        if (foundObj != null)
+        {
+            OnShopHandler?.Invoke(objectName);// ? to check if it is null, will invoke the listener
+        }
+        else
+        {
+            OnApplianceHandler?.Invoke(objectName);
+        }
     }
 
     private void CreateButtonsInAppliancePanel(Transform panelTransform, List<ApplianceBaseSO> data)
@@ -312,7 +322,7 @@ public class UIController : MonoBehaviour
                 //button.GetComponentsInChildren<TextMeshProUGUI>()[8].text = objectData.objectDescription.ToString();
                 button.GetComponentsInChildren<Image>()[0].sprite = objectData.objectIcon;
                 button.GetComponentsInChildren<Image>()[2].sprite = objectData.objectIcon;
- 
+                button.onClick.AddListener(() => OnShopCallback(button.GetComponentsInChildren<TextMeshProUGUI>()[0].text));
             }
         }
     }
@@ -348,6 +358,16 @@ public class UIController : MonoBehaviour
     public void RemoveListenerOnShopEvent(Action<string> listener)
     {
         OnShopHandler -= listener;
+    }
+
+    public void AddListenerOnPurchasingApplianceEvent(Action<string> listener)
+    {
+        OnApplianceHandler += listener;
+    }
+
+    public void RemoveListenerOnShopApplianceEvent(Action<string> listener)
+    {
+        OnApplianceHandler -= listener;
     }
 
     public void AddListenerOnCancelEvent(Action listener)

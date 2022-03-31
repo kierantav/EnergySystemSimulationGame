@@ -6,10 +6,10 @@ using UnityEngine;
 public class ApplianceCollection : ScriptableObject
 {
     public ACSO acSO;
+    public WashingMachineSO washingMachineSO;
     //public LightSO lightSO;
     //public FridgeSO fridgeSO;
     //public FanSO fanSO;
-    //public WashingMachineSO washingMachineSO;
     //public DryerSO dryerSO;
 
 }

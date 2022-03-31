@@ -21,7 +21,7 @@ public class PlayerPurchasingDieselGeneratorState : PlayerState
         this.objectName = objectName;
         if (!this.position.Equals(Vector3.zero))
         {
-            this.purchasingObjectController.PrepareObjectForModification(this.position, this.objectName);
+            this.purchasingObjectController.PrepareObjectForModification(this.position, this.objectName, "Energy");
         }
     }
 

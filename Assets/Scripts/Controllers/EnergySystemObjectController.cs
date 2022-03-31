@@ -9,18 +9,19 @@ public class EnergySystemObjectController
     GridStructure grid;
     IPlacementController placementController;
     ObjectRepository objectRepository;
+    ApplianceRepository applianceRepository;
     ObjectModificationFactory objectModificationFactory;
     ObjectModificationHelper objectModificationHelper;
     ObjectUpdateHelper objectUpdateHelper;
 
-    public EnergySystemObjectController(int cellSize, int width, int height, int length, IPlacementController placementController, ObjectRepository objectRepository, IResourceController resourceController)
+    public EnergySystemObjectController(int cellSize, int width, int height, int length, IPlacementController placementController, ObjectRepository objectRepository, ApplianceRepository applianceRepository, IResourceController resourceController)
     {
         grid = new GridStructure(cellSize, width, height, length);
         this.objectRepository = objectRepository;
         this.placementController = placementController;
-        objectModificationFactory = new ObjectModificationFactory(grid, placementController, objectRepository, resourceController);
+        this.applianceRepository = applianceRepository;
+        objectModificationFactory = new ObjectModificationFactory(grid, placementController, objectRepository, applianceRepository, resourceController);
         objectUpdateHelper = new ObjectUpdateHelper();
-
     }
 
     public IEnumerable<EnergySystemGeneratorBaseSO> GetAllObjects()
@@ -34,11 +35,11 @@ public class EnergySystemObjectController
     }
 
     #region PlacementAction
-    public void PrepareObjectForModification(Vector3 inputPosition, string objectName)
+    public void PrepareObjectForModification(Vector3 inputPosition, string objectName, string type)
     {
         try
         {
-            objectModificationHelper.PrepareObjectForModification(inputPosition, objectName);
+            objectModificationHelper.PrepareObjectForModification(inputPosition, objectName, type);
         }
         catch
         {
@@ -56,14 +57,14 @@ public class EnergySystemObjectController
 
     public void CancelModification()
     {
-        objectModificationHelper.CancelModifications();
+        objectModificationHelper.CancelModifications("Energy");
     }
     #endregion
 
     #region RemoveAction
     public void PrepareObjectForSellingAt(Vector3 inputPosition)
     {
-        objectModificationHelper.PrepareObjectForModification(inputPosition,"");
+        objectModificationHelper.PrepareObjectForModification(inputPosition,"", "Energy");
     }
 
     #endregion

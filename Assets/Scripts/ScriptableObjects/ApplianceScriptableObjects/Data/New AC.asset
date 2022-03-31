@@ -15,6 +15,9 @@ MonoBehaviour:
   objectIcon: {fileID: 21300000, guid: eeb6b5e19ac9e49d284c66f64e520baf, type: 3}
   objectName: Air Conditioner
   objectDescription: 
+  objectType: Appliance
+  objectPrefab: {fileID: 489162215231928842, guid: 09be987dc29bb684f969930e70695f44,
+    type: 3}
   emissionRate: 0.05
   emissionAmount: 0
   purchaseCost: 1000

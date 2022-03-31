@@ -6,13 +6,13 @@ using UnityEngine;
 
 public class ObjectPlacementHelper: ObjectModificationHelper
 {
-    public ObjectPlacementHelper(GridStructure grid, IPlacementController placementController, ObjectRepository objectRepository, IResourceController resourceController) : base(grid, placementController, objectRepository, resourceController)
+    public ObjectPlacementHelper(GridStructure grid, IPlacementController placementController, ObjectRepository objectRepository, ApplianceRepository applianceRepository, IResourceController resourceController) : base(grid, placementController, objectRepository, applianceRepository, resourceController)
     {
     }
 
-    public override void PrepareObjectForModification(Vector3 inputPosition, string objectName)
+    public override void PrepareObjectForModification(Vector3 inputPosition, string objectName, string type)
     {
-        base.PrepareObjectForModification(inputPosition, objectName);
+        base.PrepareObjectForModification(inputPosition, objectName, type);
         GameObject objectPrefab = energySystemData.objectPrefab; // Get object prefab
         List<Vector3> positionList = GetPositionListByName(inputPosition, objectName); // Get and update object positions List
         if (!grid.IsCellTaken(positionList)) // If the cells are not taken 
@@ -99,10 +99,10 @@ public class ObjectPlacementHelper: ObjectModificationHelper
         return null;
     }
 
-    public override void CancelModifications()
+    public override void CancelModifications(string type)
     {
         resourceController.AddMoney(objectToBeModified.Count * energySystemData.purchaseCost);
-        base.CancelModifications();
+        base.CancelModifications(type);
     }
     public override void ConfirmModifications()
     {

@@ -8,6 +8,7 @@ public abstract class EnergySystemGeneratorBaseSO: ScriptableObject
 {
     public Sprite objectIcon;
     public string objectName;
+    public string objectType;
     [TextArea]public string objectDescription;
     public GameObject objectPrefab;
 

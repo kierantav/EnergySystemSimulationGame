@@ -6,6 +6,8 @@ public abstract class ApplianceBaseSO : ScriptableObject
     public Sprite objectIcon;
     public string objectName;
     public string objectDescription;
+    public string objectType;
+    public GameObject objectPrefab;
 
     public float emissionRate;
     public float emissionAmount;
@@ -22,6 +24,5 @@ public abstract class ApplianceBaseSO : ScriptableObject
     public int happiness;
 
     public bool isTurnedOn;
-
 
 }

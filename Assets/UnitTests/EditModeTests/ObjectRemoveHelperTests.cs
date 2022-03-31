@@ -37,13 +37,13 @@ public class ObjectRemoveHelperTests
         IResourceController resourceController = Substitute.For<IResourceController>();
         resourceController.CanIBuyIt(default).Returns(true);
 
-        helper = new ObjectRemoveHelper(grid, placementController, objectRepository, resourceController);
+        //helper = new ObjectRemoveHelper(grid, placementController, objectRepository, applianceRepository, resourceController);
     }
 
     [Test]
     public void ObjectRemoveHelperSelectForRemoveTestPasses()
     {
-        helper.PrepareObjectForModification(gridPositionList1[0], "");
+        helper.PrepareObjectForModification(gridPositionList1[0], "", "Energy");
         GameObject objectInDictionary1 = helper.AccessStructureInDictionary(gridPositionList1[0]);
         Assert.AreEqual(tempObject, objectInDictionary1);
     }
@@ -51,15 +51,15 @@ public class ObjectRemoveHelperTests
     [Test]
     public void ObjectRemoveHelperCancelRemoveTestPasses()
     {
-        helper.PrepareObjectForModification(gridPositionList1[0], "");
-        helper.CancelModifications();
+        helper.PrepareObjectForModification(gridPositionList1[0], "", "Energy");
+        helper.CancelModifications("Energy");
         Assert.IsTrue(grid.IsCellTaken( gridPositionList1));
     }
 
     [Test]
     public void ObjectRemoveHelperConfirmRemoveTestPasses()
     {
-        helper.PrepareObjectForModification(gridPositionList1[0], "");
+        helper.PrepareObjectForModification(gridPositionList1[0], "", "Energy");
         helper.ConfirmModifications();
         Assert.IsFalse(grid.IsCellTaken(gridPositionList1));
     }

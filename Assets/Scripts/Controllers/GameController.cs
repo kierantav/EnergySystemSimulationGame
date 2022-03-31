@@ -18,6 +18,7 @@ public class GameController : MonoBehaviour
     public GameObject resourceControllerGameObject;
     private IResourceController resourceController;
     private EnergySystemObjectController purchasingObjectController;
+    private ApplianceObjectController purchasingApplianceController;
 
     // Controllers
     public IInputController inputController;
@@ -26,6 +27,7 @@ public class GameController : MonoBehaviour
  
     // Data Repository
     public ObjectRepository objectRepository;
+    public ApplianceRepository applianceRepository;
 
     // Layer mask
     public LayerMask inputMask;
@@ -47,7 +49,9 @@ public class GameController : MonoBehaviour
     public PlayerPurchasingInvertorState purchasingInvertorState;
     public PlayerPurchasingChargeControllerState purchasingChargeControllerState;
 
-    public Vector3 DieselGeneratorPosition, WindTurbinePosition, BatteryPosition, InvertorPosition, ChargeControllerPosition;
+    public PlayerPurchasingACState purchasingACState;
+
+    public Vector3 DieselGeneratorPosition, WindTurbinePosition, BatteryPosition, InvertorPosition, ChargeControllerPosition, ACPosition;
 
     public CameraMovement cameraMovementController;
 
@@ -83,7 +87,8 @@ public class GameController : MonoBehaviour
 
     private void PrepareStates()
     {
-        purchasingObjectController = new EnergySystemObjectController(cellSize, width, height, length, placementController, objectRepository, resourceController);
+        purchasingObjectController = new EnergySystemObjectController(cellSize, width, height, length, placementController, objectRepository, applianceRepository, resourceController);
+        purchasingApplianceController = new ApplianceObjectController(cellSize, width, height, length, placementController, objectRepository, applianceRepository, resourceController);
         resourceController.PrepareResourceController(purchasingObjectController);
 
         selectionState = new PlayerSelectionState(this, purchasingObjectController);
@@ -94,6 +99,8 @@ public class GameController : MonoBehaviour
         purchasingDieselGeneratorState = new PlayerPurchasingDieselGeneratorState(this, purchasingObjectController, DieselGeneratorPosition);
         purchasingChargeControllerState = new PlayerPurchasingChargeControllerState(this, purchasingObjectController, ChargeControllerPosition);
         purchasingInvertorState = new PlayerPurchasingInvertorState(this, purchasingObjectController, InvertorPosition);
+
+        purchasingACState = new PlayerPurchasingACState(this, purchasingApplianceController, ACPosition);
 
         // initialize state
         state = selectionState;
@@ -109,6 +116,7 @@ public class GameController : MonoBehaviour
     private void AssignUIControllerListeners()
     {
         uiController.AddListenerOnPurchasingEvent((objectName) => state.OnPuchasingEnergySystem(objectName));  // transfer to purchase energy system state
+        uiController.AddListenerOnPurchasingApplianceEvent((objectName) => state.OnPuchasingAppliance(objectName));
         uiController.AddListenerOnCancelEvent(() => state.OnCancel());
         uiController.AddListenerOnSellEvent(() => state.OnSellingObject());
         uiController.AddListenerOnConfirmEvent(() => state.OnConfirm());

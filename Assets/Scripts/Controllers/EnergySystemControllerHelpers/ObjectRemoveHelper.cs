@@ -6,11 +6,11 @@ using UnityEngine;
 
 public class ObjectRemoveHelper: ObjectModificationHelper
 {
-    public ObjectRemoveHelper(GridStructure grid, IPlacementController placementController, ObjectRepository objectRepository, IResourceController resourceController) : base(grid, placementController, objectRepository, resourceController)
+    public ObjectRemoveHelper(GridStructure grid, IPlacementController placementController, ObjectRepository objectRepository, ApplianceRepository applianceRepository, IResourceController resourceController) : base(grid, placementController, objectRepository, applianceRepository, resourceController)
     {
     }
 
-    public override void PrepareObjectForModification(Vector3 inputPosition, string objectName)
+    public override void PrepareObjectForModification(Vector3 inputPosition, string objectName, string type)
     {
         Vector3 gridPosition = grid.CalculateGridPosition(inputPosition);
         List<Vector3> positionList = new List<Vector3>();
@@ -33,7 +33,7 @@ public class ObjectRemoveHelper: ObjectModificationHelper
         }
     }
 
-    public override void CancelModifications()
+    public override void CancelModifications(string type)
     {
         foreach (var item in objectToBeModified)
         {

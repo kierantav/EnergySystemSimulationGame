@@ -57,7 +57,7 @@ public class TimeController : MonoBehaviour
 
     public void UpdateTimeDateString()
     {
-        weatherDataController.GetData(dataId);
+        //weatherDataController.GetData(dataId);
         solarRadiation = weatherDataController.Poa;
         if (timer >= secPerMin)
         {
@@ -67,7 +67,7 @@ public class TimeController : MonoBehaviour
                 min = 0;
                 hr++;
                 dataId++;
-                weatherDataController.GetData(dataId);
+                //weatherDataController.GetData(dataId);
                 solarRadiation = weatherDataController.Poa;
                 if (hr >= maxHr)
                 {

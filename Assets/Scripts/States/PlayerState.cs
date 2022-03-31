@@ -42,6 +42,11 @@ public abstract class PlayerState
 
     }
 
+    public virtual void OnPuchasingAppliance(string objectName)
+    {
+
+    }
+
     public virtual void EnterState(string objectVariable)
     {
 

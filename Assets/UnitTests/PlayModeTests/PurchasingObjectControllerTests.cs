@@ -41,7 +41,7 @@ public class PurchasingObjectControllerTests
         collection.solarPanelSO = solarPanel;
         objectRepository.scriptableObjectCollection = collection;
 
-        purchasingObjectController = new EnergySystemObjectController(1, 10, 10, 10, placementController, objectRepository, resourceController);
+        //purchasingObjectController = new EnergySystemObjectController(1, 10, 10, 10, placementController, objectRepository, applianceRepository, resourceController);
     }
 
     private Material AccessMaterial(Vector3 inputPosition, Func<GameObject> accessMethod)
@@ -63,7 +63,7 @@ public class PurchasingObjectControllerTests
         Vector3 inputPosition = new Vector3(1, 0, 1);
         string objectName = "Solar Panel";
         purchasingObjectController.PreparePurchasingObjectController(typeof(PlayerPurchasingSolarPanelState));
-        purchasingObjectController.PrepareObjectForModification(inputPosition, objectName);
+        purchasingObjectController.PrepareObjectForModification(inputPosition, objectName, "Energy");
         return inputPosition;
     }
 

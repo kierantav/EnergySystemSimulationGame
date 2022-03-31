@@ -80,6 +80,22 @@ public class PlayerSelectionState : PlayerState
         }
     }
 
+    public override void OnPuchasingAppliance(string objectName)
+    {
+
+        switch (objectName)
+        {
+            case "Air Conditioner":
+                this.gameController.TransitionToState(this.gameController.purchasingACState, objectName);
+                break;
+            case "Washing Machine":
+                //this.gameController.TransitionToState(this.gameController.purchasingBatteryState, objectName);
+                break;
+            default:
+                throw new Exception("No such energy system type." + objectName);
+        }
+    }
+
     public override void EnterState(string objectVariable)
     {
         if (this.gameController.uiController.GetSystemInfoVisibility())

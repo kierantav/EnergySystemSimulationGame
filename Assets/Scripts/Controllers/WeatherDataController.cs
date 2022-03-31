@@ -15,9 +15,9 @@ public class WeatherDataController : MonoBehaviour
 
     //Weather weather = new Weather();
 
-    public void GetData(int i) => StartCoroutine(GetData_Coroutine(i));
+    //public void GetData(int i) => StartCoroutine(GetData_Coroutine(i));
 
-    IEnumerator GetData_Coroutine(int i)
+    /*IEnumerator GetData_Coroutine(int i)
     {
         //string api = "https://eri.teachingforchange.edu.au/weatherapi/data";
         string api = "http://127.0.0.1:8000/weatherapi/data";
@@ -35,7 +35,7 @@ public class WeatherDataController : MonoBehaviour
             }
         }
         
-    }
+    }*/
 
     private void ProcessJsonData(UnityWebRequest request)
     {

@@ -7,17 +7,21 @@ public abstract class ObjectModificationHelper
     protected readonly GridStructure grid;
     protected readonly IPlacementController placementController;
     protected readonly ObjectRepository objectRepository;
+    protected readonly ApplianceRepository applianceRepository;
     protected Dictionary<List<Vector3>, GameObject> objectToBeModified = new Dictionary<List<Vector3>, GameObject>();
     protected EnergySystemGeneratorBaseSO energySystemData;
+    protected ApplianceBaseSO applianceData;
     protected IResourceController resourceController;
 
-    public ObjectModificationHelper(GridStructure grid, IPlacementController placementController, ObjectRepository objectRepository, IResourceController resourceController)
+    public ObjectModificationHelper(GridStructure grid, IPlacementController placementController, ObjectRepository objectRepository, ApplianceRepository applianceRepository, IResourceController resourceController)
     {
         this.grid = grid;
         this.placementController = placementController;
         this.objectRepository = objectRepository;
+        this.applianceRepository = applianceRepository;
         this.resourceController = resourceController;
         energySystemData = ScriptableObject.CreateInstance<NullObjectSO>();
+        applianceData = ScriptableObject.CreateInstance<NullApplianceSO>();
     }
 
     public GameObject AccessStructureInDictionary(Vector3 gridPosition)
@@ -32,10 +36,15 @@ public abstract class ObjectModificationHelper
         return null;
     }
 
-    public virtual void CancelModifications()
+    public virtual void CancelModifications(string type)
     {
-        placementController.DestroyObjects(objectToBeModified.Values);
-        ResetHelperData();
+        if (type == "Energy")
+        {
+            placementController.DestroyObjects(objectToBeModified.Values);
+            ResetHelperData();
+        } else {
+            //Debug.Log("Appliance");
+        }
     }
 
     public virtual void ConfirmModifications()
@@ -49,12 +58,21 @@ public abstract class ObjectModificationHelper
         ResetHelperData();
     }
 
-    public virtual void PrepareObjectForModification(Vector3 inputPosition, string objectName)
+    public virtual void PrepareObjectForModification(Vector3 inputPosition, string objectName, string type)
     {
-        if (energySystemData.GetType() == typeof(NullObjectSO))
+        if (type == "Energy")
         {
-            energySystemData = this.objectRepository.GetEnergySystemData(objectName);
+            if (energySystemData.GetType() == typeof(NullObjectSO))
+            {
+                energySystemData = this.objectRepository.GetEnergySystemData(objectName);
+            }
+        } else {
+            if (applianceData.GetType() == typeof(NullApplianceSO))
+            {
+                //applianceData = this.applianceRepository.GetApplianceData(objectName);
+            }
         }
+        
     }
 
     private void ResetHelperData()

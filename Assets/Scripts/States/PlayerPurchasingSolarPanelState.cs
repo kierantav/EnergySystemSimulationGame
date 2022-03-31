@@ -22,7 +22,7 @@ public class PlayerPurchasingSolarPanelState : PlayerState
     public override void OnInputPointerDown(Vector3 position)
     {
         if (position.x >= 41 && position.x <= 112 && position.y >= 20 && position.z >= 20 && position.z <= 62)
-            this.purchasingObjectController.PrepareObjectForModification(position, this.objectName);
+            this.purchasingObjectController.PrepareObjectForModification(position, this.objectName, "Energy");
         else
             Debug.Log("Solar Panel must be installed on the roof");
         

@@ -8,10 +8,10 @@ public class ObjectModificationFactory
     private readonly ObjectModificationHelper objectPlacementHelper;
     private readonly ObjectModificationHelper objectRemoveHelper;
 
-    public ObjectModificationFactory(GridStructure grid, IPlacementController placementController, ObjectRepository objectRepository, IResourceController resourceController)
+    public ObjectModificationFactory(GridStructure grid, IPlacementController placementController, ObjectRepository objectRepository, ApplianceRepository applianceRepository, IResourceController resourceController)
     {
-        objectPlacementHelper = new ObjectPlacementHelper(grid, placementController, objectRepository, resourceController);
-        objectRemoveHelper = new ObjectRemoveHelper(grid, placementController, objectRepository, resourceController);
+        objectPlacementHelper = new ObjectPlacementHelper(grid, placementController, objectRepository, applianceRepository, resourceController);
+        objectRemoveHelper = new ObjectRemoveHelper(grid, placementController, objectRepository, applianceRepository, resourceController);
     }
 
     public ObjectModificationHelper GetHelper(Type classType)
