@@ -31,6 +31,7 @@ public class EnergySystemObjectController
 
     public void PreparePurchasingObjectController(Type classType)
     {
+        Debug.Log(classType);
         objectModificationHelper = objectModificationFactory.GetHelper(classType);
     }
 

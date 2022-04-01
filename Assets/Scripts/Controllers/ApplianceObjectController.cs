@@ -38,6 +38,7 @@ public class ApplianceObjectController
 
     public void PreparePurchasingApplianceController(Type classType)
     {
+        Debug.Log(classType);
         objectModificationHelper = objectModificationFactory.GetHelper(classType);
     }
 
@@ -54,14 +55,14 @@ public class ApplianceObjectController
 
     public void PrepareApplianceForModification(Vector3 inputPosition, string objectName, string type)
     {
-        /*try
+        try
         {
             objectModificationHelper.PrepareObjectForModification(inputPosition, objectName, type);
         }
         catch
         {
-            throw new Exception("No such appliance type." + objectName);
+            throw new Exception("No such appliance type." + objectName+ ','+type);
 
-        }*/
+        }
     }
 }

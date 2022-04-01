@@ -59,7 +59,7 @@ public abstract class ObjectModificationHelper
     }
 
     public virtual void PrepareObjectForModification(Vector3 inputPosition, string objectName, string type)
-    {
+    {   
         if (type == "Energy")
         {
             if (energySystemData.GetType() == typeof(NullObjectSO))
@@ -67,9 +67,13 @@ public abstract class ObjectModificationHelper
                 energySystemData = this.objectRepository.GetEnergySystemData(objectName);
             }
         } else {
+        
             if (applianceData.GetType() == typeof(NullApplianceSO))
             {
-                //applianceData = this.applianceRepository.GetApplianceData(objectName);
+                Debug.Log(this.applianceRepository);
+                 applianceData = this.applianceRepository.GetApplianceData(objectName);
+                 Debug.Log(applianceData +" "+ type);
+               
             }
         }
         
