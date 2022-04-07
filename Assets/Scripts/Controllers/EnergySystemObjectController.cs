@@ -31,16 +31,16 @@ public class EnergySystemObjectController
 
     public void PreparePurchasingObjectController(Type classType)
     {
-        Debug.Log(classType);
+        //Debug.Log(classType);
         objectModificationHelper = objectModificationFactory.GetHelper(classType);
     }
 
     #region PlacementAction
-    public void PrepareObjectForModification(Vector3 inputPosition, string objectName, string type)
+    public void PrepareObjectForModification(Vector3 inputPosition, string objectName)
     {
         try
         {
-            objectModificationHelper.PrepareObjectForModification(inputPosition, objectName, type);
+            objectModificationHelper.PrepareObjectForModification(inputPosition, objectName,  "Energy");
         }
         catch
         {
@@ -53,18 +53,19 @@ public class EnergySystemObjectController
 
     public void ConfirmModification()
     {
-        objectModificationHelper.ConfirmModifications();
+        objectModificationHelper.ConfirmModifications("Energy");
     }
 
     public void CancelModification()
     {
-        objectModificationHelper.CancelModifications("Energy");
+        objectModificationHelper.CancelModifications();
     }
     #endregion
 
     #region RemoveAction
     public void PrepareObjectForSellingAt(Vector3 inputPosition)
     {
+        //Debug.Log(objectModificationHelper);
         objectModificationHelper.PrepareObjectForModification(inputPosition,"", "Energy");
     }
 
@@ -112,7 +113,7 @@ public class EnergySystemObjectController
 
     public void UpdateSystemAttributesToEnergySystemData()
     {
-        objectUpdateHelper.GetSystemData(grid.GetListOfAllObjects(), grid);
+        objectUpdateHelper.GetSystemData(grid.GetListOfAllObjects(), grid.GetListOfAllAppliances(), grid);
         objectUpdateHelper.UpdateSystemObjectAttributes();
 
     }

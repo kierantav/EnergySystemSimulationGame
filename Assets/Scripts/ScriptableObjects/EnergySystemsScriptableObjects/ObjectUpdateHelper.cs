@@ -6,14 +6,15 @@ using UnityEngine;
 public class ObjectUpdateHelper 
 {
     List<EnergySystemGeneratorBaseSO> objectDataList;
+    List<ApplianceBaseSO> applianceDataList;
     GridStructure grid;
 
-    public void GetSystemData(List<EnergySystemGeneratorBaseSO> objectDataList, GridStructure grid)
+    public void GetSystemData(List<EnergySystemGeneratorBaseSO> objectDataList, List<ApplianceBaseSO> applianceDataList, GridStructure grid)
     {
         this.objectDataList = objectDataList;
+        this.applianceDataList = applianceDataList;
         this.grid = grid;
     }
-
 
     public void UpdateSystemObjectAttributes()
     {

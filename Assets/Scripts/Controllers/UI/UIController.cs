@@ -10,8 +10,8 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 using Michsky.UI.ModernUIPack;
+using UnityEngine.UI;
 
 public class UIController : MonoBehaviour
 {
@@ -21,6 +21,7 @@ public class UIController : MonoBehaviour
     private Action OnCancelHandler;
     private Action OnConfirmHandler;
     private Action OnSellActionHandler;
+    //private Action OnSellApplianceActionHandler;
 
     // modify - cancel & confirm to place or remove objects
     [Header("Constructure Modified Panel Property")]
@@ -34,6 +35,8 @@ public class UIController : MonoBehaviour
     // shop - install or sell energy systems and appliances
     [Header("Shop Panel Property")]
     public GameObject shopMenuPanel;
+
+
     public Button sellBtn;
     public Button openEnergySystemWindowBtn;
     public Button openApplianceWindowBtn;
@@ -111,6 +114,7 @@ public class UIController : MonoBehaviour
 
         openShopMenuBtn.onClick.AddListener(OnShopMenu);
         sellBtn.onClick.AddListener(OnSellHandler);
+        //sellBtn.onClick.AddListener(OnSellApplianceHandler);
         closeShopMenuBtn.onClick.AddListener(OnCloseShopMenuHandler);
 
         openStatsMenuBtn.onClick.AddListener(OnStatsMenu);
@@ -151,6 +155,20 @@ public class UIController : MonoBehaviour
     public void HideSystemInfo()
     {
         systemInfoPanelHelper.Hide();
+    }
+
+    
+    public void DisplayApplianceInfo(ApplianceBaseSO applianceData)
+    {
+        switch (applianceData.objectName)
+        {
+            case ("Air Conditioner"):
+                systemInfoPanelHelper.DisplayACInfo(applianceData);
+                break;
+            case ("Washing Machine"):
+                //systemInfoPanelHelper.DisplayDieselGeneratorInfo(data);
+                break;
+        }
     }
 
     public bool GetSystemInfoVisibility()
@@ -341,6 +359,14 @@ public class UIController : MonoBehaviour
         mainMenuPanel.SetActive(false);
     }
 
+    /*private void OnSellApplianceHandler()
+    {
+        OnSellApplianceActionHandler?.Invoke();
+        OnCloseShopMenuHandler();
+        modifyPanel.SetActive(true);
+        mainMenuPanel.SetActive(false);
+    }*/
+
     private void OnCloseShopMenuHandler()
     {
         shopMenuPanel.SetActive(false);
@@ -399,6 +425,16 @@ public class UIController : MonoBehaviour
     {
         OnSellActionHandler -= listener;
     }
+
+    /*public void AddListenerOnSellApplianceEvent(Action listener)
+    {
+        OnSellApplianceActionHandler += listener;
+    }
+
+    public void RemoveListenerOnSellApplianceEvent(Action listener)
+    {
+        OnSellApplianceActionHandler -= listener;
+    }*/
     #endregion
 
     private void EnableCameraMovement(bool setting)

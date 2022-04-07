@@ -58,6 +58,11 @@ public abstract class PlayerState
         this.gameController.TransitionToState(this.gameController.sellingObjectState, null);
     }
 
+    /*public virtual void OnSellingAppliance()
+    {
+        this.gameController.TransitionToState(this.gameController.sellingApplianceState, null);
+    }*/
+
 
     public abstract void OnCancel();
 

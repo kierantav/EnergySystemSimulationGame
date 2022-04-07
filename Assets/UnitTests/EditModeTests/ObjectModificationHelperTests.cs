@@ -93,7 +93,7 @@ public class ObjectModificationHelperTests
     {
         helper.PrepareObjectForModification(gridPosition1, solarPanelName, "Energy");
         helper.PrepareObjectForModification(gridPosition2, solarPanelName, "Energy");
-        helper.CancelModifications("Energy");
+        helper.CancelModifications();
         GameObject objectInDictionary1 = helper.AccessStructureInDictionary(gridPosition1);
         GameObject objectInDictionary2 = helper.AccessStructureInDictionary(gridPosition2);
         Assert.IsNull(objectInDictionary1);
@@ -105,7 +105,7 @@ public class ObjectModificationHelperTests
     {
         helper.PrepareObjectForModification(gridPosition1, solarPanelName, "Energy");
         helper.PrepareObjectForModification(gridPosition2, solarPanelName, "Energy");
-        helper.ConfirmModifications();
+        helper.ConfirmModifications("Energy");
         List<Vector3> gridPositionList1 = new List<Vector3>();
         gridPositionList1.Add(gridPosition1);
         List<Vector3> gridPositionList2 = new List<Vector3>();

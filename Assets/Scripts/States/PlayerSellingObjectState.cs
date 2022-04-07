@@ -5,20 +5,24 @@ using UnityEngine;
 public class PlayerSellingObjectState : PlayerState
 {
     EnergySystemObjectController purchasingObjectController;
-    public PlayerSellingObjectState(GameController gameController, EnergySystemObjectController purchasingObjectController) : base(gameController)
+    ApplianceObjectController purchasingApplianceController;
+    public PlayerSellingObjectState(GameController gameController, EnergySystemObjectController purchasingObjectController, ApplianceObjectController purchasingApplianceController) : base(gameController)
     {
         this.purchasingObjectController = purchasingObjectController;
+        this.purchasingApplianceController = purchasingApplianceController;
     }
 
     public override void OnCancel()
     {
         this.purchasingObjectController.CancelModification();
+        this.purchasingApplianceController.CancelModification();
         this.gameController.TransitionToState(this.gameController.selectionState, null);
     }
 
     public override void OnConfirm()
     {
         this.purchasingObjectController.ConfirmModification();
+        this.purchasingApplianceController.ConfirmModification();
         purchasingObjectController.UpdateSystemAttributesToEnergySystemData();
         this.gameController.TransitionToState(this.gameController.selectionState, null);
     }
@@ -36,7 +40,14 @@ public class PlayerSellingObjectState : PlayerState
 
     public override void OnInputPointerDown(Vector3 position)
     {
-        this.purchasingObjectController.PrepareObjectForSellingAt(position);
+        /*if (objectType.Equals("Energy"))
+        {*/
+            this.purchasingObjectController.PrepareObjectForSellingAt(position);
+        /*} 
+        else
+        {*/
+            this.purchasingApplianceController.PrepareApplianceForSellingAt(position);
+        //}
     }
 
     public override void OnInputPointerUp()
@@ -46,6 +57,7 @@ public class PlayerSellingObjectState : PlayerState
     public override void EnterState(string objectVariable)
     {
         this.purchasingObjectController.PreparePurchasingObjectController(GetType());
+        this.purchasingApplianceController.PreparePurchasingApplianceController(GetType());
         purchasingObjectController.UpdateSystemAttributesToEnergySystemData();
     }
 

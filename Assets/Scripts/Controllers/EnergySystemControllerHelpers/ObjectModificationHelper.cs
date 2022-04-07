@@ -36,31 +36,32 @@ public abstract class ObjectModificationHelper
         return null;
     }
 
-    public virtual void CancelModifications(string type)
+    public virtual void CancelModifications()
     {
-        if (type == "Energy")
-        {
-            placementController.DestroyObjects(objectToBeModified.Values);
-            ResetHelperData();
-        } else {
-            //Debug.Log("Appliance");
-        }
+        placementController.DestroyObjects(objectToBeModified.Values);
+        ResetHelperData();
     }
 
-    public virtual void ConfirmModifications()
+    public virtual void ConfirmModifications(string type)
     {
         placementController.PlaceObjectsOnTheMap(objectToBeModified.Values);
         foreach (var keyValuePair in objectToBeModified)
         {
-            grid.PlaceObjectOnTheGrid(keyValuePair.Value, keyValuePair.Key, GameObject.Instantiate(energySystemData));
-            //grid.PlaceObjectOnTheGrid(keyValuePair.Value, keyValuePair.Key, energySystemData);
+            if (type.Equals("Energy"))
+            {
+                grid.PlaceObjectOnTheGrid(keyValuePair.Value, keyValuePair.Key, GameObject.Instantiate(energySystemData), GameObject.Instantiate(applianceData));
+            } else
+            {
+                grid.PlaceObjectOnTheGrid(keyValuePair.Value, keyValuePair.Key, GameObject.Instantiate(energySystemData), GameObject.Instantiate(applianceData));
+            }
+                //grid.PlaceObjectOnTheGrid(keyValuePair.Value, keyValuePair.Key, energySystemData);
         }
         ResetHelperData();
     }
 
     public virtual void PrepareObjectForModification(Vector3 inputPosition, string objectName, string type)
     {   
-        if (type == "Energy")
+        if (type.Equals("Energy"))
         {
             if (energySystemData.GetType() == typeof(NullObjectSO))
             {
@@ -70,10 +71,10 @@ public abstract class ObjectModificationHelper
         
             if (applianceData.GetType() == typeof(NullApplianceSO))
             {
-                Debug.Log(this.applianceRepository);
-                 applianceData = this.applianceRepository.GetApplianceData(objectName);
-                 Debug.Log(applianceData +" "+ type);
-               
+                //Debug.Log(this.applianceRepository);
+                //Debug.Log(objectName + " object");
+                applianceData = this.applianceRepository.GetApplianceData(objectName);
+                //Debug.Log(applianceData);
             }
         }
         
@@ -83,5 +84,6 @@ public abstract class ObjectModificationHelper
     {
         objectToBeModified.Clear();
         energySystemData = ScriptableObject.CreateInstance<NullObjectSO>();
+        applianceData = ScriptableObject.CreateInstance<NullApplianceSO>();
     }
 }

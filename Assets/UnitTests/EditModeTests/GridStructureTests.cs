@@ -109,7 +109,7 @@ public class GridStructureTests
             returnPosition.Add(grid.CalculateGridPosition(p));
         }
         GameObject testObject = new GameObject("TestObject");
-        grid.PlaceObjectOnTheGrid(testObject, returnPosition, null);
+        grid.PlaceObjectOnTheGrid(testObject, returnPosition, null, null);
         //Assert
         Assert.IsTrue(grid.IsCellTaken(position));
     }
@@ -124,7 +124,7 @@ public class GridStructureTests
             returnPosition.Add(grid.CalculateGridPosition(p));
         }
         GameObject testObject = new GameObject("TestObject");
-        grid.PlaceObjectOnTheGrid(testObject, returnPosition, null);
+        grid.PlaceObjectOnTheGrid(testObject, returnPosition, null, null);
         //Assert
         Assert.IsTrue(grid.IsCellTaken(position));
     }
@@ -139,7 +139,7 @@ public class GridStructureTests
             returnPosition.Add(grid.CalculateGridPosition(p));
         }
         GameObject testObject = new GameObject("TestObject");
-        grid.PlaceObjectOnTheGrid(testObject, returnPosition, null);
+        grid.PlaceObjectOnTheGrid(testObject, returnPosition, null, null);
         //Assert
         Assert.IsTrue(grid.IsCellTaken(position));
     }
@@ -154,7 +154,7 @@ public class GridStructureTests
             returnPosition.Add(grid.CalculateGridPosition(p));
         }
         GameObject testObject = null;
-        grid.PlaceObjectOnTheGrid(testObject, returnPosition, null);
+        grid.PlaceObjectOnTheGrid(testObject, returnPosition, null, null);
         //Assert
         Assert.IsFalse(grid.IsCellTaken(position));
     }
@@ -180,7 +180,7 @@ public class GridStructureTests
             returnPosition.Add(grid.CalculateGridPosition(p));
         }
         GameObject testGameObject = new GameObject("TestGameObject");
-        grid.PlaceObjectOnTheGrid(testGameObject, position, null);
+        grid.PlaceObjectOnTheGrid(testGameObject, position, null, null);
         GameObject retreivedGameObject = grid.GetObjectFromTheGrid(returnPosition[0]);
         Assert.AreEqual(testGameObject, retreivedGameObject);
         Assert.AreEqual(returnPosition, grid.existedObjectsPositions[0]);
@@ -216,7 +216,7 @@ public class GridStructureTests
             returnPosition.Add(grid.CalculateGridPosition(p));
         }
         GameObject testObject = new GameObject("TestObject");
-        grid.PlaceObjectOnTheGrid(testObject, returnPosition, null);
+        grid.PlaceObjectOnTheGrid(testObject, returnPosition, null, null);
         Assert.IsNotNull(grid.GetObjectPositionListFromTheGrid(returnPosition[0]));
     }
 
@@ -230,7 +230,7 @@ public class GridStructureTests
             returnPosition.Add(grid.CalculateGridPosition(p));
         }
         GameObject testObject = new GameObject("TestObject");
-        grid.PlaceObjectOnTheGrid(testObject, returnPosition, null);
+        grid.PlaceObjectOnTheGrid(testObject, returnPosition, null, null);
         Assert.IsNull(grid.GetObjectPositionListFromTheGrid(Vector3.zero));
     }
     #endregion
@@ -254,14 +254,14 @@ public class GridStructureTests
         List<Vector3> positionList6 = new List<Vector3>() { new Vector3(99, 99, 0) };
         List<Vector3> positionList7 = new List<Vector3>() { new Vector3(99, 99, 99) };
         List<Vector3> positionList8 = new List<Vector3>() { new Vector3(0, 99, 99) };
-        grid.PlaceObjectOnTheGrid(gameObject, positionList1, solarPanel);
-        grid.PlaceObjectOnTheGrid(gameObject, positionList2, dieselGenerator);
-        grid.PlaceObjectOnTheGrid(gameObject, positionList3, battery);
-        grid.PlaceObjectOnTheGrid(gameObject, positionList4, invertor);
-        grid.PlaceObjectOnTheGrid(gameObject, positionList5, chargeController);
-        grid.PlaceObjectOnTheGrid(gameObject, positionList6, windTurbineSO);
-        grid.PlaceObjectOnTheGrid(gameObject, positionList7, chargeController);
-        grid.PlaceObjectOnTheGrid(gameObject, positionList8, windTurbineSO);
+        grid.PlaceObjectOnTheGrid(gameObject, positionList1, solarPanel, null);
+        grid.PlaceObjectOnTheGrid(gameObject, positionList2, dieselGenerator, null);
+        grid.PlaceObjectOnTheGrid(gameObject, positionList3, battery, null);
+        grid.PlaceObjectOnTheGrid(gameObject, positionList4, invertor, null);
+        grid.PlaceObjectOnTheGrid(gameObject, positionList5, chargeController, null);
+        grid.PlaceObjectOnTheGrid(gameObject, positionList6, windTurbineSO, null);
+        grid.PlaceObjectOnTheGrid(gameObject, positionList7, chargeController, null);
+        grid.PlaceObjectOnTheGrid(gameObject, positionList8, windTurbineSO, null);
 
         var list = grid.GetAllObjects().ToList();
         Assert.IsTrue(list.Count == 8);

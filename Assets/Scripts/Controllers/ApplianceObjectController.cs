@@ -24,44 +24,61 @@ public class ApplianceObjectController
         objectUpdateHelper = new ObjectUpdateHelper();
     }
 
-    /*public void PurchasingApplianceObject(string objectName)
+    public ApplianceBaseSO GetApplianceDataFromPosition(Vector3 inputPosition)
     {
-        applianceTempObject.name = objectName;
-        Instantiate(applianceTempObject, Vector3.zero, Quaternion.identity);
-    }*/
+        List<Vector3> PositionList = new List<Vector3>();
+        Vector3 gridPosition = grid.CalculateGridPosition(inputPosition);
+        PositionList.Add(gridPosition);
+        if (grid.IsCellTaken(PositionList))
+        {
+            return grid.GetApplianceDataFromTheGrid(PositionList[0]);
+        }
+        return null;
+    }
+    public IEnumerable<ApplianceBaseSO> GetAllAppliances()
+    {
+        return grid.GetAllAppliances();
+    }
 
     public void CancelModification()
     {
         if (objectModificationHelper != null)
-            objectModificationHelper.CancelModifications("Appliance");
+            objectModificationHelper.CancelModifications();
     }
 
     public void PreparePurchasingApplianceController(Type classType)
     {
-        Debug.Log(classType);
+        //Debug.Log(classType);
         objectModificationHelper = objectModificationFactory.GetHelper(classType);
+    }
+
+    public void PrepareApplianceForSellingAt(Vector3 inputPosition)
+    {
+        //Debug.Log(objectModificationHelper);
+        objectModificationHelper.PrepareObjectForModification(inputPosition, "", "Appliance");
     }
 
     public void UpdateSystemAttributesToApplianceData()
     {
-        objectUpdateHelper.GetSystemData(grid.GetListOfAllObjects(), grid);
+        objectUpdateHelper.GetSystemData(grid.GetListOfAllObjects(), grid.GetListOfAllAppliances(), grid);
         objectUpdateHelper.UpdateSystemObjectAttributes();
     }
 
     public void ConfirmModification()
     {
-        objectModificationHelper.ConfirmModifications();
+        objectModificationHelper.ConfirmModifications("Appliance");
     }
 
-    public void PrepareApplianceForModification(Vector3 inputPosition, string objectName, string type)
+    public void PrepareApplianceForModification(Vector3 inputPosition, string objectName)
     {
         try
         {
-            objectModificationHelper.PrepareObjectForModification(inputPosition, objectName, type);
+            //Debug.Log("1");
+            objectModificationHelper.PrepareObjectForModification(inputPosition, objectName, "Appliance");
         }
         catch
         {
-            throw new Exception("No such appliance type." + objectName+ ','+type);
+            throw new Exception("No such appliance type." + objectName);
 
         }
     }

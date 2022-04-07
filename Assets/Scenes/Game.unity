@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028334, g: 0.22571336, b: 0.3069219, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1915,8 +1915,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 778335620}
   m_HandleRect: {fileID: 778335618}
   m_Direction: 2
-  m_Value: 0.9999971
-  m_Size: 0.95280427
+  m_Value: 0.9999985
+  m_Size: 0.9528043
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -27970,7 +27970,7 @@ MonoBehaviour:
   resourceControllerGameObject: {fileID: 1052832990}
   uiController: {fileID: 729452628}
   objectRepository: {fileID: 1445391128}
-  applianceRepository: {fileID: 0}
+  applianceRepository: {fileID: 1845548205}
   inputMask:
     serializedVersion: 2
     m_Bits: 512
@@ -53718,7 +53718,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 5817091243596693952}
   m_HandleRect: {fileID: 5922254901631960390}
   m_Direction: 2
-  m_Value: 1
+  m_Value: 0
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:

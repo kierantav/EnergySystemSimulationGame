@@ -38,6 +38,12 @@ public class GridStructure
         }
     }
 
+    public ApplianceBaseSO GetApplianceDataFromTheGrid(Vector3 gridPosition)
+    {
+        Vector3Int cellIndex = CalculateGridIndex(gridPosition);
+        return grid[cellIndex.x, cellIndex.y, cellIndex.z].GetApplianceData();
+    }
+
     public IEnumerable<EnergySystemGeneratorBaseSO> GetAllObjects()
     {
         List<EnergySystemGeneratorBaseSO> objectDataList = new List<EnergySystemGeneratorBaseSO>();
@@ -67,6 +73,36 @@ public class GridStructure
         }
         return objectDataList;
     }
+
+    public IEnumerable<ApplianceBaseSO> GetAllAppliances()
+    {
+        List<ApplianceBaseSO> applianceDataList = new List<ApplianceBaseSO>();
+        foreach (var list in existedObjectsPositions)
+        {
+            Vector3 position = list[0];
+            var data = grid[(int)position.x, (int)position.y, (int)position.z].GetApplianceData();
+            if (data != null)
+            {
+                applianceDataList.Add(data);
+            }
+        }
+        return applianceDataList;
+    }
+
+    public List<ApplianceBaseSO> GetListOfAllAppliances()
+    {
+        List<ApplianceBaseSO> applianceDataList = new List<ApplianceBaseSO>();
+        foreach (var list in existedObjectsPositions)
+        {
+            Vector3 position = list[0];
+            var data = grid[(int)position.x, (int)position.y, (int)position.z].GetApplianceData();
+            if (data != null)
+            {
+                applianceDataList.Add(data);
+            }
+        }
+        return applianceDataList;
+    }
     #region InputPosition=>GridPosition=>GridIndex
     // Convert the mouse position (can be float) into grid position (must be int) and get grid position
     public Vector3 CalculateGridPosition(Vector3 inputPosition)
@@ -95,7 +131,7 @@ public class GridStructure
     }
 
     // To place an object on the empty cell
-    public void PlaceObjectOnTheGrid(GameObject objectModel, List<Vector3> gridPositionList, EnergySystemGeneratorBaseSO energySystemData)
+    public void PlaceObjectOnTheGrid(GameObject objectModel, List<Vector3> gridPositionList, EnergySystemGeneratorBaseSO energySystemData, ApplianceBaseSO applianceData)
     {
         foreach (Vector3 p in gridPositionList)
         {
@@ -103,7 +139,7 @@ public class GridStructure
 
             if (CheckGridIndexInRange(cellIndex))
             {
-                grid[cellIndex.x, cellIndex.y, cellIndex.z].SetObject(objectModel, energySystemData);
+                grid[cellIndex.x, cellIndex.y, cellIndex.z].SetObject(objectModel, energySystemData, applianceData);
             }
             else
             {

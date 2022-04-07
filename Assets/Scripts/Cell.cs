@@ -15,6 +15,7 @@ public class Cell
     // Field to store what object was placed
     GameObject objectModel = null;
     EnergySystemGeneratorBaseSO energySystemData;
+    ApplianceBaseSO applianceData;
 
     // Feild showing if this cell has stored any object
     bool isTaken = false;
@@ -22,13 +23,14 @@ public class Cell
     public bool IsTaken { get => isTaken; }
 
     // Store an object on this cell
-    public void SetObject(GameObject objectModel, EnergySystemGeneratorBaseSO energySystemData)
+    public void SetObject(GameObject objectModel, EnergySystemGeneratorBaseSO energySystemData, ApplianceBaseSO applianceData)
     {
         if (objectModel == null)
             return;
         // Object stored
         this.objectModel = objectModel;
         this.energySystemData = energySystemData;
+        this.applianceData = applianceData;
 
         // Cell has been tatekn
         this.isTaken = true;
@@ -45,11 +47,17 @@ public class Cell
         return energySystemData;
     }
 
+    public ApplianceBaseSO GetApplianceData()
+    {
+        return applianceData;
+    }
+
     // Remove Object
     public void RemoveObject()
     {
         objectModel = null;
         isTaken = false;
         energySystemData = null;
+        applianceData = null;
     }
 }

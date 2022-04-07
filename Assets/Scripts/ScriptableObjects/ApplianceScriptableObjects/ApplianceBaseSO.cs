@@ -25,4 +25,7 @@ public abstract class ApplianceBaseSO : ScriptableObject
 
     public bool isTurnedOn;
 
+    public int objectWidth;
+    public int objectHeight;
+    public int objectLength;
 }

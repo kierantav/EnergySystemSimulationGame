@@ -16,8 +16,10 @@ public class ObjectModificationFactory
 
     public ObjectModificationHelper GetHelper(Type classType)
     {
+        
         if (classType == typeof(PlayerSellingObjectState))
         {
+            //Debug.Log(classType);
             return objectRemoveHelper;
         }
         else

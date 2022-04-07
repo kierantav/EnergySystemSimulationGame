@@ -10,7 +10,7 @@ public class CellTests
     public void CellSetGameObjectTestPasses()
     {
         Cell cell = new Cell();
-        cell.SetObject(new GameObject(), null);
+        cell.SetObject(new GameObject(), null, null);
         Assert.IsTrue(cell.IsTaken);
     }
 
@@ -18,7 +18,7 @@ public class CellTests
     public void CellSetGameObjectNullTestFails()
     {
         Cell cell = new Cell();
-        cell.SetObject(null, null);
+        cell.SetObject(null, null, null);
         Assert.IsFalse(cell.IsTaken);
     }
 
@@ -26,7 +26,7 @@ public class CellTests
     public void CellRemoveGameObjectTestFails()
     {
         Cell cell = new Cell();
-        cell.SetObject(new GameObject(), null);
+        cell.SetObject(new GameObject(), null, null);
         cell.RemoveObject();
         Assert.IsFalse(cell.IsTaken);
     }
@@ -36,7 +36,7 @@ public class CellTests
     {
         Cell cell = new Cell();
         SolarPanelSO solarPanel = new SolarPanelSO();
-        cell.SetObject(new GameObject(), solarPanel);
+        cell.SetObject(new GameObject(), solarPanel, null);
         Assert.AreEqual(solarPanel, cell.GetEnergySystemData());
     }
 

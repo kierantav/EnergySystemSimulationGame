@@ -1,11 +1,10 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using Michsky.UI.ModernUIPack;
-using System;
-using UnityEngine.Events;
 
 public class SystemInfoPanelHelper : MonoBehaviour
 {
@@ -307,11 +306,16 @@ public class SystemInfoPanelHelper : MonoBehaviour
         SetText(emissionAmount, data.emissionGeneratedAmount + " kg");
         SetSwitch(dieselGeneratorSwitch, data.isTurnedOn);
         SetText(fuelAmount, data.fuelAmount + "/60L");
-        SetButton(fuelPurchaseBtn, data.purchaseFuelBtn);
+        //SetButton(fuelPurchaseBtn, data.purchaseFuelBtn);
         SetToggle(statusToggle, data.isRunning);
         Debug.Log("dieselGeneratorSwitch_IsOn: " + dieselGeneratorSwitch.isOn);
         Debug.Log("is_Turned_On: " + data.isTurnedOn);
         Debug.Log("Is_Running: " + data.isRunning);
+    }
+
+    public void DisplayACInfo(ApplianceBaseSO applianceData)
+    {
+        // Display AC Info
     }
 
     private void UpdateDieselGeneratorInfo(EnergySystemGeneratorBaseSO data)

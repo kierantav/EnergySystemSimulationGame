@@ -13,8 +13,4 @@ MonoBehaviour:
   m_Name: New Appliance Collection
   m_EditorClassIdentifier: 
   acSO: {fileID: 11400000, guid: d274b57d486fe4b368536f840401691d, type: 2}
-  lightSO: {fileID: 11400000, guid: db5fe4386c6a044909af8d63916a7d61, type: 2}
-  fridgeSO: {fileID: 11400000, guid: 49d8d2771e3214c6d87b77eeadf0d492, type: 2}
-  fanSO: {fileID: 11400000, guid: 28e3579627fc54d11afdfbf55f497397, type: 2}
   washingMachineSO: {fileID: 11400000, guid: 0c472c5a22bc34fbfbc5224ded86dbd0, type: 2}
-  dryerSO: {fileID: 11400000, guid: b2010293195974ceb87f05ec0ebeb552, type: 2}

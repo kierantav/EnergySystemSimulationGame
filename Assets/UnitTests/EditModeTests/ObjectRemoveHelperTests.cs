@@ -31,8 +31,8 @@ public class ObjectRemoveHelperTests
         tempObject = new GameObject();
         placementController.CreateGhostObject(default, default).ReturnsForAnyArgs(tempObject);
         grid = new GridStructure(1, 10, 10, 10);
-        grid.PlaceObjectOnTheGrid(tempObject, gridPositionList1, null);
-        grid.PlaceObjectOnTheGrid(tempObject, gridPositionList2, null);
+        grid.PlaceObjectOnTheGrid(tempObject, gridPositionList1, null, null);
+        grid.PlaceObjectOnTheGrid(tempObject, gridPositionList2, null, null);
 
         IResourceController resourceController = Substitute.For<IResourceController>();
         resourceController.CanIBuyIt(default).Returns(true);
@@ -52,7 +52,7 @@ public class ObjectRemoveHelperTests
     public void ObjectRemoveHelperCancelRemoveTestPasses()
     {
         helper.PrepareObjectForModification(gridPositionList1[0], "", "Energy");
-        helper.CancelModifications("Energy");
+        helper.CancelModifications();
         Assert.IsTrue(grid.IsCellTaken( gridPositionList1));
     }
 
@@ -60,7 +60,7 @@ public class ObjectRemoveHelperTests
     public void ObjectRemoveHelperConfirmRemoveTestPasses()
     {
         helper.PrepareObjectForModification(gridPositionList1[0], "", "Energy");
-        helper.ConfirmModifications();
+        helper.ConfirmModifications("Energy");
         Assert.IsFalse(grid.IsCellTaken(gridPositionList1));
     }
 

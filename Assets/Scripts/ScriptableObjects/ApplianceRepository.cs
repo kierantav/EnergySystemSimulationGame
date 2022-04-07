@@ -31,6 +31,37 @@ public class ApplianceRepository : MonoBehaviour
                 return null;
         }
     }
+
+    public List<int> GetObjectSize(string objectName)
+    {
+        List<int> objectSizeToReturn = null;
+        switch (objectName)
+        {
+            case "Air Conditioner":
+                objectSizeToReturn = GetACSize();
+                break;
+            case "Washing Machine":
+                //objectSizeToReturn = GetBatterySize();
+                break;
+            default:
+                throw new Exception("No such appliance size." + objectName);
+
+        }
+        if (objectSizeToReturn == null)
+        {
+            throw new Exception("No size for that name " + objectName);
+        }
+        return objectSizeToReturn;
+    }
+
+    private List<int> GetACSize()
+    {
+        List<int> temp = new List<int>();
+        temp.Add(applianceCollection.acSO.objectWidth);
+        temp.Add(applianceCollection.acSO.objectHeight);
+        temp.Add(applianceCollection.acSO.objectLength);
+        return temp;
+    }
 }
 
 

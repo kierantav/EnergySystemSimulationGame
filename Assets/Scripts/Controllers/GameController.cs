@@ -19,6 +19,7 @@ public class GameController : MonoBehaviour
     private IResourceController resourceController;
     private EnergySystemObjectController purchasingObjectController;
     private ApplianceObjectController purchasingApplianceController;
+    //private string type;
 
     // Controllers
     public IInputController inputController;
@@ -40,6 +41,7 @@ public class GameController : MonoBehaviour
     private PlayerState state;
     public PlayerSelectionState selectionState;
     public PlayerSellingObjectState sellingObjectState;
+    //public PlayerSellingApplianceState sellingApplianceState;
 
     // Purchasing States
     public PlayerPurchasingSolarPanelState purchasingSolarPanelState;
@@ -92,7 +94,8 @@ public class GameController : MonoBehaviour
         resourceController.PrepareResourceController(purchasingObjectController);
 
         selectionState = new PlayerSelectionState(this, purchasingObjectController);
-        sellingObjectState = new PlayerSellingObjectState(this, purchasingObjectController);
+        //sellingApplianceState = new PlayerSellingApplianceState(this, purchasingApplianceController);
+        sellingObjectState = new PlayerSellingObjectState(this, purchasingObjectController, purchasingApplianceController);
         purchasingSolarPanelState = new PlayerPurchasingSolarPanelState(this, purchasingObjectController);
         purchasingBatteryState = new PlayerPurchasingBatteryState(this, purchasingObjectController, BatteryPosition);
         purchasingWindTurbineState = new PlayerPurchasingWindTurbineState(this, purchasingObjectController, WindTurbinePosition);
@@ -119,6 +122,7 @@ public class GameController : MonoBehaviour
         uiController.AddListenerOnPurchasingApplianceEvent((objectName) => state.OnPuchasingAppliance(objectName));
         uiController.AddListenerOnCancelEvent(() => state.OnCancel());
         uiController.AddListenerOnSellEvent(() => state.OnSellingObject());
+        //uiController.AddListenerOnSellApplianceEvent(() => state.OnSellingAppliance());
         uiController.AddListenerOnConfirmEvent(() => state.OnConfirm());
     }
 

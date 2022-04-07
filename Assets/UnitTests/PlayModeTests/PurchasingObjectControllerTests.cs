@@ -63,7 +63,7 @@ public class PurchasingObjectControllerTests
         Vector3 inputPosition = new Vector3(1, 0, 1);
         string objectName = "Solar Panel";
         purchasingObjectController.PreparePurchasingObjectController(typeof(PlayerPurchasingSolarPanelState));
-        purchasingObjectController.PrepareObjectForModification(inputPosition, objectName, "Energy");
+        purchasingObjectController.PrepareObjectForModification(inputPosition, objectName);
         return inputPosition;
     }
 

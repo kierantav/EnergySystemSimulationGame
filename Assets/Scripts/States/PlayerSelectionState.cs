@@ -13,6 +13,7 @@ using UnityEngine;
 public class PlayerSelectionState : PlayerState
 {
     EnergySystemObjectController purchasingObjectController;
+    ApplianceObjectController applianceObjectController;
     Vector3? previousPosition;
 
     public PlayerSelectionState(GameController gameController, EnergySystemObjectController objectController) : base(gameController)
@@ -26,19 +27,38 @@ public class PlayerSelectionState : PlayerState
 
     public override void OnInputPointerDown(Vector3 position)
     {
-        EnergySystemGeneratorBaseSO data = purchasingObjectController.GetEnergySystemDataFromPosition(position);
-        purchasingObjectController.UpdateSystemAttributesToEnergySystemData();
-        if (data)
+        /*if (type.Equals("Appliance"))
         {
-            this.gameController.uiController.DisplaySystemInfo(data);
-            previousPosition = position;
+            ApplianceBaseSO applianceData = applianceObjectController.GetApplianceDataFromPosition(position);
+            if (applianceData)
+            {
+                this.gameController.uiController.DisplayApplianceInfo(applianceData);
+                previousPosition = position;
+            }
+            else
+            {
+                this.gameController.uiController.HideSystemInfo();
+                applianceData = null;
+                previousPosition = null;
+            }
         }
         else
-        {
-            this.gameController.uiController.HideSystemInfo();
-            data = null;
-            previousPosition = null;
-        }
+        {*/
+            EnergySystemGeneratorBaseSO data = purchasingObjectController.GetEnergySystemDataFromPosition(position);
+
+            purchasingObjectController.UpdateSystemAttributesToEnergySystemData();
+            if (data)
+            {
+                this.gameController.uiController.DisplaySystemInfo(data);
+                previousPosition = position;
+            }
+            else
+            {
+                this.gameController.uiController.HideSystemInfo();
+                data = null;
+                previousPosition = null;
+            }
+        //}
         return;
     }
 
@@ -101,6 +121,7 @@ public class PlayerSelectionState : PlayerState
         if (this.gameController.uiController.GetSystemInfoVisibility())
         {
             EnergySystemGeneratorBaseSO data = purchasingObjectController.GetEnergySystemDataFromPosition(previousPosition.Value);
+            //ApplianceBaseSO data = applianceObjectController.GetApplianceDataFromPosition(previousPosition.Value);
             
             if (data)
             {
