@@ -109,7 +109,7 @@ public class PlayerSelectionState : PlayerState
                 this.gameController.TransitionToState(this.gameController.purchasingACState, objectName);
                 break;
             case "Washing Machine":
-                //this.gameController.TransitionToState(this.gameController.purchasingBatteryState, objectName);
+                this.gameController.TransitionToState(this.gameController.purchasingWashingMachineState, objectName);
                 break;
             default:
                 throw new Exception("No such energy system type." + objectName);

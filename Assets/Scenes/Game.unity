@@ -27984,6 +27984,7 @@ MonoBehaviour:
   InvertorPosition: {x: 43, y: 5, z: 50}
   ChargeControllerPosition: {x: 44, y: 15, z: 60}
   ACPosition: {x: 96.04, y: 16.56, z: 39.44}
+  WashingMachinePosition: {x: 68.44, y: 3.4, z: 69.57}
   cameraMovementController: {fileID: 1192458006}
 --- !u!4 &1534812097
 Transform:

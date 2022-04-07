@@ -41,7 +41,7 @@ public class ApplianceRepository : MonoBehaviour
                 objectSizeToReturn = GetACSize();
                 break;
             case "Washing Machine":
-                //objectSizeToReturn = GetBatterySize();
+                objectSizeToReturn = GetWashingMachineSize();
                 break;
             default:
                 throw new Exception("No such appliance size." + objectName);
@@ -52,6 +52,15 @@ public class ApplianceRepository : MonoBehaviour
             throw new Exception("No size for that name " + objectName);
         }
         return objectSizeToReturn;
+    }
+
+    private List<int> GetWashingMachineSize()
+    {
+        List<int> temp = new List<int>();
+        temp.Add(applianceCollection.washingMachineSO.objectWidth);
+        temp.Add(applianceCollection.washingMachineSO.objectHeight);
+        temp.Add(applianceCollection.washingMachineSO.objectLength);
+        return temp;
     }
 
     private List<int> GetACSize()

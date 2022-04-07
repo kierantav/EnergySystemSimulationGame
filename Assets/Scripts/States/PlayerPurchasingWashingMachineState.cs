@@ -2,12 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerPurchasingACState : PlayerState
+public class PlayerPurchasingWashingMachineState : PlayerState
 {
     ApplianceObjectController purchasingApplianceController;
     string objectName;
     Vector3 position;
-    public PlayerPurchasingACState(GameController gameController, ApplianceObjectController purchasingApplianceController, Vector3 position) : base(gameController)
+    public PlayerPurchasingWashingMachineState(GameController gameController, ApplianceObjectController purchasingApplianceController, Vector3 position) : base(gameController)
     {
         this.purchasingApplianceController = purchasingApplianceController;
         this.position = position;
@@ -40,8 +40,8 @@ public class PlayerPurchasingACState : PlayerState
 
     public override void OnPuchasingAppliance(string objectName)
     {
-        Debug.Log(objectName);
-        if (objectName != "Air Conditioner")
+        //Debug.Log(objectName);
+        if (objectName != "Washing Machine")
         {
             OnCancel();
         }

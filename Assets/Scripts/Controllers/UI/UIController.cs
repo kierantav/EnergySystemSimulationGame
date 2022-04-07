@@ -308,6 +308,7 @@ public class UIController : MonoBehaviour
         }
         else
         {
+            //Debug.Log("OnShopCallback");
             OnApplianceHandler?.Invoke(objectName);
         }
     }
