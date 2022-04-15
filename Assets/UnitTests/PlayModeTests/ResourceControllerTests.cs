@@ -32,14 +32,18 @@ public class ResourceControllerTests : MonoBehaviour, IResourceController
         return true;
     }
 
-    public void PrepareResourceController(EnergySystemObjectController purchasingObjectController)
+    public void PrepareResourceController(EnergySystemObjectController purchasingObjectController, ApplianceObjectController applianceObjectController)
     {
         
     }
 
-
     public bool SpendMoney(int amount)
     {
         return true;
+    }
+
+    public void UpdateLoad(float powerNeededRate)
+    {
+        throw new System.NotImplementedException();
     }
 }

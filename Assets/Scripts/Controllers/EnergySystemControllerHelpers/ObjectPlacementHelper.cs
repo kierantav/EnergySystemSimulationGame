@@ -17,13 +17,14 @@ public class ObjectPlacementHelper: ObjectModificationHelper
         //Debug.Log(type);
         List<Vector3> positionList = GetPositionListByName(inputPosition, objectName, type); // Get and update object positions List
         //Debug.Log(positionList);
-        if (type.Equals("Appliance"))
+        /*if (type.Equals("Appliance"))
         {
             //Debug.Log(objectPrefab);
             AddObjectForPlacement(objectPrefab, positionList);
+            resourceController.SpendMoney(applianceData.purchaseCost);
         }
         else
-        {
+        {*/
             if (!grid.IsCellTaken(positionList)) // If the cells are not taken 
             {
                 List<Vector3> currentPositionList = CheckExisting(positionList);
@@ -31,8 +32,16 @@ public class ObjectPlacementHelper: ObjectModificationHelper
                 {
                     if (currentPositionList.Contains(positionList[0]))
                     {
-                        resourceController.AddMoney(energySystemData.purchaseCost);
-                        RevokeObjectFromBeingPlaced(currentPositionList);
+                        if (type.Equals("Energy"))
+                        {
+                            resourceController.AddMoney(energySystemData.purchaseCost);
+                            RevokeObjectFromBeingPlaced(currentPositionList);
+                        } else
+                        {
+                            //Debug.Log(applianceData.purchaseCost);
+                            resourceController.AddMoney(applianceData.purchaseCost);
+                            RevokeObjectFromBeingPlaced(currentPositionList);
+                        }
                     }
                     else
                     {
@@ -41,8 +50,16 @@ public class ObjectPlacementHelper: ObjectModificationHelper
                 }
                 else if (resourceController.CanIBuyIt(energySystemData.purchaseCost))
                 {
-                    AddObjectForPlacement(objectPrefab, positionList);
-                    resourceController.SpendMoney(energySystemData.purchaseCost);
+                    if (type.Equals("Energy"))
+                    {
+                        AddObjectForPlacement(objectPrefab, positionList);
+                        resourceController.SpendMoney(energySystemData.purchaseCost);
+                    }
+                    else
+                    {
+                        AddObjectForPlacement(objectPrefab, positionList);
+                        resourceController.SpendMoney(applianceData.purchaseCost);
+                    }
                 }
             }
             else
@@ -54,7 +71,7 @@ public class ObjectPlacementHelper: ObjectModificationHelper
                 //}
                 Debug.Log("Cell has been taken!!!");
             }
-        }
+        //}
     }
 
     private GameObject GetObjectType(string type)
@@ -134,14 +151,29 @@ public class ObjectPlacementHelper: ObjectModificationHelper
         return null;
     }
 
-    public override void CancelModifications()
+    public override void CancelModifications(string type)
     {
-        resourceController.AddMoney(objectToBeModified.Count * energySystemData.purchaseCost);
-        base.CancelModifications();
+        if (type.Equals("Energy"))
+        {
+            resourceController.AddMoney(objectToBeModified.Count * energySystemData.purchaseCost);
+        } 
+        else
+        {
+            resourceController.AddMoney(objectToBeModified.Count * applianceData.purchaseCost);
+        }
+        base.CancelModifications(type);
     }
     public override void ConfirmModifications(string type)
     {
-        resourceController.AddExperience(objectToBeModified.Count * energySystemData.purchaseExperience);
+        if (type.Equals("Energy"))
+        {
+            resourceController.AddExperience(objectToBeModified.Count * energySystemData.purchaseExperience);
+        } else
+        {
+            resourceController.AddExperience(objectToBeModified.Count * applianceData.purchaseExperience);
+            //resourceController.UpdateLoad(applianceData.powerNeededRate);
+        }
+        
         base.ConfirmModifications(type);   
     }
 }

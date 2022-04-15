@@ -43,7 +43,7 @@ public class MeterHelper : MonoBehaviour
 
     void Update()
     {
-
+        //Debug.Log(TargetLoadRate);
         if (LoadRate < targetLoadRate)
         {
             float diff1 = speed * Time.deltaTime;

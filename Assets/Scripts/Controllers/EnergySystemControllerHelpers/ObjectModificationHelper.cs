@@ -36,7 +36,7 @@ public abstract class ObjectModificationHelper
         return null;
     }
 
-    public virtual void CancelModifications()
+    public virtual void CancelModifications(string type)
     {
         placementController.DestroyObjects(objectToBeModified.Values);
         ResetHelperData();

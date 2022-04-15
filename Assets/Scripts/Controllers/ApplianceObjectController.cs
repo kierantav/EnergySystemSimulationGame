@@ -43,7 +43,7 @@ public class ApplianceObjectController
     public void CancelModification()
     {
         if (objectModificationHelper != null)
-            objectModificationHelper.CancelModifications();
+            objectModificationHelper.CancelModifications("Appliance");
     }
 
     public void PreparePurchasingApplianceController(Type classType)

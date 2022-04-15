@@ -22,7 +22,7 @@ MonoBehaviour:
   emissionAmount: 0
   purchaseCost: 1000
   upkeepCost: 0
-  purchaseExperience: 0
+  purchaseExperience: 30
   greenPointExperience: 0
   powerNeededRate: 3.5
   powerNeededAmount: 0

@@ -160,15 +160,7 @@ public class UIController : MonoBehaviour
     
     public void DisplayApplianceInfo(ApplianceBaseSO applianceData)
     {
-        switch (applianceData.objectName)
-        {
-            case ("Air Conditioner"):
-                systemInfoPanelHelper.DisplayACInfo(applianceData);
-                break;
-            case ("Washing Machine"):
-                //systemInfoPanelHelper.DisplayDieselGeneratorInfo(data);
-                break;
-        }
+        systemInfoPanelHelper.DisplayApplianceInfo(applianceData);
     }
 
     public bool GetSystemInfoVisibility()

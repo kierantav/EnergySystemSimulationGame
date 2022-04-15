@@ -25,6 +25,7 @@ public class ResourceController : MonoBehaviour, IResourceController
     LevelHelper levelHelper;
 
     private EnergySystemObjectController purchasingObjectController;
+    private ApplianceObjectController applianceObjectController;
     public UIController uIController;
     public TimeController timeController;
     public int StartMoneyAmount { get => startMoneyAmount; }
@@ -63,9 +64,10 @@ public class ResourceController : MonoBehaviour, IResourceController
     }
 
 
-    public void PrepareResourceController(EnergySystemObjectController purchasingObjectController)
+    public void PrepareResourceController(EnergySystemObjectController purchasingObjectController, ApplianceObjectController applianceObjectController)
     {
         this.purchasingObjectController = purchasingObjectController;
+        this.applianceObjectController = applianceObjectController;
       
         InvokeRepeating("TimePeriod", 0, 1);
         //InvokeRepeating("CalculatePropertyIncome", 0, moneyCalculationInterval);
@@ -76,7 +78,7 @@ public class ResourceController : MonoBehaviour, IResourceController
     private void Update()
     {
         timeController.UpdateTimeDateString();
-        powerHelper.GetBreakerSwitchesValue(uIController.breakerPanelHelper.IsInterverSwitchOn, uIController.breakerPanelHelper.IsMainLoadSwitchOn, uIController.breakerPanelHelper.IsDGSwitchOn, uIController.breakerPanelHelper.Load);
+        powerHelper.GetBreakerSwitchesValue(uIController.breakerPanelHelper.IsInterverSwitchOn, uIController.breakerPanelHelper.IsMainLoadSwitchOn, uIController.breakerPanelHelper.IsDGSwitchOn, GetCurrentTotalLoad());
         if (powerHelper.LoadDiff != 0f)
         {
             uIController.breakerPanelHelper.loadValue.text = "0";
@@ -86,7 +88,7 @@ public class ResourceController : MonoBehaviour, IResourceController
             
         }
 
-        meterHelper.TargetLoadRate = uIController.breakerPanelHelper.Load;
+        meterHelper.TargetLoadRate = GetCurrentTotalLoad();
         meterHelper.TargetPowerRate = powerHelper.TotalOutputRate;
 
 
@@ -100,6 +102,19 @@ public class ResourceController : MonoBehaviour, IResourceController
 
         //    }
         //}
+    }
+
+    private float GetCurrentTotalLoad()
+    {
+        float totalLoad = 0;
+        foreach (var appliance in applianceObjectController.GetAllAppliances())
+        { 
+            if (appliance.isTurnedOn)
+            {
+                totalLoad += appliance.powerNeededRate;
+            }
+        }
+        return totalLoad;
     }
 
 

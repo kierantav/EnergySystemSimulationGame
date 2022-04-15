@@ -52,7 +52,7 @@ public class ObjectRemoveHelperTests
     public void ObjectRemoveHelperCancelRemoveTestPasses()
     {
         helper.PrepareObjectForModification(gridPositionList1[0], "", "Energy");
-        helper.CancelModifications();
+        helper.CancelModifications("Energy");
         Assert.IsTrue(grid.IsCellTaken( gridPositionList1));
     }
 

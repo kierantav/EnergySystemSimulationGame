@@ -40,7 +40,7 @@ public class PlayerPurchasingACState : PlayerState
 
     public override void OnPuchasingAppliance(string objectName)
     {
-        Debug.Log(objectName);
+        //Debug.Log(objectName);
         if (objectName != "Air Conditioner")
         {
             OnCancel();

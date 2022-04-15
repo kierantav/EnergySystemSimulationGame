@@ -40,14 +40,14 @@ public class PlayerSellingObjectState : PlayerState
 
     public override void OnInputPointerDown(Vector3 position)
     {
-        /*if (objectType.Equals("Energy"))
-        {*/
+        EnergySystemGeneratorBaseSO obj = this.purchasingObjectController.GetEnergySystemDataFromPosition(position);
+        if (obj != null && obj.objectType.Equals("Energy"))
+        {
             this.purchasingObjectController.PrepareObjectForSellingAt(position);
-        /*} 
-        else
-        {*/
+        } else
+        {
             this.purchasingApplianceController.PrepareApplianceForSellingAt(position);
-        //}
+        }
     }
 
     public override void OnInputPointerUp()

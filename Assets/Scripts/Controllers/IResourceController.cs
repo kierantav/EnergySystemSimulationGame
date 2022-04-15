@@ -10,5 +10,5 @@
     bool SpendMoney(int amount);
     void AddExperience(int amount);
 
-    void PrepareResourceController(EnergySystemObjectController purchasingObjectController);
+    void PrepareResourceController(EnergySystemObjectController purchasingObjectController, ApplianceObjectController applianceObjectController);
 }

@@ -92,9 +92,9 @@ public class GameController : MonoBehaviour
     {
         purchasingObjectController = new EnergySystemObjectController(cellSize, width, height, length, placementController, objectRepository, applianceRepository, resourceController);
         purchasingApplianceController = new ApplianceObjectController(cellSize, width, height, length, placementController, objectRepository, applianceRepository, resourceController);
-        resourceController.PrepareResourceController(purchasingObjectController);
+        resourceController.PrepareResourceController(purchasingObjectController, purchasingApplianceController);
 
-        selectionState = new PlayerSelectionState(this, purchasingObjectController);
+        selectionState = new PlayerSelectionState(this, purchasingObjectController, purchasingApplianceController);
         //sellingApplianceState = new PlayerSellingApplianceState(this, purchasingApplianceController);
         sellingObjectState = new PlayerSellingObjectState(this, purchasingObjectController, purchasingApplianceController);
         purchasingSolarPanelState = new PlayerPurchasingSolarPanelState(this, purchasingObjectController);

@@ -5,6 +5,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using Michsky.UI.ModernUIPack;
+using UnityEngine.Events;
 
 public class SystemInfoPanelHelper : MonoBehaviour
 {
@@ -14,24 +15,29 @@ public class SystemInfoPanelHelper : MonoBehaviour
 
     public Toggle solarPanelToggle, windTurbineToggle, batteryToggle, inverterToggle, chargeControllerToggle, statusToggle;
 
-    public SwitchManager invertorSwitch, chargeControllerSwitch, dieselGeneratorSwitch;
-    public Button invertorSwitchBtn, chargeControllerSwitchBtn, dieselGeneratorSwitchBtn;
+    public SwitchManager invertorSwitch, chargeControllerSwitch, dieselGeneratorSwitch, applianceSwitch;
+    public Button invertorSwitchBtn, chargeControllerSwitchBtn, dieselGeneratorSwitchBtn, applianceSwitchBtn;
 
     public Button fuelPurchaseBtn, maintenanceBtn;
 
 
     EnergySystemGeneratorBaseSO data;
+    ApplianceBaseSO applianceData;
 
     // Start is called before the first frame update
     void Start()
     {
         Hide();
         data = ScriptableObject.CreateInstance<NullObjectSO>();
+        applianceData = ScriptableObject.CreateInstance<NullApplianceSO>();
         invertorSwitchBtn.onClick.AddListener(RefreshInverterStatus);
         chargeControllerSwitchBtn.onClick.AddListener(RefreshChargeControllerStatus);
         dieselGeneratorSwitchBtn.onClick.AddListener(RefreshDieselGeneratorStatus);
+        applianceSwitchBtn.onClick.AddListener(ToggleAppliance);
 
     }
+
+    
 
     void Update()
     {
@@ -94,6 +100,7 @@ public class SystemInfoPanelHelper : MonoBehaviour
         HideElement(fuelPurchaseBtn.gameObject);
         HideElement(emissionRate.gameObject);
         HideElement(emissionAmount.gameObject);
+        HideElement(applianceSwitch.gameObject);
 
         //further Usage
         //todo
@@ -134,6 +141,7 @@ public class SystemInfoPanelHelper : MonoBehaviour
         HideElement(maintenanceBtn.gameObject);
         HideElement(chargeControllerSwitch.gameObject);
         HideElement(dieselGeneratorSwitch.gameObject);
+        HideElement(applianceSwitch.gameObject);
 
         SetText(objectName, data.objectName);
         SetIcon(objectIcon, data.objectIcon);
@@ -184,6 +192,7 @@ public class SystemInfoPanelHelper : MonoBehaviour
         HideElement(maintenanceBtn.gameObject);
         HideElement(invertorSwitch.gameObject);
         HideElement(dieselGeneratorSwitch.gameObject);
+        HideElement(applianceSwitch.gameObject);
 
         SetText(objectName, data.objectName);
         SetIcon(objectIcon, data.objectIcon);
@@ -229,6 +238,7 @@ public class SystemInfoPanelHelper : MonoBehaviour
         HideElement(invertorSwitch.gameObject);
         HideElement(dieselGeneratorSwitch.gameObject);
         HideElement(chargeControllerSwitch.gameObject);
+        HideElement(applianceSwitch.gameObject);
 
         SetText(objectName, data.objectName);
         SetIcon(objectIcon, data.objectIcon);
@@ -266,6 +276,7 @@ public class SystemInfoPanelHelper : MonoBehaviour
         HideElement(invertorSwitch.gameObject);
         HideElement(chargeControllerSwitch.gameObject);
         HideElement(dieselGeneratorSwitch.gameObject);
+        HideElement(applianceSwitch.gameObject);
         HideElement(maintenanceBtn.gameObject);
 
         HideElement(emissionRate.gameObject);
@@ -297,6 +308,7 @@ public class SystemInfoPanelHelper : MonoBehaviour
         HideElement(chargeControllerSwitch.gameObject);
         HideElement(invertorSwitch.gameObject);
         HideElement(efficiency.gameObject);
+        HideElement(applianceSwitch.gameObject);
 
         SetText(objectName, data.objectName);
         SetIcon(objectIcon, data.objectIcon);
@@ -308,14 +320,54 @@ public class SystemInfoPanelHelper : MonoBehaviour
         SetText(fuelAmount, data.fuelAmount + "/60L");
         //SetButton(fuelPurchaseBtn, data.purchaseFuelBtn);
         SetToggle(statusToggle, data.isRunning);
-        Debug.Log("dieselGeneratorSwitch_IsOn: " + dieselGeneratorSwitch.isOn);
+        /*Debug.Log("dieselGeneratorSwitch_IsOn: " + dieselGeneratorSwitch.isOn);
         Debug.Log("is_Turned_On: " + data.isTurnedOn);
-        Debug.Log("Is_Running: " + data.isRunning);
+        Debug.Log("Is_Running: " + data.isRunning);*/
     }
 
-    public void DisplayACInfo(ApplianceBaseSO applianceData)
+    public void DisplayApplianceInfo(ApplianceBaseSO applianceData)
     {
-        // Display AC Info
+        this.data = ScriptableObject.CreateInstance<NullObjectSO>();
+        Show();
+        this.applianceData = applianceData;
+
+        HideElement(efficiency.gameObject);
+        HideElement(storage.gameObject);
+        HideElement(inputRate.gameObject);
+        HideElement(OutputRate.gameObject);
+        HideElement(powerRate.gameObject);
+        HideElement(powerAmount.gameObject);
+        HideElement(emissionRate.gameObject);
+        HideElement(emissionAmount.gameObject);
+        HideElement(solarPanelToggle.gameObject);
+        HideElement(windTurbineToggle.gameObject);
+        HideElement(chargeControllerToggle.gameObject);
+        HideElement(inverterToggle.gameObject);
+        HideElement(batteryToggle.gameObject);
+        HideElement(maintenanceBtn.gameObject);
+        HideElement(chargeControllerSwitch.gameObject);
+        HideElement(dieselGeneratorSwitch.gameObject);
+        HideElement(invertorSwitch.gameObject);
+        HideElement(statusToggle.gameObject);
+        HideElement(fuelAmount.gameObject);
+        HideElement(fuelPurchaseBtn.gameObject);
+
+
+        SetText(objectName, applianceData.objectName);
+        SetIcon(objectIcon, applianceData.objectIcon);
+        SetSwitch(applianceSwitch, applianceData.isTurnedOn);
+    }
+
+    private void ToggleAppliance()
+    {
+        if (applianceSwitch.isOn)
+        {
+            applianceData.isTurnedOn = true;
+        }
+        else
+        {
+            applianceData.isTurnedOn = false;
+        }
     }
 
     private void UpdateDieselGeneratorInfo(EnergySystemGeneratorBaseSO data)
@@ -340,9 +392,9 @@ public class SystemInfoPanelHelper : MonoBehaviour
         }
 
         SetToggle(statusToggle, data.isRunning);
-        Debug.Log("dieselGeneratorSwitch_IsOn: " + dieselGeneratorSwitch.isOn);
+        /*Debug.Log("dieselGeneratorSwitch_IsOn: " + dieselGeneratorSwitch.isOn);
         Debug.Log("is_Turned_On: " + data.isTurnedOn);
-        Debug.Log("Is_Running: " + data.isRunning);
+        Debug.Log("Is_Running: " + data.isRunning);*/
     }
 
 

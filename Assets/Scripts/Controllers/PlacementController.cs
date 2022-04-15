@@ -38,7 +38,7 @@ public class PlacementController : MonoBehaviour, IPlacementController
             if (originalMaterials.ContainsKey(child.gameObject) == false)
             {
                 originalMaterials.Add(child.gameObject, renderer.materials);
-                //Debug.Log(originalMaterials);
+                //Debug.Log(originalMaterials.ContainsKey(child.gameObject));
             }
 
             Material[] materialsToSet = new Material[renderer.materials.Length];
@@ -55,6 +55,7 @@ public class PlacementController : MonoBehaviour, IPlacementController
     {
         foreach (var obj in objectCollection)
         {
+            //Debug.Log(obj);
             ResetObjectMaterial(obj);
         }
         originalMaterials.Clear();
@@ -64,7 +65,10 @@ public class PlacementController : MonoBehaviour, IPlacementController
     {
         foreach (Transform child in obj.transform)
         {
+            //Debug.Log(child.gameObject);
             var renderer = child.GetComponent<MeshRenderer>();
+            //Debug.Log(originalMaterials.ContainsKey(child.gameObject));
+            //Debug.Log(child.gameObject);
             if (originalMaterials.ContainsKey(child.gameObject))
             {
                 renderer.materials = originalMaterials[child.gameObject];

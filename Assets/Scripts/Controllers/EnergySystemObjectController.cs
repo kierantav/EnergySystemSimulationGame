@@ -58,7 +58,7 @@ public class EnergySystemObjectController
 
     public void CancelModification()
     {
-        objectModificationHelper.CancelModifications();
+        objectModificationHelper.CancelModifications("Energy");
     }
     #endregion
 

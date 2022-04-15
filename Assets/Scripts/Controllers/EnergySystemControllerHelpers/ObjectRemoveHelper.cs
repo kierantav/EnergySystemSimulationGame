@@ -16,44 +16,33 @@ public class ObjectRemoveHelper: ObjectModificationHelper
         List<Vector3> positionList = new List<Vector3>();
         positionList.Add(gridPosition);
         //Debug.Log(type);
-        if (type.Equals("Energy"))
+        // if the cell has been taken
+        if (grid.IsCellTaken(positionList))
         {
-            // if the cell has been taken
-            if (grid.IsCellTaken(positionList))
+            var obj = grid.GetObjectFromTheGrid(gridPosition);
+            //Debug.Log(obj);
+            List<Vector3> list = grid.GetObjectPositionListFromTheGrid(gridPosition);
+            if (objectToBeModified.ContainsKey(list))
             {
-                var obj = grid.GetObjectFromTheGrid(gridPosition);
-                List<Vector3> list = grid.GetObjectPositionListFromTheGrid(gridPosition);
-                if (objectToBeModified.ContainsKey(list))
-                {
-                    resourceController.AddMoney(resourceController.removeCost);
-                    StopObjectsFromBeingSelled(list, obj);
-                }
-                else if (resourceController.CanIBuyIt(resourceController.removeCost))
-                {
-                    AddObjectsForSelling(list, obj);
-                    resourceController.SpendMoney(resourceController.removeCost);
-                }
+                resourceController.AddMoney(resourceController.removeCost);
+                StopObjectsFromBeingSelled(list, obj);
             }
-        } 
-        else
-        {
-            //Debug.Log(grid.IsCellTaken(positionList));
-            if (grid.IsCellTaken(positionList))
+            else if (resourceController.CanIBuyIt(resourceController.removeCost))
             {
-                //Debug.Log("test");
-                var obj = grid.GetObjectFromTheGrid(gridPosition);
-                List<Vector3> list = grid.GetObjectPositionListFromTheGrid(gridPosition);
                 AddObjectsForSelling(list, obj);
+                resourceController.SpendMoney(resourceController.removeCost);
             }
         }
+        
     }
 
-    public override void CancelModifications()
+    public override void CancelModifications(string type)
     {
         foreach (var item in objectToBeModified)
         {
             resourceController.AddMoney(resourceController.removeCost);
         }
+        //Debug.Log(objectToBeModified.Values);
         this.placementController.PlaceObjectsOnTheMap(objectToBeModified.Values);
         objectToBeModified.Clear();
     }
@@ -80,6 +69,7 @@ public class ObjectRemoveHelper: ObjectModificationHelper
 
     private void StopObjectsFromBeingSelled(List<Vector3> positionList, GameObject obj)
     {
+        Debug.Log("stop objects");
         placementController.ResetObjectMaterial(obj);
         objectToBeModified.Remove(positionList);
     }
