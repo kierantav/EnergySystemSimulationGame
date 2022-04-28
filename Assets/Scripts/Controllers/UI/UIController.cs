@@ -104,6 +104,7 @@ public class UIController : MonoBehaviour
     [Header("System Info")]
     public SystemInfoPanelHelper systemInfoPanelHelper;
     public BreakerPanelHelper breakerPanelHelper;
+    public Button openLoadPanelBtn;
 
 
 
@@ -135,12 +136,23 @@ public class UIController : MonoBehaviour
         closeStatsMenuBtn.onClick.AddListener(OnCloseStatsMenuHandler);
 
         cameraDefaultBtn.onClick.AddListener(OnCameraDefault);
-        //openLoadPanelBtn.onClick.AddListener(OnLoadMenu);
+        openLoadPanelBtn.onClick.AddListener(OnToggleLoadPanel);
     }
 
     private void PurchaseFuel()
     {
         throw new NotImplementedException();
+    }
+
+    private void OnToggleLoadPanel()
+    {
+        if (breakerPanelHelper.mainLoadPanel.gameObject.activeSelf)
+        {
+            breakerPanelHelper.HideLoadPanel();
+        } else
+        {
+            breakerPanelHelper.ShowLoadPanel();
+        }
     }
 
     public void DisplaySystemInfo(EnergySystemGeneratorBaseSO data)

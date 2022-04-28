@@ -104,7 +104,7 @@ public class ResourceController : MonoBehaviour, IResourceController
         //}
     }
 
-    private float GetCurrentTotalLoad()
+    public float GetCurrentTotalLoad()
     {
         float totalLoad = 0;
         foreach (var appliance in applianceObjectController.GetAllAppliances())

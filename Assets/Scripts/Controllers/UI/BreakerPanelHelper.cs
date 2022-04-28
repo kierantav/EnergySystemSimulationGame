@@ -9,9 +9,11 @@ using UnityEngine.UI;
 public class BreakerPanelHelper : MonoBehaviour
 {
     public UIController uiController;
+    public ResourceController resourceController;
 
     public SwitchManager invertorSwitch, mainLoadSwitch, dieselGeneratorSwitch;
     public TextMeshProUGUI currentLoad;
+    public GameObject noAppliancesText;
     public GameObject mainLoadPanel;
     public GameObject applianceSwitchPanel;
     public GameObject appliancePanelPrefab;
@@ -43,12 +45,16 @@ public class BreakerPanelHelper : MonoBehaviour
         gameObject.SetActive(false);
         HideLoadPanel();
         HideSwitches();
-        
+        noAppliancesText.gameObject.SetActive(false);
+
+
         switches.Add(applianceSwitch1);
         switches.Add(applianceSwitch2);
         switches.Add(applianceSwitch3);
         switches.Add(applianceSwitch4);
-        //UpdateLoadValueUI();
+
+
+        UpdateLoadValueUI();
         //saveBtn.onClick.AddListener(Save);
         applianceData = ScriptableObject.CreateInstance<NullApplianceSO>();
         closeLoadBtn.onClick.AddListener(CloseLoadPanel);
@@ -71,11 +77,14 @@ public class BreakerPanelHelper : MonoBehaviour
         if (applianceSwitch1.isOn)
         {
             applianceList[0].isTurnedOn = true;
+            load += applianceList[0].powerNeededRate;
         }
         else
         {
             applianceList[0].isTurnedOn = false;
+            load -= applianceList[0].powerNeededRate;
         }
+        currentLoad.text = "Current Load: " + load + " kwh";
     }
 
     private void ToggleAppliance2Switch()
@@ -83,11 +92,14 @@ public class BreakerPanelHelper : MonoBehaviour
         if (applianceSwitch2.isOn)
         {
             applianceList[1].isTurnedOn = true;
+            load += applianceList[1].powerNeededRate;
         }
         else
         {
             applianceList[1].isTurnedOn = false;
+            load -= applianceList[1].powerNeededRate;
         }
+        currentLoad.text = "Current Load: " + load + " kwh";
     }
 
     private void Save()
@@ -98,16 +110,18 @@ public class BreakerPanelHelper : MonoBehaviour
 
     public void UpdateLoadValueUI()
     {
-        //currentLoad.text = "Your Property's Current Load is: " + load + " kwh.";
+        currentLoad.text = "Current Load : " + load + " kwh";
     }
 
     // Update is called once per frame
     void Update()
     {
+        /*Debug.Log(load);
+        UpdateLoadValueUI();*/
+
         UpdateMainLoadUI();
         UpdateInvertorSwitchUI();
         UpdateDieselGeneratorSwitchUI();
-
     }
 
     private void UpdateDieselGeneratorSwitchUI()
@@ -159,12 +173,12 @@ public class BreakerPanelHelper : MonoBehaviour
         }
     }
 
-    private void HideLoadPanel()
+    public void HideLoadPanel()
     {
         mainLoadPanel.SetActive(false);
     }
 
-    private void ShowLoadPanel()
+    public void ShowLoadPanel()
     {
 
         //Debug.Log(uiController.applianceObjectController);
@@ -181,10 +195,12 @@ public class BreakerPanelHelper : MonoBehaviour
     {
         if (data == null || data.Count == 0)
         {
+            noAppliancesText.gameObject.SetActive(true);
             ClearAppliancesInLoadPanel(panelTransform);
         }
         else
         {
+            noAppliancesText.gameObject.SetActive(false);
             UpdateAppliancesInLoadPanel(panelTransform, data);
         }
     }
