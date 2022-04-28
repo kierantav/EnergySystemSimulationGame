@@ -16,6 +16,7 @@ public class GridStructure
     Cell[,,] grid;     // Cell[x, y, z] = [0, 1, 2]
     private int width, height, length;
     public List<List<Vector3>> existedObjectsPositions = new List<List<Vector3>>();
+    //public List<ApplianceBaseSO> installedAppliances;
 
     public GridStructure(int cellSize, int width, int height, int length)
     {

@@ -50,9 +50,11 @@ public abstract class ObjectModificationHelper
             if (type.Equals("Energy"))
             {
                 grid.PlaceObjectOnTheGrid(keyValuePair.Value, keyValuePair.Key, GameObject.Instantiate(energySystemData), GameObject.Instantiate(applianceData));
+                
             } else
             {
                 grid.PlaceObjectOnTheGrid(keyValuePair.Value, keyValuePair.Key, GameObject.Instantiate(energySystemData), GameObject.Instantiate(applianceData));
+                //grid.installedAppliances.Add(applianceData);
             }
                 //grid.PlaceObjectOnTheGrid(keyValuePair.Value, keyValuePair.Key, energySystemData);
         }

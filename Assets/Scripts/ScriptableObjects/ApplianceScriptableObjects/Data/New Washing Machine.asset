@@ -16,7 +16,7 @@ MonoBehaviour:
   objectName: Washing Machine
   objectDescription: 
   objectType: Appliance
-  objectPrefab: {fileID: 1027985409521004574, guid: 4cb7080475f9f7a478507486a5be568d,
+  objectPrefab: {fileID: 1853104163479907676, guid: 96ee093969a93dd4ba2bdb72f523f5ed,
     type: 3}
   emissionRate: 0.02
   emissionAmount: 0
@@ -27,6 +27,7 @@ MonoBehaviour:
   powerNeededRate: 2
   powerNeededAmount: 0
   happiness: 0
+  isInstalled: 1
   isTurnedOn: 0
   objectWidth: 5
   objectHeight: 5

@@ -5,19 +5,26 @@ using UnityEngine;
 public class PlayerPurchasingACState : PlayerState
 {
     ApplianceObjectController purchasingApplianceController;
+    UIController uiController;
     string objectName;
     Vector3 position;
-    public PlayerPurchasingACState(GameController gameController, ApplianceObjectController purchasingApplianceController, Vector3 position) : base(gameController)
+
+    Vector3 cameraPosition = new Vector3(70.65f, 10f, 54.84f);
+    Quaternion cameraRotation = Quaternion.Euler(0f, 111.38f, 0f);
+
+    public PlayerPurchasingACState(GameController gameController, ApplianceObjectController purchasingApplianceController, Vector3 position, UIController uiController) : base(gameController)
     {
         this.purchasingApplianceController = purchasingApplianceController;
         this.position = position;
+        this.uiController = uiController;
     }
 
     public override void EnterState(string objectName)
     {
-        //Debug.Log(objectName);
-        purchasingApplianceController.PreparePurchasingApplianceController(GetType());
+        // Set camera
+        this.uiController.CameraMovementController.SetPosition(cameraPosition, cameraRotation);
 
+        purchasingApplianceController.PreparePurchasingApplianceController(GetType());
         //purchasingApplianceController.UpdateSystemAttributesToApplianceData();
         this.objectName = objectName;
         if (!this.position.Equals(Vector3.zero))
@@ -35,6 +42,7 @@ public class PlayerPurchasingACState : PlayerState
     public override void OnConfirm()
     {
         this.purchasingApplianceController.ConfirmModification();
+        uiController.InstalledAppliances = purchasingApplianceController.GetListOfAllAppliances();
         this.gameController.TransitionToState(this.gameController.selectionState, null);
     }
 
