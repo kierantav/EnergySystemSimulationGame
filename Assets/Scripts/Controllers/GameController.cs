@@ -96,7 +96,7 @@ public class GameController : MonoBehaviour
 
         selectionState = new PlayerSelectionState(this, purchasingObjectController, purchasingApplianceController);
         //sellingApplianceState = new PlayerSellingApplianceState(this, purchasingApplianceController);
-        sellingObjectState = new PlayerSellingObjectState(this, purchasingObjectController, purchasingApplianceController);
+        sellingObjectState = new PlayerSellingObjectState(this, purchasingObjectController, purchasingApplianceController, uiController);
         purchasingSolarPanelState = new PlayerPurchasingSolarPanelState(this, purchasingObjectController);
         purchasingBatteryState = new PlayerPurchasingBatteryState(this, purchasingObjectController, BatteryPosition);
         purchasingWindTurbineState = new PlayerPurchasingWindTurbineState(this, purchasingObjectController, WindTurbinePosition);
@@ -104,8 +104,8 @@ public class GameController : MonoBehaviour
         purchasingChargeControllerState = new PlayerPurchasingChargeControllerState(this, purchasingObjectController, ChargeControllerPosition);
         purchasingInvertorState = new PlayerPurchasingInvertorState(this, purchasingObjectController, InvertorPosition);
 
-        purchasingACState = new PlayerPurchasingACState(this, purchasingApplianceController, ACPosition);
-        purchasingWashingMachineState = new PlayerPurchasingWashingMachineState(this, purchasingApplianceController, WashingMachinePosition);
+        purchasingACState = new PlayerPurchasingACState(this, purchasingApplianceController, ACPosition, uiController);
+        purchasingWashingMachineState = new PlayerPurchasingWashingMachineState(this, purchasingApplianceController, WashingMachinePosition, uiController);
 
         // initialize state
         state = selectionState;

@@ -14,6 +14,7 @@ public class ApplianceObjectController
     ObjectModificationFactory objectModificationFactory;
     ObjectModificationHelper objectModificationHelper;
     ObjectUpdateHelper objectUpdateHelper;
+    //CameraMovement cameraMovement;
 
     public ApplianceObjectController(int cellSize, int width, int height, int length, IPlacementController placementController, ObjectRepository objectRepository, ApplianceRepository applianceRepository, IResourceController resourceController)
     {
@@ -38,6 +39,11 @@ public class ApplianceObjectController
     public IEnumerable<ApplianceBaseSO> GetAllAppliances()
     {
         return grid.GetAllAppliances();
+    }
+
+    public List<ApplianceBaseSO> GetListOfAllAppliances()
+    {
+        return grid.GetListOfAllAppliances();
     }
 
     public void CancelModification()

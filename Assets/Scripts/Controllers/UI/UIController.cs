@@ -46,6 +46,12 @@ public class UIController : MonoBehaviour
     public TooltipManager itemTooltip;
     //public GameObject applianceTempObject; // to create empty gameobject based on appliance type
 
+    /*[Header("Load Panel Property")]
+    public GameObject applianceSwitchPanel;
+    public GameObject appliancePanelPrefab;
+    public GameObject loadPanel;
+    public Button openLoadPanelBtn;*/
+
     [Header("Main Menu Panel Property")]
     public GameObject mainMenuPanel;
     public Button openStatsMenuBtn;
@@ -61,6 +67,7 @@ public class UIController : MonoBehaviour
     public ApplianceObjectController applianceObjectController;
     public ObjectRepository objectRepository;
     public ApplianceRepository applianceRepository;
+    private List<ApplianceBaseSO> installedAppliances;
 
     [Header("Camera")]
     private CameraMovement cameraMovementController;
@@ -89,15 +96,22 @@ public class UIController : MonoBehaviour
     public Button resumeGameButton;
     public GameObject pausePlane;
 
+    [Header("Camera Default")]
+    public Button cameraDefaultBtn;
+    private Vector3 defaultCameraPosition = new Vector3(8.35f, 23f, 9.4f);
+    private Quaternion defaultCameraRotation = Quaternion.Euler(0f, 44.05f, 0f);
+
     [Header("System Info")]
     public SystemInfoPanelHelper systemInfoPanelHelper;
     public BreakerPanelHelper breakerPanelHelper;
+    public Button openLoadPanelBtn;
 
 
 
 
 
     public CameraMovement CameraMovementController { get => cameraMovementController; set => cameraMovementController = value; } // exploit the cameraMovementController to GameController
+    public List<ApplianceBaseSO> InstalledAppliances { get => installedAppliances; set => installedAppliances = value; }
 
     void Start()
     {
@@ -108,6 +122,7 @@ public class UIController : MonoBehaviour
         shopMenuPanel.SetActive(false); // Hide shopMenuPanel until the player clicks on shop button
         modifyPanel.SetActive(false);   // Hide modifyPanel until the player is in shopMode
         stateMenuPanel.SetActive(false);
+        //loadPanel.SetActive(false);
 
         cancelBtn.onClick.AddListener(OnCancelCallback);
         confirmBtn.onClick.AddListener(OnConfirmCallback);
@@ -119,11 +134,25 @@ public class UIController : MonoBehaviour
 
         openStatsMenuBtn.onClick.AddListener(OnStatsMenu);
         closeStatsMenuBtn.onClick.AddListener(OnCloseStatsMenuHandler);
+
+        cameraDefaultBtn.onClick.AddListener(OnCameraDefault);
+        openLoadPanelBtn.onClick.AddListener(OnToggleLoadPanel);
     }
 
     private void PurchaseFuel()
     {
         throw new NotImplementedException();
+    }
+
+    private void OnToggleLoadPanel()
+    {
+        if (breakerPanelHelper.mainLoadPanel.gameObject.activeSelf)
+        {
+            breakerPanelHelper.HideLoadPanel();
+        } else
+        {
+            breakerPanelHelper.ShowLoadPanel();
+        }
     }
 
     public void DisplaySystemInfo(EnergySystemGeneratorBaseSO data)
@@ -233,6 +262,17 @@ public class UIController : MonoBehaviour
     }
     #endregion
 
+    private void OnCameraDefault()
+    {
+        cameraMovementController.SetPosition(defaultCameraPosition, defaultCameraRotation);
+        EnableCameraMovement(true);
+    }
+
+    /*private void OnLoadMenu()
+    {
+        loadPanel.SetActive(true);
+        CreateAppliancesInLoadPanel(loadPanel.transform, applianceRepository.GetApplianceObjects());
+    }*/
 
     #region ShopMenuPanelCallback
     private void OnShopMenu()
@@ -250,6 +290,7 @@ public class UIController : MonoBehaviour
 
     private void CreateButtonsInEnergyPanel(Transform panelTransform, List<EnergySystemGeneratorBaseSO> data)
     {
+        //Debug.Log(data.Count + "-" + panelTransform.childCount);
         if (data.Count > panelTransform.childCount)
         {
             int quantityDifference = data.Count - panelTransform.childCount;
@@ -318,6 +359,9 @@ public class UIController : MonoBehaviour
         for (int i = 0; i < panelTransform.childCount; i++)
         {
             var button = panelTransform.GetChild(i).GetComponent<Button>();
+            //var child = panelTransform.GetChild(i);
+            //Debug.Log(button.name);
+            //Debug.Log(child.name);
 
             if (button != null)
             {
@@ -337,6 +381,29 @@ public class UIController : MonoBehaviour
             }
         }
     }
+
+    /*private void CreateAppliancesInLoadPanel(Transform panelTransform, List<ApplianceBaseSO> data)
+    {
+        if (data.Count > panelTransform.childCount)
+        {
+            int quantityDifference = data.Count - panelTransform.childCount;
+            for (int i = 0; i < quantityDifference; i++)
+            {
+                Instantiate(appliancePanelPrefab, panelTransform);
+            }
+        }
+        for (int i = 0; i < panelTransform.childCount; i++)
+        {
+            var button = panelTransform.GetChild(i).GetComponent<Button>();
+
+            if (button != null)
+            {
+                ApplianceBaseSO objectData = data[i];
+                button.GetComponentsInChildren<TextMeshProUGUI>()[0].text = objectData.objectName;
+                button.GetComponentsInChildren<Image>()[0].sprite = objectData.objectIcon;
+            }
+        }
+    }*/
 
     //public void PurchasingApplianceObject(string objectName)
     //{
@@ -430,7 +497,7 @@ public class UIController : MonoBehaviour
     }*/
     #endregion
 
-    private void EnableCameraMovement(bool setting)
+    public void EnableCameraMovement(bool setting)
     {
         // camera can't be moved when opening the shop menu
         if (setting)

@@ -6,10 +6,12 @@ public class PlayerSellingObjectState : PlayerState
 {
     EnergySystemObjectController purchasingObjectController;
     ApplianceObjectController purchasingApplianceController;
-    public PlayerSellingObjectState(GameController gameController, EnergySystemObjectController purchasingObjectController, ApplianceObjectController purchasingApplianceController) : base(gameController)
+    UIController uiController;
+    public PlayerSellingObjectState(GameController gameController, EnergySystemObjectController purchasingObjectController, ApplianceObjectController purchasingApplianceController, UIController uiController) : base(gameController)
     {
         this.purchasingObjectController = purchasingObjectController;
         this.purchasingApplianceController = purchasingApplianceController;
+        this.uiController = uiController;
     }
 
     public override void OnCancel()
@@ -24,6 +26,7 @@ public class PlayerSellingObjectState : PlayerState
         this.purchasingObjectController.ConfirmModification();
         this.purchasingApplianceController.ConfirmModification();
         purchasingObjectController.UpdateSystemAttributesToEnergySystemData();
+        this.uiController.InstalledAppliances = purchasingApplianceController.GetListOfAllAppliances();
         this.gameController.TransitionToState(this.gameController.selectionState, null);
     }
 

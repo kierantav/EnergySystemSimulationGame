@@ -83,7 +83,7 @@ public class ResourceController : MonoBehaviour, IResourceController
         {
             uIController.breakerPanelHelper.loadValue.text = "0";
             uIController.breakerPanelHelper.Load = 0f;
-            uIController.breakerPanelHelper.UpdateLoadValueUI();
+            //uIController.breakerPanelHelper.UpdateLoadValueUI();
             powerHelper.LoadDiff = 0f;
             
         }
@@ -104,7 +104,7 @@ public class ResourceController : MonoBehaviour, IResourceController
         //}
     }
 
-    private float GetCurrentTotalLoad()
+    public float GetCurrentTotalLoad()
     {
         float totalLoad = 0;
         foreach (var appliance in applianceObjectController.GetAllAppliances())

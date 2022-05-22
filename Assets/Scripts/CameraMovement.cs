@@ -63,10 +63,11 @@ public class CameraMovement : MonoBehaviour
     }
 
     // For further usage: leave it for now.
-    //public void SetPosition(Vector3 position)
-    //{
-    //    transform.position = position;
-    //}
+    public void SetPosition(Vector3 position, Quaternion rotation)
+    {
+        transform.position = position;
+        transform.rotation = rotation;
+    }
 
 
     #region CameraMovementCalculation

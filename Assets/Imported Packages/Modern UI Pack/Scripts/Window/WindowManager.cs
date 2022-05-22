@@ -49,8 +49,11 @@ namespace Michsky.UI.ModernUIPack
             catch { }
 
             currentWindow = windows[currentWindowIndex].windowObject;
-            currentWindowAnimator = currentWindow.GetComponent<Animator>();
-            currentWindowAnimator.Play(windowFadeIn);
+            if (currentWindow.gameObject != null)
+            {
+                currentWindowAnimator = currentWindow.GetComponent<Animator>();
+                currentWindowAnimator.Play(windowFadeIn);
+            }
             isFirstTime = false;
         }
 

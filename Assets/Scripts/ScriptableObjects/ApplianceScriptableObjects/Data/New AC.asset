@@ -27,6 +27,7 @@ MonoBehaviour:
   powerNeededRate: 3.5
   powerNeededAmount: 0
   happiness: 0
+  isInstalled: 1
   isTurnedOn: 0
   objectWidth: 10
   objectHeight: 3
