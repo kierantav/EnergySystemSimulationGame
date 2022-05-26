@@ -193,10 +193,10 @@ public class GridStructure
                     // return the result of if the cell has been taken or not
                     return true;
             }
-            //else
-            //{
-            //    throw new IndexOutOfRangeException("No Index" + cellIndex + "in grid");
-            //}
+            else
+            {
+                //throw new IndexOutOfRangeException("No Index" + cellIndex + "in grid");
+            }
 
         }
         return false;

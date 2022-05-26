@@ -14,3 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   acSO: {fileID: 11400000, guid: d274b57d486fe4b368536f840401691d, type: 2}
   washingMachineSO: {fileID: 11400000, guid: 0c472c5a22bc34fbfbc5224ded86dbd0, type: 2}
+  fridgeSO: {fileID: 11400000, guid: 49d8d2771e3214c6d87b77eeadf0d492, type: 2}

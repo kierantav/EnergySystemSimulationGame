@@ -31,6 +31,9 @@ public class ResourceController : MonoBehaviour, IResourceController
     public int StartMoneyAmount { get => startMoneyAmount; }
     public float MoneyCalculationInterval { get => moneyCalculationInterval;}
     int IResourceController.removeCost { get => removeCost; }
+    public float DieselCo2Produced { get => dieselCo2Produced; set => dieselCo2Produced = value; }
+
+    private float dieselCo2Produced = 0;
 
     private string startTime;
     private float currentPoA;
@@ -78,10 +81,10 @@ public class ResourceController : MonoBehaviour, IResourceController
     private void Update()
     {
         timeController.UpdateTimeDateString();
-        powerHelper.GetBreakerSwitchesValue(uIController.breakerPanelHelper.IsInterverSwitchOn, uIController.breakerPanelHelper.IsMainLoadSwitchOn, uIController.breakerPanelHelper.IsDGSwitchOn, GetCurrentTotalLoad());
+        powerHelper.GetBreakerSwitchesValue(uIController.breakerPanelHelper.IsInterverSwitchOn, uIController.breakerPanelHelper.IsMainLoadSwitchOn, uIController.breakerPanelHelper.IsDGSwitchOn, GetCurrentTotalLoad(), uIController.breakerPanelHelper.IsMainSwitchOn);
         if (powerHelper.LoadDiff != 0f)
         {
-            uIController.breakerPanelHelper.loadValue.text = "0";
+            //uIController.breakerPanelHelper.loadValue.text = "0";
             uIController.breakerPanelHelper.Load = 0f;
             //uIController.breakerPanelHelper.UpdateLoadValueUI();
             powerHelper.LoadDiff = 0f;
@@ -102,6 +105,17 @@ public class ResourceController : MonoBehaviour, IResourceController
 
         //    }
         //}
+    }
+
+    private void IncreaseDieselCo2()
+    {
+        foreach (var energySystem in purchasingObjectController.GetAllObjects())
+        {
+            if (energySystem.objectName.Equals("Diesel Generator") && energySystem.isRunning)
+            {
+
+            }
+        }
     }
 
     public float GetCurrentTotalLoad()

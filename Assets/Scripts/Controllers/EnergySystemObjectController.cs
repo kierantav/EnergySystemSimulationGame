@@ -29,6 +29,11 @@ public class EnergySystemObjectController
         return grid.GetAllObjects();
     }
 
+    public List<EnergySystemGeneratorBaseSO> GetListOfAllObjects()
+    {
+        return grid.GetListOfAllObjects();
+    }
+
     public void PreparePurchasingObjectController(Type classType)
     {
         //Debug.Log(classType);
@@ -45,7 +50,6 @@ public class EnergySystemObjectController
         catch
         {
             throw new Exception("No such energy system type." + objectName);
-            
         }
     }
 

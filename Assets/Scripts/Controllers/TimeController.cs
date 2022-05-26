@@ -37,8 +37,8 @@ public class TimeController : MonoBehaviour
     private void PrepareTimeStartingPoint()
     {
         hr = 7;
-        day = 1;
-        month = 1;
+        day = 22;
+        month = 2;
         year = 2020;
         dataId = 7;
     }

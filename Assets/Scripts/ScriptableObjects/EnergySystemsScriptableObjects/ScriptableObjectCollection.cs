@@ -11,5 +11,5 @@ public class ScriptableObjectCollection : ScriptableObject
     public WindTurbineSO windTurbineSO;
     public InvertorSO invertorSO;
     public HybirdChargeControllerSO hybirdChargeControllerSO;
-
+    public PowerLinesSO powerLinesSO;
 }

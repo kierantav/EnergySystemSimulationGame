@@ -5,12 +5,14 @@ using UnityEngine;
 public class PlayerPurchasingDieselGeneratorState : PlayerState
 {
     EnergySystemObjectController purchasingObjectController;
+    UIController uiController;
     string objectName;
     Vector3 position;
 
-    public PlayerPurchasingDieselGeneratorState(GameController gameController, EnergySystemObjectController purchasingObjectController, Vector3 position) : base(gameController)
+    public PlayerPurchasingDieselGeneratorState(GameController gameController, EnergySystemObjectController purchasingObjectController, Vector3 position, UIController uiController) : base(gameController)
     {
         this.purchasingObjectController = purchasingObjectController;
+        this.uiController = uiController;
         this.position = position;
     }
 
@@ -35,6 +37,7 @@ public class PlayerPurchasingDieselGeneratorState : PlayerState
     {
         this.purchasingObjectController.ConfirmModification();
         purchasingObjectController.UpdateSystemAttributesToEnergySystemData();
+        uiController.InstalledEnergySystems = purchasingObjectController.GetListOfAllObjects();
         this.gameController.TransitionToState(this.gameController.selectionState, null);
     }
 

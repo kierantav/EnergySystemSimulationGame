@@ -68,6 +68,7 @@ public class UIController : MonoBehaviour
     public ObjectRepository objectRepository;
     public ApplianceRepository applianceRepository;
     private List<ApplianceBaseSO> installedAppliances;
+    private List<EnergySystemGeneratorBaseSO> installedEnergySystems;
 
     [Header("Camera")]
     private CameraMovement cameraMovementController;
@@ -82,6 +83,7 @@ public class UIController : MonoBehaviour
     [Header("Weather Data Property")]
     public TextMeshProUGUI weatherValue;
     public TextMeshProUGUI temperatureValue;
+    public TextMeshProUGUI secondTempValue;
     public TextMeshProUGUI solarRadiationValue;
     public TextMeshProUGUI windSpeedValue;
 
@@ -104,6 +106,7 @@ public class UIController : MonoBehaviour
     [Header("System Info")]
     public SystemInfoPanelHelper systemInfoPanelHelper;
     public BreakerPanelHelper breakerPanelHelper;
+    public StatsPanelHelper statsPanelHelper;
     public Button openLoadPanelBtn;
 
 
@@ -112,6 +115,7 @@ public class UIController : MonoBehaviour
 
     public CameraMovement CameraMovementController { get => cameraMovementController; set => cameraMovementController = value; } // exploit the cameraMovementController to GameController
     public List<ApplianceBaseSO> InstalledAppliances { get => installedAppliances; set => installedAppliances = value; }
+    public List<EnergySystemGeneratorBaseSO> InstalledEnergySystems { get => installedEnergySystems; set => installedEnergySystems = value; }
 
     void Start()
     {
@@ -134,10 +138,12 @@ public class UIController : MonoBehaviour
 
         openStatsMenuBtn.onClick.AddListener(OnStatsMenu);
         closeStatsMenuBtn.onClick.AddListener(OnCloseStatsMenuHandler);
+        openPropertyWindowBtn.onClick.AddListener(OnPropertyInfoHandler);
 
         cameraDefaultBtn.onClick.AddListener(OnCameraDefault);
         openLoadPanelBtn.onClick.AddListener(OnToggleLoadPanel);
     }
+    
 
     private void PurchaseFuel()
     {
@@ -223,9 +229,10 @@ public class UIController : MonoBehaviour
     public void SetWeatherValue( string weather, float temperature, float solar, float wind)
     {
         weatherValue.text = weather + " ";
-        temperatureValue.text = temperature + " °C";
-        solarRadiationValue.text = solar + " w/m2";
-        windSpeedValue.text = wind + " m/s";
+        temperatureValue.text = Math.Round(temperature, 1) + " °C";
+        secondTempValue.text = Math.Round(temperature, 1) + " °C";
+        solarRadiationValue.text = Math.Round(solar,3) + " w/m2";
+        windSpeedValue.text = Math.Round(wind,3) + " m/s";
     }
 
 
@@ -248,7 +255,7 @@ public class UIController : MonoBehaviour
     #endregion
 
 
-    #region ShopMenuPanelCallback
+    #region StatsMenuCallback
     private void OnStatsMenu()
     {
         stateMenuPanel.SetActive(true);
@@ -259,6 +266,11 @@ public class UIController : MonoBehaviour
     {
         stateMenuPanel.SetActive(false);
         EnableCameraMovement(true);
+    }
+    private void OnPropertyInfoHandler()
+    {
+        statsPanelHelper.CreateEnergySystemsInStatsMenu(InstalledEnergySystems);
+        //Debug.Log("openPropertyInfoBtn");
     }
     #endregion
 
@@ -381,29 +393,6 @@ public class UIController : MonoBehaviour
             }
         }
     }
-
-    /*private void CreateAppliancesInLoadPanel(Transform panelTransform, List<ApplianceBaseSO> data)
-    {
-        if (data.Count > panelTransform.childCount)
-        {
-            int quantityDifference = data.Count - panelTransform.childCount;
-            for (int i = 0; i < quantityDifference; i++)
-            {
-                Instantiate(appliancePanelPrefab, panelTransform);
-            }
-        }
-        for (int i = 0; i < panelTransform.childCount; i++)
-        {
-            var button = panelTransform.GetChild(i).GetComponent<Button>();
-
-            if (button != null)
-            {
-                ApplianceBaseSO objectData = data[i];
-                button.GetComponentsInChildren<TextMeshProUGUI>()[0].text = objectData.objectName;
-                button.GetComponentsInChildren<Image>()[0].sprite = objectData.objectIcon;
-            }
-        }
-    }*/
 
     //public void PurchasingApplianceObject(string objectName)
     //{

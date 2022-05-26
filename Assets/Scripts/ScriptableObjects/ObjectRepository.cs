@@ -16,6 +16,7 @@ public class ObjectRepository : MonoBehaviour
         systemObjects.Add(scriptableObjectCollection.windTurbineSO);
         systemObjects.Add(scriptableObjectCollection.invertorSO);
         systemObjects.Add(scriptableObjectCollection.hybirdChargeControllerSO);
+        systemObjects.Add(scriptableObjectCollection.powerLinesSO);
         return systemObjects;
     }
 
@@ -42,6 +43,9 @@ public class ObjectRepository : MonoBehaviour
                 break;
             case "Charge Controller":
                 objectPrefabToReturn = GetHybirdChargeControllerPrefab();
+                break;
+            case "On-Grid Power":
+                objectPrefabToReturn = GetPowerLinesPrefab();
                 break;
             default:
                 throw new Exception("No such energy system type." + objectName);
@@ -82,6 +86,10 @@ public class ObjectRepository : MonoBehaviour
     {
         return scriptableObjectCollection.dieselGeneratorSO.objectPrefab;
     }
+    private GameObject GetPowerLinesPrefab()
+    {
+        return scriptableObjectCollection.powerLinesSO.objectPrefab;
+    }
     #endregion
 
     #region GetEnergySystemSizePrafabByName
@@ -107,6 +115,9 @@ public class ObjectRepository : MonoBehaviour
                 break;
             case "Charge Controller":
                 objectSizeToReturn = GetHybirdChargeControllerSize();
+                break;
+            case "On-Grid Power":
+                objectSizeToReturn = GetPowerLinesSize();
                 break;
             default:
                 throw new Exception("No such energy system size." + objectName);
@@ -170,6 +181,15 @@ public class ObjectRepository : MonoBehaviour
         return temp;
     }
 
+    public List<int> GetPowerLinesSize()
+    {
+        List<int> temp = new List<int>();
+        temp.Add(scriptableObjectCollection.powerLinesSO.objectWidth);
+        temp.Add(scriptableObjectCollection.powerLinesSO.objectHeight);
+        temp.Add(scriptableObjectCollection.powerLinesSO.objectLength);
+        return temp;
+    }
+
     #endregion
 
     // Todo: Editmode Test
@@ -189,6 +209,8 @@ public class ObjectRepository : MonoBehaviour
                 return scriptableObjectCollection.invertorSO;
             case "Charge Controller":
                 return scriptableObjectCollection.hybirdChargeControllerSO;
+            case "On-Grid Power":
+                return scriptableObjectCollection.powerLinesSO;
             default:
                 return null;
         }

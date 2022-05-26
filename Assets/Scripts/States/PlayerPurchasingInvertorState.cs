@@ -6,15 +6,17 @@ public class PlayerPurchasingInvertorState : PlayerState
 {
     // Inherited from abstract class
     EnergySystemObjectController purchasingObjectController;
+    UIController uiController;
 
     // New field
     string objectName;
     Vector3 position;
 
-    public PlayerPurchasingInvertorState(GameController gameController, EnergySystemObjectController purchasingObjectController, Vector3 position) : base(gameController)
+    public PlayerPurchasingInvertorState(GameController gameController, EnergySystemObjectController purchasingObjectController, Vector3 position, UIController uiController) : base(gameController)
     {
         this.purchasingObjectController = purchasingObjectController;
         this.position = position;
+        this.uiController = uiController;
     }
 
     public override void EnterState(string objectName)
@@ -38,6 +40,7 @@ public class PlayerPurchasingInvertorState : PlayerState
     {
         this.purchasingObjectController.ConfirmModification();
         purchasingObjectController.UpdateSystemAttributesToEnergySystemData();
+        uiController.InstalledEnergySystems = purchasingObjectController.GetListOfAllObjects();
         this.gameController.TransitionToState(this.gameController.selectionState, null);
     }
 

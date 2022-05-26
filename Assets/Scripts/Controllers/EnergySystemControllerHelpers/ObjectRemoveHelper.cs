@@ -69,7 +69,7 @@ public class ObjectRemoveHelper: ObjectModificationHelper
 
     private void StopObjectsFromBeingSelled(List<Vector3> positionList, GameObject obj)
     {
-        Debug.Log("stop objects");
+        //Debug.Log("stop objects");
         placementController.ResetObjectMaterial(obj);
         objectToBeModified.Remove(positionList);
     }
