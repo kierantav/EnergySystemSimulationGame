@@ -50,11 +50,13 @@ public class GameController : MonoBehaviour
     public PlayerPurchasingWindTurbineState purchasingWindTurbineState;
     public PlayerPurchasingInvertorState purchasingInvertorState;
     public PlayerPurchasingChargeControllerState purchasingChargeControllerState;
+    public PlayerPurchasingPowerLinesState purchasingPowerLinesState;
 
     public PlayerPurchasingACState purchasingACState;
     public PlayerPurchasingWashingMachineState purchasingWashingMachineState;
+    public PlayerPurchasingFridgeState purchasingFridgeState;
 
-    public Vector3 DieselGeneratorPosition, WindTurbinePosition, BatteryPosition, InvertorPosition, ChargeControllerPosition, ACPosition, WashingMachinePosition;
+    public Vector3 DieselGeneratorPosition, WindTurbinePosition, BatteryPosition, InvertorPosition, ChargeControllerPosition, PowerLinesPosition, ACPosition, WashingMachinePosition, FridgePosition;
 
     public CameraMovement cameraMovementController;
 
@@ -97,15 +99,17 @@ public class GameController : MonoBehaviour
         selectionState = new PlayerSelectionState(this, purchasingObjectController, purchasingApplianceController);
         //sellingApplianceState = new PlayerSellingApplianceState(this, purchasingApplianceController);
         sellingObjectState = new PlayerSellingObjectState(this, purchasingObjectController, purchasingApplianceController, uiController);
-        purchasingSolarPanelState = new PlayerPurchasingSolarPanelState(this, purchasingObjectController);
-        purchasingBatteryState = new PlayerPurchasingBatteryState(this, purchasingObjectController, BatteryPosition);
-        purchasingWindTurbineState = new PlayerPurchasingWindTurbineState(this, purchasingObjectController, WindTurbinePosition);
-        purchasingDieselGeneratorState = new PlayerPurchasingDieselGeneratorState(this, purchasingObjectController, DieselGeneratorPosition);
-        purchasingChargeControllerState = new PlayerPurchasingChargeControllerState(this, purchasingObjectController, ChargeControllerPosition);
-        purchasingInvertorState = new PlayerPurchasingInvertorState(this, purchasingObjectController, InvertorPosition);
+        purchasingSolarPanelState = new PlayerPurchasingSolarPanelState(this, purchasingObjectController, uiController);
+        purchasingBatteryState = new PlayerPurchasingBatteryState(this, purchasingObjectController, BatteryPosition, uiController);
+        purchasingWindTurbineState = new PlayerPurchasingWindTurbineState(this, purchasingObjectController, WindTurbinePosition, uiController);
+        purchasingDieselGeneratorState = new PlayerPurchasingDieselGeneratorState(this, purchasingObjectController, DieselGeneratorPosition, uiController);
+        purchasingChargeControllerState = new PlayerPurchasingChargeControllerState(this, purchasingObjectController, ChargeControllerPosition, uiController);
+        purchasingInvertorState = new PlayerPurchasingInvertorState(this, purchasingObjectController, InvertorPosition, uiController);
+        purchasingPowerLinesState = new PlayerPurchasingPowerLinesState(this, purchasingObjectController, PowerLinesPosition, uiController);
 
         purchasingACState = new PlayerPurchasingACState(this, purchasingApplianceController, ACPosition, uiController);
         purchasingWashingMachineState = new PlayerPurchasingWashingMachineState(this, purchasingApplianceController, WashingMachinePosition, uiController);
+        purchasingFridgeState = new PlayerPurchasingFridgeState(this, purchasingApplianceController, FridgePosition, uiController);
 
         // initialize state
         state = selectionState;

@@ -84,6 +84,9 @@ public class PlayerSelectionState : PlayerState
             case "Charge Controller":
                 this.gameController.TransitionToState(this.gameController.purchasingChargeControllerState, objectName);
                 break;
+            case "On-Grid Power":
+                this.gameController.TransitionToState(this.gameController.purchasingPowerLinesState, objectName);
+                break;
             default:
                 throw new Exception("No such energy system type." + objectName);
         }
@@ -99,6 +102,9 @@ public class PlayerSelectionState : PlayerState
                 break;
             case "Washing Machine":
                 this.gameController.TransitionToState(this.gameController.purchasingWashingMachineState, objectName);
+                break;
+            case "Fridge":
+                this.gameController.TransitionToState(this.gameController.purchasingFridgeState, objectName);
                 break;
             default:
                 throw new Exception("No such energy system type." + objectName);

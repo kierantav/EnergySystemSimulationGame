@@ -27,6 +27,7 @@ public class PlayerSellingObjectState : PlayerState
         this.purchasingApplianceController.ConfirmModification();
         purchasingObjectController.UpdateSystemAttributesToEnergySystemData();
         this.uiController.InstalledAppliances = purchasingApplianceController.GetListOfAllAppliances();
+        this.uiController.InstalledEnergySystems = purchasingObjectController.GetListOfAllObjects();
         this.gameController.TransitionToState(this.gameController.selectionState, null);
     }
 

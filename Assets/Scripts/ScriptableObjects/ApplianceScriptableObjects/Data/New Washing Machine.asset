@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6278f0ab8d8c84dae935bbf5450b8a21, type: 3}
   m_Name: New Washing Machine
   m_EditorClassIdentifier: 
-  objectIcon: {fileID: 21300000, guid: 491004833cbc8462496e3d5ffdac760f, type: 3}
+  objectIcon: {fileID: 21300000, guid: 2960fe79bf69a48469c451d56e2fe760, type: 3}
   objectName: Washing Machine
   objectDescription: 
   objectType: Appliance
@@ -27,7 +27,6 @@ MonoBehaviour:
   powerNeededRate: 2
   powerNeededAmount: 0
   happiness: 0
-  isInstalled: 1
   isTurnedOn: 0
   objectWidth: 5
   objectHeight: 5

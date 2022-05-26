@@ -13,7 +13,7 @@ public class ApplianceRepository : MonoBehaviour
         systemObjects.Add(applianceCollection.acSO);
         systemObjects.Add(applianceCollection.washingMachineSO);
         //systemObjects.Add(applianceCollection.lightSO);
-        //systemObjects.Add(applianceCollection.fridgeSO);
+        systemObjects.Add(applianceCollection.fridgeSO);
         //systemObjects.Add(applianceCollection.fanSO);
         //systemObjects.Add(applianceCollection.dryerSO);
         return systemObjects;
@@ -27,6 +27,8 @@ public class ApplianceRepository : MonoBehaviour
                 return applianceCollection.acSO;
             case "Washing Machine":
                 return applianceCollection.washingMachineSO;
+            case "Fridge":
+                return applianceCollection.fridgeSO;
             default:
                 return null;
         }
@@ -42,6 +44,9 @@ public class ApplianceRepository : MonoBehaviour
                 break;
             case "Washing Machine":
                 objectSizeToReturn = GetWashingMachineSize();
+                break;
+            case "Fridge":
+                objectSizeToReturn = GetFridgeSize();
                 break;
             default:
                 throw new Exception("No such appliance size." + objectName);
@@ -69,6 +74,15 @@ public class ApplianceRepository : MonoBehaviour
         temp.Add(applianceCollection.acSO.objectWidth);
         temp.Add(applianceCollection.acSO.objectHeight);
         temp.Add(applianceCollection.acSO.objectLength);
+        return temp;
+    }
+
+    private List<int> GetFridgeSize()
+    {
+        List<int> temp = new List<int>();
+        temp.Add(applianceCollection.fridgeSO.objectWidth);
+        temp.Add(applianceCollection.fridgeSO.objectHeight);
+        temp.Add(applianceCollection.fridgeSO.objectLength);
         return temp;
     }
 }

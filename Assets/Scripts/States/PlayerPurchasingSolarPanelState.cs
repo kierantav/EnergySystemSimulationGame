@@ -5,13 +5,15 @@ using UnityEngine;
 public class PlayerPurchasingSolarPanelState : PlayerState
 {
     EnergySystemObjectController purchasingObjectController;
+    UIController uiController;
 
     string objectName;
 
 
-    public PlayerPurchasingSolarPanelState(GameController gameController, EnergySystemObjectController purchasingObjectController) : base(gameController)
+    public PlayerPurchasingSolarPanelState(GameController gameController, EnergySystemObjectController purchasingObjectController, UIController uiController) : base(gameController)
     {
         this.purchasingObjectController = purchasingObjectController;
+        this.uiController = uiController;
     }
 
     public override void OnInputPointerChange(Vector3 position)
@@ -50,6 +52,7 @@ public class PlayerPurchasingSolarPanelState : PlayerState
     {
         this.purchasingObjectController.ConfirmModification();
         purchasingObjectController.UpdateSystemAttributesToEnergySystemData();
+        uiController.InstalledEnergySystems = purchasingObjectController.GetListOfAllObjects();
         this.gameController.TransitionToState(this.gameController.selectionState, null);
     }
 

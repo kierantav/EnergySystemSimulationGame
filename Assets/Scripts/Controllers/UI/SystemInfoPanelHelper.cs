@@ -360,7 +360,7 @@ public class SystemInfoPanelHelper : MonoBehaviour
 
     private void ToggleAppliance()
     {
-        if (applianceSwitch.isOn)
+        if (!applianceSwitch.isOn)
         {
             applianceData.isTurnedOn = true;
         }

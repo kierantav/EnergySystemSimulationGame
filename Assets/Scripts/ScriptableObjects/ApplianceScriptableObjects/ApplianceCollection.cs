@@ -8,7 +8,7 @@ public class ApplianceCollection : ScriptableObject
     public ACSO acSO;
     public WashingMachineSO washingMachineSO;
     //public LightSO lightSO;
-    //public FridgeSO fridgeSO;
+    public FridgeSO fridgeSO;
     //public FanSO fanSO;
     //public DryerSO dryerSO;
 

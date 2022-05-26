@@ -19,3 +19,4 @@ MonoBehaviour:
   invertorSO: {fileID: 11400000, guid: a50ef1b03a1df44139dac9cba88bd7ad, type: 2}
   hybirdChargeControllerSO: {fileID: 11400000, guid: 87feecf1990f143649bddaa8654e3d73,
     type: 2}
+  powerLinesSO: {fileID: 11400000, guid: 6d310c18b6f01dd4782b634676ea3f30, type: 2}

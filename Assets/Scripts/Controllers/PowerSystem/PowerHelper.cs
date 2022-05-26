@@ -4,16 +4,22 @@ using UnityEngine;
 
 public class PowerHelper
 {
-
+    // Diesel Generator
     private float dieselGeneratorPreviousFuelAmount = 0f;
     private float dieselGeneratorEmissionRate = 0f;
     private float dieselGeneratorPreviousEmissionAmount = 0f;
     private float dieselGeneratorPreviousPowerRate = 0f;
     private float dieselGeneratorPreviousPowerAmout = 0f;
+    // On-Grid Power
+    private float powerLinesEmissionRate = 0f;
+    private float powerLinesPreviousEmissionAmount = 0f;
+    private float powerLinesPreviousPowerRate = 0f;
+    private float powerLinesPreviousPowerAmout = 0f;
     // Breaker Panel
     bool isInverterSwitchOnBreaker = false;
-    bool isMainSwitchOnBreaker = false;
+    bool isMainLoadSwitchOnBreaker = false;
     bool isDGSwitchOnBreaker = false;
+    bool isMainSwitchOnBreaker = false;
     
     // solarPanelInfo
     int solarPanelCount = 0;
@@ -41,6 +47,8 @@ public class PowerHelper
     bool isBatteryRunning = false;
     bool isDGExisted = false;
     bool isDGRunning = false;
+    bool isPowerLinesExisted = false;
+    bool isPowerLinesRunning = false;
 
     float totalOutputRate = 0f;
     public float LoadDiff { get => loadDiff; set => loadDiff = value; }
@@ -68,6 +76,10 @@ public class PowerHelper
             if (obj.objectName == "Diesel Generator")
             {
                 UpdateDGInfoFromObject(obj);
+            }
+            if (obj.objectName == "On-Grid Power")
+            {
+                UpdatePowerLinesInfoFromObject(obj);
             }
         }
 
@@ -105,6 +117,10 @@ public class PowerHelper
             {
                 UpdateDGInformationAfterRunning(obj);
             }
+            if (obj.objectName == "On-Grid Power")
+            {
+                UpdatePowerLinesInfoAfterRunning(obj);
+            }
         }
 
         if (loadDiff != 0f)
@@ -129,7 +145,6 @@ public class PowerHelper
 
         RefreshValues();
     }
-
     private void RefreshValues()
     {
         dieselGeneratorPreviousFuelAmount = 0f;
@@ -137,6 +152,12 @@ public class PowerHelper
         dieselGeneratorPreviousEmissionAmount = 0f;
         dieselGeneratorPreviousPowerRate = 0f;
         dieselGeneratorPreviousPowerAmout = 0f;
+
+        powerLinesEmissionRate = 0f;
+        powerLinesPreviousEmissionAmount = 0f;
+        powerLinesPreviousPowerRate = 0f;
+        powerLinesPreviousPowerAmout = 0f;
+
         solarPanelCount = 0;
         solarPanelPowerRateTemp = 0f;
         solarPanelsOutputRate = 0f;
@@ -162,6 +183,8 @@ public class PowerHelper
         isDGExisted = false;
         isDGRunning = false;
         needMoreFuel = false;
+        isPowerLinesExisted = false;
+        isPowerLinesRunning = false;
     }
 
     // Need to be Refactored
@@ -171,24 +194,30 @@ public class PowerHelper
 
 
         // 1 - see if solar panel system can provide all power for property's load
-        if (isSolarPanelRunning && CheckInvertorAccessibility() && CheckInvertorLoadBalance() )
+        if (isSolarPanelRunning && CheckInvertorAccessibility() && CheckInvertorLoadBalance())
         {
             if (CheckChargeControllerAccessibility())
             {
                 CheckBatteryAccessibility();
             }
         }
-        else if (isBatteryExisted && isBatteryRunning && isChargeControllerExisted && isChargeControllerRunning && isInvertorRunning && isInvertorExisted && isMainSwitchOnBreaker && isInverterSwitchOnBreaker)
+        else if (isBatteryExisted && isBatteryRunning && isChargeControllerExisted && isChargeControllerRunning && isInvertorRunning && isInvertorExisted && isMainLoadSwitchOnBreaker && isInverterSwitchOnBreaker)
         {
             if (loadValueUpdate == 0f)
                 loadValueUpdate = loadValue;
 
             CheckBatteryStorageAmount(period, loadValueUpdate);
-        }else if(isDGSwitchOnBreaker && isDGExisted && isDGRunning)
+        } else if (isDGSwitchOnBreaker && isDGExisted && isDGRunning)
         {
             if (loadValueUpdate == 0f)
                 loadValueUpdate = loadValue;
             CheckDieselGeneratorAccessibility(period, loadValueUpdate);
+        }
+        else if (isMainSwitchOnBreaker && isPowerLinesExisted && isPowerLinesRunning)
+        {
+            if (loadValueUpdate == 0f)
+                loadValueUpdate = loadValue;
+            CheckPowerLinesAccessibility(period, loadValueUpdate);
         }
         else
         {
@@ -237,6 +266,9 @@ public class PowerHelper
                 if (isDGSwitchOnBreaker && isDGExisted && isDGRunning)
                 {
                     CheckDieselGeneratorAccessibility(period, (energyNeeded - batteryPreviousSavedAmount) / period);
+                } else if (isMainSwitchOnBreaker && isPowerLinesExisted && isPowerLinesRunning)
+                {
+                    CheckPowerLinesAccessibility(period, (energyNeeded - batteryPreviousSavedAmount) / period);
                 }
                 else
                 {
@@ -287,6 +319,15 @@ public class PowerHelper
         {
             loadDiff = load;
             needMoreFuel = true;
+        }
+    }
+
+    private void CheckPowerLinesAccessibility(float period, float load)
+    {
+        if (isMainSwitchOnBreaker && isPowerLinesExisted && isPowerLinesRunning)
+        {
+            energyRequired = load * period;
+            powerLinesPreviousEmissionAmount += powerLinesEmissionRate * energyRequired;
         }
     }
 
@@ -359,7 +400,7 @@ public class PowerHelper
     {
         
         // power goes to mainload/battery.
-        if (isSolarPanelRunning && isInvertorRunning && isInverterSwitchOnBreaker && isMainSwitchOnBreaker && loadValue != 0f)
+        if (isSolarPanelRunning && isInvertorRunning && isInverterSwitchOnBreaker && isMainLoadSwitchOnBreaker && loadValue != 0f)
         {
             return true;
         }
@@ -412,6 +453,15 @@ public class PowerHelper
         dieselGeneratorPreviousPowerRate = obj.powerGeneratedRate;
         dieselGeneratorPreviousPowerAmout = obj.powerGeneratedAmount;
     }
+    private void UpdatePowerLinesInfoFromObject(EnergySystemGeneratorBaseSO obj)
+    {
+        isPowerLinesRunning = obj.isRunning;
+        isPowerLinesExisted = true;
+        powerLinesEmissionRate = obj.emissionRate;
+        powerLinesPreviousEmissionAmount = obj.emissionGeneratedAmount;
+        powerLinesPreviousPowerRate = obj.powerGeneratedRate;
+        powerLinesPreviousPowerAmout = obj.powerGeneratedAmount;
+    }
     #endregion
 
     #region Update Info After Running
@@ -452,6 +502,21 @@ public class PowerHelper
         dieselGeneratorPreviousEmissionAmount = 0f;
         energyRequired = 0f;
     }
+
+    private void UpdatePowerLinesInfoAfterRunning(EnergySystemGeneratorBaseSO obj)
+    {
+        obj.emissionGeneratedAmount = powerLinesPreviousEmissionAmount;
+        obj.powerGeneratedRate = loadValue;
+        obj.powerGeneratedAmount += energyRequired;
+
+        if (!obj.isRunning)
+        {
+            loadDiff = loadValue;
+        }
+
+        powerLinesPreviousEmissionAmount = 0f;
+        energyRequired = 0f;
+    }
     #endregion
 
     private bool CanIRunIt(float fuelAmount, float estimatedFuelAmount)
@@ -464,11 +529,12 @@ public class PowerHelper
         return false;
     }
 
-    public void GetBreakerSwitchesValue(bool iValue, bool mValue, bool dValue, float lValue)
+    public void GetBreakerSwitchesValue(bool iValue, bool mLValue, bool dValue, float lValue, bool mValue)
     {
         isInverterSwitchOnBreaker = iValue;
-        isMainSwitchOnBreaker = mValue;
+        isMainLoadSwitchOnBreaker = mLValue;
         isDGSwitchOnBreaker = dValue;
+        isMainSwitchOnBreaker = mValue;
         loadValue = lValue;
     }
     private bool LoadExisted()
@@ -479,7 +545,7 @@ public class PowerHelper
             return false;
         }
 
-        if (isMainSwitchOnBreaker == false)
+        if (isMainLoadSwitchOnBreaker == false)
         {
             //Debug.Log("Please Switch Main Load On");
             return false;
