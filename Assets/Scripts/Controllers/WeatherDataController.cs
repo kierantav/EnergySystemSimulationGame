@@ -12,40 +12,23 @@ public class WeatherDataController : MonoBehaviour
 
     public float Poa { get => poa; set => poa = value; }
 
-    private void Start()
-    {
-        GetData(8);
-    }
-
-    private void Update()
-    {
-        
-    }
-
     public void GetData(int i) => StartCoroutine(GetData_Coroutine(i));
 
     IEnumerator GetData_Coroutine(int i)
     {
-        while (i <= 6911)
+        string api = "http://eri.teachingforchange.edu.au/weatherapi/data";
+        //string api = "http://127.0.0.1:8000/weatherapi/data";
+        string apiWithDataId = api + "/" + i;
+        using (UnityWebRequest request = UnityWebRequest.Get(apiWithDataId))
         {
-            if (i == 8) { yield return new WaitForSeconds(1); }
-
-            string api = "http://eri.teachingforchange.edu.au/weatherapi/data";
-            //string api = "http://127.0.0.1:8000/weatherapi/data";
-            string apiWithDataId = api + "/" + i;
-            using (UnityWebRequest request = UnityWebRequest.Get(apiWithDataId))
+            yield return request.SendWebRequest();
+            if (request.isNetworkError || request.isHttpError)
             {
-                yield return request.SendWebRequest();
-                if (request.isNetworkError || request.isHttpError)
-                {
-                    Debug.Log(request.error);
-                }
-                else
-                {
-                    ProcessJsonData(request);
-                    yield return new WaitForSeconds(60);
-                    ++i;
-                }
+                Debug.Log(request.error);
+            }
+            else
+            {
+                ProcessJsonData(request);
             }
         }
     }
@@ -53,8 +36,6 @@ public class WeatherDataController : MonoBehaviour
     private void ProcessJsonData(UnityWebRequest request)
     {
         Weather weather = JsonUtility.FromJson<Weather>(request.downloadHandler.text);
-        //Debug.Log(weather.Time);
-        //Debug.Log(weather.TEMP_AVG);
         uIController.SetWeatherValue("Sunny", weather.TEMP_AVG, weather.POA_AVG, weather.WSPD_AVG);
         poa = weather.POA_AVG;
         

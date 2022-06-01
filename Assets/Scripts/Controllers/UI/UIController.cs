@@ -258,6 +258,7 @@ public class UIController : MonoBehaviour
     #region StatsMenuCallback
     private void OnStatsMenu()
     {
+        statsPanelHelper.CreateEnergySystemsInStatsMenu(InstalledEnergySystems);
         stateMenuPanel.SetActive(true);
         EnableCameraMovement(false);
     }
@@ -270,6 +271,7 @@ public class UIController : MonoBehaviour
     private void OnPropertyInfoHandler()
     {
         statsPanelHelper.CreateEnergySystemsInStatsMenu(InstalledEnergySystems);
+        //statsPanelHelper.CreateAppliancesInStatsMenu(InstalledAppliances);
         //Debug.Log("openPropertyInfoBtn");
     }
     #endregion

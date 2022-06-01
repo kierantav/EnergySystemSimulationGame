@@ -84,9 +84,6 @@ public class ResourceController : MonoBehaviour, IResourceController
         powerHelper.GetBreakerSwitchesValue(uIController.breakerPanelHelper.IsInterverSwitchOn, uIController.breakerPanelHelper.IsMainLoadSwitchOn, uIController.breakerPanelHelper.IsDGSwitchOn, GetCurrentTotalLoad(), uIController.breakerPanelHelper.IsMainSwitchOn);
         if (powerHelper.LoadDiff != 0f)
         {
-            //uIController.breakerPanelHelper.loadValue.text = "0";
-            uIController.breakerPanelHelper.Load = 0f;
-            //uIController.breakerPanelHelper.UpdateLoadValueUI();
             powerHelper.LoadDiff = 0f;
             
         }

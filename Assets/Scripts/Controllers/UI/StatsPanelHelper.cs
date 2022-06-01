@@ -9,7 +9,7 @@ public class StatsPanelHelper : MonoBehaviour
 {
     public UIController uiController;
     public GameObject energySystemsPanel;
-    public GameObject appliancesPanel;
+    public GameObject renewablesPanel;
     public GameObject statsPanelPrefab;
     private TextMeshProUGUI dieselCo2ProducedText;
     private TextMeshProUGUI gridPowerCo2ProducedText;
@@ -21,9 +21,10 @@ public class StatsPanelHelper : MonoBehaviour
     private int gridPowerIndex;
 
     List<EnergySystemGeneratorBaseSO> energySystemData;
+    List<EnergySystemGeneratorBaseSO> renewablesData;
 
-    private float nextActionTime = 0.0f;
-    public float period = 0.1f;
+    //private float nextActionTime = 0.0f;
+    //public float period = 0.1f;
 
     protected float Timer;
 
@@ -50,7 +51,7 @@ public class StatsPanelHelper : MonoBehaviour
 
     private void UpdateAmountProduced()
     {
-        if (energySystemData != null )
+        if (energySystemData != null)
         {
             if (dieselCo2ProducedText != null)
             {
@@ -65,7 +66,8 @@ public class StatsPanelHelper : MonoBehaviour
 
     public void CreateEnergySystemsInStatsMenu(List<EnergySystemGeneratorBaseSO> data)
     {
-        if (data == null || data.Count == 0)
+        List<EnergySystemGeneratorBaseSO> newData = data;
+        if (newData == null || newData.Count == 0)
         {
             Debug.Log("No energy systems installed!");
             //noAppliancesText.gameObject.SetActive(true);
@@ -73,9 +75,30 @@ public class StatsPanelHelper : MonoBehaviour
         }
         else
         {
-            energySystemData = UpdateData(data);
+            energySystemData = UpdateData(newData);
             //noAppliancesText.gameObject.SetActive(false);
-            UpdateEnergySystemsInStatsPanel(energySystemsPanel.transform, data);
+            UpdateEnergySystemsInStatsPanel(energySystemsPanel.transform, newData);
+            //List<EnergySystemGeneratorBaseSO> renewablesData = UpdateRenewablesData(newData);
+            //UpdateEnergySystemsInStatsPanel(renewablesPanel.transform, data);
+        }
+    }
+
+    public void CreateRenewablesInStatsMenu(List<EnergySystemGeneratorBaseSO> data)
+    {
+        List<EnergySystemGeneratorBaseSO> newData = data;
+        if (newData == null || newData.Count == 0)
+        {
+            Debug.Log("No renewables installed!");
+            //noAppliancesText.gameObject.SetActive(true);
+            //ClearAppliancesInLoadPanel(panelTransform);
+        }
+        else
+        {
+            renewablesData = UpdateRenewablesData(newData);
+            //noAppliancesText.gameObject.SetActive(false);
+            UpdateEnergySystemsInStatsPanel(renewablesPanel.transform, newData);
+            //List<EnergySystemGeneratorBaseSO> renewablesData = UpdateRenewablesData(newData);
+            //UpdateEnergySystemsInStatsPanel(renewablesPanel.transform, data);
         }
     }
 
@@ -101,10 +124,12 @@ public class StatsPanelHelper : MonoBehaviour
                 {
                     child.GetComponentsInChildren<TextMeshProUGUI>()[0].text = newData[index1].objectName;
                     child.GetComponentsInChildren<Image>()[1].sprite = newData[index1].objectIcon;
-                    if (newData[index1].objectName.Equals("Diesel Generator")) {
+                    if (newData[index1].objectName.Equals("Diesel Generator"))
+                    {
                         dieselCo2ProducedText = child.GetComponentsInChildren<TextMeshProUGUI>()[1];
                         dieselIndex = index1;
-                    } else
+                    }
+                    else
                     {
                         gridPowerIndex = index1;
                         gridPowerCo2ProducedText = child.GetComponentsInChildren<TextMeshProUGUI>()[1];
@@ -156,6 +181,22 @@ public class StatsPanelHelper : MonoBehaviour
             for (int i = 0; i < newData.Count; i++)
             {
                 if (!newData[i].objectName.Equals("Diesel Generator") && !newData[i].objectName.Equals("On-Grid Power"))
+                {
+                    newData.Remove(newData[i]);
+                }
+            }
+        }
+        return newData;
+    }
+
+    private List<EnergySystemGeneratorBaseSO> UpdateRenewablesData(List<EnergySystemGeneratorBaseSO> data)
+    {
+        List<EnergySystemGeneratorBaseSO> newData = data;
+        if (newData != null || newData.Count > 0)
+        {
+            for (int i = 0; i < newData.Count; i++)
+            {
+                if (!newData[i].objectName.Equals("Solar Panel") && !newData[i].objectName.Equals("Wind Turbine"))
                 {
                     newData.Remove(newData[i]);
                 }

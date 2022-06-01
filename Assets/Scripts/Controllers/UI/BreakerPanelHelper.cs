@@ -47,8 +47,6 @@ public class BreakerPanelHelper : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //EnergySystemGeneratorBaseSO gridPower = GetGridPowerObject();
-        //Debug.Log(gridPower.isRunning);
         gameObject.SetActive(false);
         HideLoadPanel();
         HideSwitches();
@@ -134,6 +132,7 @@ public class BreakerPanelHelper : MonoBehaviour
 
     private void ToggleAppliance1Switch()
     {
+        Debug.Log(load);
         if (applianceSwitch1.isOn)
         {
             applianceList[0].isTurnedOn = true;
@@ -144,6 +143,7 @@ public class BreakerPanelHelper : MonoBehaviour
             applianceList[0].isTurnedOn = false;
             load -= applianceList[0].powerNeededRate;
         }
+        Debug.Log(load);
         UpdateLoadValueUI();
     }
 
