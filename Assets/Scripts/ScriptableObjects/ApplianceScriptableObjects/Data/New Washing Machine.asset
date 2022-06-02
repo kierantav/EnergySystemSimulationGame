@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   objectIcon: {fileID: 21300000, guid: 2960fe79bf69a48469c451d56e2fe760, type: 3}
   objectName: Washing Machine
-  objectDescription: 
+  objectDescription: Washing Machine
   objectType: Appliance
   objectPrefab: {fileID: 1853104163479907676, guid: 96ee093969a93dd4ba2bdb72f523f5ed,
     type: 3}

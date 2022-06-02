@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   objectIcon: {fileID: 21300000, guid: 491004833cbc8462496e3d5ffdac760f, type: 3}
   objectName: Fridge
-  objectDescription: 
+  objectDescription: Fridge
   objectType: Appliance
   objectPrefab: {fileID: 6161978639738040497, guid: a0d4554a9e840214fb4fd4552a0a3e3e,
     type: 3}

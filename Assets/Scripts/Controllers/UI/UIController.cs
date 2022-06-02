@@ -43,6 +43,7 @@ public class UIController : MonoBehaviour
     public GameObject energySystemPurchasePanel;
     public GameObject appliancePurchasePanel;
     public GameObject itemBtnPrefab; // to list all selections
+    public GameObject applianceBtnPrefab;
     public TooltipManager itemTooltip;
     //public GameObject applianceTempObject; // to create empty gameobject based on appliance type
 
@@ -107,6 +108,7 @@ public class UIController : MonoBehaviour
     public SystemInfoPanelHelper systemInfoPanelHelper;
     public BreakerPanelHelper breakerPanelHelper;
     public StatsPanelHelper statsPanelHelper;
+    public ApplianceOptionsPanelHelper applianceOptionsPanelHelper;
     public Button openLoadPanelBtn;
 
 
@@ -259,6 +261,7 @@ public class UIController : MonoBehaviour
     private void OnStatsMenu()
     {
         statsPanelHelper.CreateEnergySystemsInStatsMenu(InstalledEnergySystems);
+        statsPanelHelper.CreateRenewablesInStatsMenu(InstalledEnergySystems);
         stateMenuPanel.SetActive(true);
         EnableCameraMovement(false);
     }
@@ -270,9 +273,15 @@ public class UIController : MonoBehaviour
     }
     private void OnPropertyInfoHandler()
     {
+        /*if (InstalledEnergySystems != null)
+        {
+            foreach (var item in InstalledEnergySystems)
+            {
+                Debug.Log("InstalledEnergySystems: " + item.objectName);
+            }
+        }*/
         statsPanelHelper.CreateEnergySystemsInStatsMenu(InstalledEnergySystems);
-        //statsPanelHelper.CreateAppliancesInStatsMenu(InstalledAppliances);
-        //Debug.Log("openPropertyInfoBtn");
+        statsPanelHelper.CreateRenewablesInStatsMenu(InstalledEnergySystems);
     }
     #endregion
 
@@ -367,7 +376,7 @@ public class UIController : MonoBehaviour
             int quantityDifference = data.Count - panelTransform.childCount;
             for (int i = 0; i < quantityDifference; i++)
             {
-                Instantiate(itemBtnPrefab, panelTransform);
+                Instantiate(applianceBtnPrefab, panelTransform);
             }
         }
         for (int i = 0; i < panelTransform.childCount; i++)
@@ -381,19 +390,19 @@ public class UIController : MonoBehaviour
             {
                 ApplianceBaseSO objectData = data[i];
                 button.GetComponentsInChildren<TextMeshProUGUI>()[0].text = objectData.objectName;
-                button.GetComponentsInChildren<TextMeshProUGUI>()[1].text = objectData.emissionRate+" kgCO2/kwh";
-                button.GetComponentsInChildren<TextMeshProUGUI>()[2].text = objectData.powerNeededRate+ "kw";
-                button.GetComponentsInChildren<TextMeshProUGUI>()[3].text = "$ "+objectData.purchaseCost;
-                button.GetComponentsInChildren<TextMeshProUGUI>()[4].text = objectData.objectName;
-                button.GetComponentsInChildren<TextMeshProUGUI>()[5].text = objectData.emissionRate + " kgCO2/kwh";
-                button.GetComponentsInChildren<TextMeshProUGUI>()[6].text = objectData.powerNeededRate + "kw";
-                button.GetComponentsInChildren<TextMeshProUGUI>()[7].text = "$ " + objectData.purchaseCost;
+                button.GetComponentsInChildren<TextMeshProUGUI>()[1].text = objectData.objectName;
+                button.GetComponent<TooltipContent>().description = objectData.objectDescription.ToString();
                 //button.GetComponentsInChildren<TextMeshProUGUI>()[8].text = objectData.objectDescription.ToString();
                 button.GetComponentsInChildren<Image>()[0].sprite = objectData.objectIcon;
                 button.GetComponentsInChildren<Image>()[2].sprite = objectData.objectIcon;
                 button.onClick.AddListener(() => OnShopCallback(button.GetComponentsInChildren<TextMeshProUGUI>()[0].text));
             }
         }
+    }
+
+    private void OnApplianceCallback(string objectName)
+    {
+        applianceOptionsPanelHelper.gameObject.SetActive(true);
     }
 
     //public void PurchasingApplianceObject(string objectName)

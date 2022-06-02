@@ -21,6 +21,7 @@ public class PlayerPurchasingACState : PlayerState
 
     public override void EnterState(string objectName)
     {
+        //uiController.applianceOptionsPanelHelper.OpenApplianceOptionsPanel();
         // Set camera
         this.uiController.CameraMovementController.SetPosition(cameraPosition, cameraRotation);
 
@@ -48,7 +49,7 @@ public class PlayerPurchasingACState : PlayerState
 
     public override void OnPuchasingAppliance(string objectName)
     {
-        //Debug.Log(objectName);
+        Debug.Log(objectName);
         if (objectName != "Air Conditioner")
         {
             OnCancel();
