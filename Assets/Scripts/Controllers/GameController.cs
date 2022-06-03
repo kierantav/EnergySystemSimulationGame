@@ -125,11 +125,13 @@ public class GameController : MonoBehaviour
     private void AssignUIControllerListeners()
     {
         uiController.AddListenerOnPurchasingEvent((objectName) => state.OnPuchasingEnergySystem(objectName));  // transfer to purchase energy system state
-        uiController.AddListenerOnPurchasingApplianceEvent((objectName) => state.OnPuchasingAppliance(objectName));
+        uiController.AddListenerOnPurchasingApplianceEvent((objectName, applianceName) => state.OnPuchasingAppliance(objectName, applianceName));
         uiController.AddListenerOnCancelEvent(() => state.OnCancel());
         uiController.AddListenerOnSellEvent(() => state.OnSellingObject());
         //uiController.AddListenerOnSellApplianceEvent(() => state.OnSellingAppliance());
         uiController.AddListenerOnConfirmEvent(() => state.OnConfirm());
+
+        //applianceOp
     }
 
     private void AssignInputListeners()
@@ -138,10 +140,10 @@ public class GameController : MonoBehaviour
         inputController.AddListenerOnPointerChangeEvent((position) => state.OnInputPointerChange(position));
     }
 
-    public void TransitionToState(PlayerState newState, string objectVariable)
+    public void TransitionToState(PlayerState newState, string objectVariable, string applianceName)
     {
         this.state = newState;
-        this.state.EnterState(objectVariable);
+        this.state.EnterState(objectVariable, applianceName);
     }
 
 }

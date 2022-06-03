@@ -19,9 +19,8 @@ public class PlayerPurchasingACState : PlayerState
         this.uiController = uiController;
     }
 
-    public override void EnterState(string objectName)
+    public override void EnterState(string objectName, string applianceName)
     {
-        //uiController.applianceOptionsPanelHelper.OpenApplianceOptionsPanel();
         // Set camera
         this.uiController.CameraMovementController.SetPosition(cameraPosition, cameraRotation);
 
@@ -30,30 +29,30 @@ public class PlayerPurchasingACState : PlayerState
         this.objectName = objectName;
         if (!this.position.Equals(Vector3.zero))
         {
-            purchasingApplianceController.PrepareApplianceForModification(this.position, this.objectName);
+            purchasingApplianceController.PrepareApplianceForModification(this.position, this.objectName, applianceName);
         }
     }
 
     public override void OnCancel()
     {
         this.purchasingApplianceController.CancelModification();
-        this.gameController.TransitionToState(this.gameController.selectionState, null);
+        this.gameController.TransitionToState(this.gameController.selectionState, null, "");
     }
 
     public override void OnConfirm()
     {
         this.purchasingApplianceController.ConfirmModification();
         uiController.InstalledAppliances = purchasingApplianceController.GetListOfAllAppliances();
-        this.gameController.TransitionToState(this.gameController.selectionState, null);
+        this.gameController.TransitionToState(this.gameController.selectionState, null, "");
     }
 
-    public override void OnPuchasingAppliance(string objectName)
+    public override void OnPuchasingAppliance(string objectName, string applianceName)
     {
         Debug.Log(objectName);
         if (objectName != "Air Conditioner")
         {
             OnCancel();
         }
-        base.OnPuchasingAppliance(objectName);
+        base.OnPuchasingAppliance(objectName, applianceName);
     }
 }

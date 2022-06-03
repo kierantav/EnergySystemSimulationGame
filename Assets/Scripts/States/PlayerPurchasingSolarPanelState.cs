@@ -35,7 +35,7 @@ public class PlayerPurchasingSolarPanelState : PlayerState
         return;
     }
 
-    public override void EnterState(string objectName)
+    public override void EnterState(string objectName, string applianceName)
     {
         this.purchasingObjectController.PreparePurchasingObjectController(GetType());
         purchasingObjectController.UpdateSystemAttributesToEnergySystemData();
@@ -45,7 +45,7 @@ public class PlayerPurchasingSolarPanelState : PlayerState
     public override void OnCancel()
     {
         this.purchasingObjectController.CancelModification();
-        this.gameController.TransitionToState(this.gameController.selectionState, null);
+        this.gameController.TransitionToState(this.gameController.selectionState, null, "");
     }
 
     public override void OnConfirm()
@@ -53,7 +53,7 @@ public class PlayerPurchasingSolarPanelState : PlayerState
         this.purchasingObjectController.ConfirmModification();
         purchasingObjectController.UpdateSystemAttributesToEnergySystemData();
         uiController.InstalledEnergySystems = purchasingObjectController.GetListOfAllObjects();
-        this.gameController.TransitionToState(this.gameController.selectionState, null);
+        this.gameController.TransitionToState(this.gameController.selectionState, null, "");
     }
 
     public override void OnPuchasingEnergySystem(string objectName)

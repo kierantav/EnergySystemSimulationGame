@@ -45,7 +45,7 @@ public class EnergySystemObjectController
     {
         try
         {
-            objectModificationHelper.PrepareObjectForModification(inputPosition, objectName,  "Energy");
+            objectModificationHelper.PrepareObjectForModification(inputPosition, objectName, "", "Energy");
         }
         catch
         {
@@ -70,7 +70,7 @@ public class EnergySystemObjectController
     public void PrepareObjectForSellingAt(Vector3 inputPosition)
     {
         //Debug.Log(objectModificationHelper);
-        objectModificationHelper.PrepareObjectForModification(inputPosition,"", "Energy");
+        objectModificationHelper.PrepareObjectForModification(inputPosition,"", "", "Energy");
     }
 
     #endregion

@@ -16,7 +16,7 @@ public class PlayerPurchasingDieselGeneratorState : PlayerState
         this.position = position;
     }
 
-    public override void EnterState(string objectName)
+    public override void EnterState(string objectName, string applianceName)
     {
         this.purchasingObjectController.PreparePurchasingObjectController(GetType());
         purchasingObjectController.UpdateSystemAttributesToEnergySystemData();
@@ -30,7 +30,7 @@ public class PlayerPurchasingDieselGeneratorState : PlayerState
     public override void OnCancel()
     {
         this.purchasingObjectController.CancelModification();
-        this.gameController.TransitionToState(this.gameController.selectionState, null);
+        this.gameController.TransitionToState(this.gameController.selectionState, null, "");
     }
 
     public override void OnConfirm()
@@ -38,7 +38,7 @@ public class PlayerPurchasingDieselGeneratorState : PlayerState
         this.purchasingObjectController.ConfirmModification();
         purchasingObjectController.UpdateSystemAttributesToEnergySystemData();
         uiController.InstalledEnergySystems = purchasingObjectController.GetListOfAllObjects();
-        this.gameController.TransitionToState(this.gameController.selectionState, null);
+        this.gameController.TransitionToState(this.gameController.selectionState, null, "");
     }
 
     public override void OnPuchasingEnergySystem(string objectName)

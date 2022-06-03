@@ -10,12 +10,14 @@ public class ObjectPlacementHelper: ObjectModificationHelper
     {
     }
 
-    public override void PrepareObjectForModification(Vector3 inputPosition, string objectName, string type)
+    public override void PrepareObjectForModification(Vector3 inputPosition, string objectName, string applianceName, string type)
     {
-        base.PrepareObjectForModification(inputPosition, objectName, type);
+        base.PrepareObjectForModification(inputPosition, objectName, applianceName, type);
         GameObject objectPrefab = GetObjectType(type);
+        Debug.Log(objectPrefab.name);
+        Debug.Log(inputPosition);
         //Debug.Log(type);
-        List<Vector3> positionList = GetPositionListByName(inputPosition, objectName, type); // Get and update object positions List
+        List<Vector3> positionList = GetPositionListByName(inputPosition, objectName, applianceName, type); // Get and update object positions List
         //Debug.Log(positionList);
         /*if (type.Equals("Appliance"))
         {
@@ -105,7 +107,7 @@ public class ObjectPlacementHelper: ObjectModificationHelper
     }
 
     // return positionlist
-    private List<Vector3> GetPositionListByName(Vector3 inputPosition, string objectName, string type)
+    private List<Vector3> GetPositionListByName(Vector3 inputPosition, string objectName, string applianceName, string type)
     {
         List<Vector3> positionList = new List<Vector3>();
         Vector3 gridPosition = grid.CalculateGridPosition(inputPosition); // Convert mouse position into grid position
@@ -116,7 +118,7 @@ public class ObjectPlacementHelper: ObjectModificationHelper
             objectSize = this.objectRepository.GetObjectSize(objectName);
         } else
         {
-            objectSize = this.applianceRepository.GetObjectSize(objectName);
+            objectSize = this.applianceRepository.GetObjectSize(objectName, applianceName);
         }
         
         // Adding current mouse/grid position with object volume

@@ -18,7 +18,7 @@ public class PlayerSellingObjectState : PlayerState
     {
         this.purchasingObjectController.CancelModification();
         this.purchasingApplianceController.CancelModification();
-        this.gameController.TransitionToState(this.gameController.selectionState, null);
+        this.gameController.TransitionToState(this.gameController.selectionState, null, "");
     }
 
     public override void OnConfirm()
@@ -28,7 +28,7 @@ public class PlayerSellingObjectState : PlayerState
         purchasingObjectController.UpdateSystemAttributesToEnergySystemData();
         this.uiController.InstalledAppliances = purchasingApplianceController.GetListOfAllAppliances();
         this.uiController.InstalledEnergySystems = purchasingObjectController.GetListOfAllObjects();
-        this.gameController.TransitionToState(this.gameController.selectionState, null);
+        this.gameController.TransitionToState(this.gameController.selectionState, null, "");
     }
 
     public override void OnPuchasingEnergySystem(string objectName)
@@ -58,7 +58,7 @@ public class PlayerSellingObjectState : PlayerState
     {
         return;
     }
-    public override void EnterState(string objectVariable)
+    public override void EnterState(string objectVariable, string applianceName)
     {
         this.purchasingObjectController.PreparePurchasingObjectController(GetType());
         this.purchasingApplianceController.PreparePurchasingApplianceController(GetType());

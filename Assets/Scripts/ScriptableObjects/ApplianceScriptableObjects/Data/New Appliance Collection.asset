@@ -12,6 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 342a7ddb1ac2d4799826e1b49cc61603, type: 3}
   m_Name: New Appliance Collection
   m_EditorClassIdentifier: 
-  acSO: {fileID: 11400000, guid: d274b57d486fe4b368536f840401691d, type: 2}
-  washingMachineSO: {fileID: 11400000, guid: 0c472c5a22bc34fbfbc5224ded86dbd0, type: 2}
-  fridgeSO: {fileID: 11400000, guid: 49d8d2771e3214c6d87b77eeadf0d492, type: 2}
+  smallACSO: {fileID: 11400000, guid: 6ad6fada2059d83469c784b11d808a85, type: 2}
+  mediumACSO: {fileID: 11400000, guid: d274b57d486fe4b368536f840401691d, type: 2}
+  largeACSO: {fileID: 11400000, guid: bee18f3c5f2bf3a41b628c88d4ea7176, type: 2}
+  mediumWashingMachineSO: {fileID: 11400000, guid: 0c472c5a22bc34fbfbc5224ded86dbd0,
+    type: 2}
+  largeFridgeSO: {fileID: 11400000, guid: 49d8d2771e3214c6d87b77eeadf0d492, type: 2}

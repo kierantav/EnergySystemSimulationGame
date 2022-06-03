@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ca48d47eab8394899b8f267238343c80, type: 3}
-  m_Name: New Fridge
+  m_Name: Large Fridge
   m_EditorClassIdentifier: 
   objectIcon: {fileID: 21300000, guid: 491004833cbc8462496e3d5ffdac760f, type: 3}
-  objectName: Fridge
+  objectName: Large
   objectDescription: Fridge
   objectType: Appliance
   objectPrefab: {fileID: 6161978639738040497, guid: a0d4554a9e840214fb4fd4552a0a3e3e,

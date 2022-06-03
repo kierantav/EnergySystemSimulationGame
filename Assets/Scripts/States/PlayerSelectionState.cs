@@ -67,51 +67,51 @@ public class PlayerSelectionState : PlayerState
         switch (objectName)
         {
             case "Diesel Generator":
-                this.gameController.TransitionToState(this.gameController.purchasingDieselGeneratorState, objectName);
+                this.gameController.TransitionToState(this.gameController.purchasingDieselGeneratorState, objectName, "");
                 break;
             case "Battery":
-                this.gameController.TransitionToState(this.gameController.purchasingBatteryState, objectName);
+                this.gameController.TransitionToState(this.gameController.purchasingBatteryState, objectName, "");
                 break;
             case "Solar Panel":
-                this.gameController.TransitionToState(this.gameController.purchasingSolarPanelState, objectName);
+                this.gameController.TransitionToState(this.gameController.purchasingSolarPanelState, objectName, "");
                 break;
             case "Wind Turbine":
-                this.gameController.TransitionToState(this.gameController.purchasingWindTurbineState, objectName);
+                this.gameController.TransitionToState(this.gameController.purchasingWindTurbineState, objectName, "");
                 break;
             case "Invertor":
-                this.gameController.TransitionToState(this.gameController.purchasingInvertorState, objectName);
+                this.gameController.TransitionToState(this.gameController.purchasingInvertorState, objectName, "");
                 break;
             case "Charge Controller":
-                this.gameController.TransitionToState(this.gameController.purchasingChargeControllerState, objectName);
+                this.gameController.TransitionToState(this.gameController.purchasingChargeControllerState, objectName, "");
                 break;
             case "On-Grid Power":
-                this.gameController.TransitionToState(this.gameController.purchasingPowerLinesState, objectName);
+                this.gameController.TransitionToState(this.gameController.purchasingPowerLinesState, objectName, "");
                 break;
             default:
                 throw new Exception("No such energy system type." + objectName);
         }
     }
 
-    public override void OnPuchasingAppliance(string objectName)
+    public override void OnPuchasingAppliance(string objectName, string applianceName)
     {
 
         switch (objectName)
         {
             case "Air Conditioner":
-                this.gameController.TransitionToState(this.gameController.purchasingACState, objectName);
+                this.gameController.TransitionToState(this.gameController.purchasingACState, objectName, applianceName);
                 break;
             case "Washing Machine":
-                this.gameController.TransitionToState(this.gameController.purchasingWashingMachineState, objectName);
+                this.gameController.TransitionToState(this.gameController.purchasingWashingMachineState, objectName, applianceName);
                 break;
             case "Fridge":
-                this.gameController.TransitionToState(this.gameController.purchasingFridgeState, objectName);
+                this.gameController.TransitionToState(this.gameController.purchasingFridgeState, objectName, applianceName);
                 break;
             default:
-                throw new Exception("No such energy system type." + objectName);
+                throw new Exception("No such appliance type." + objectName);
         }
     }
 
-    public override void EnterState(string objectVariable)
+    public override void EnterState(string objectVariable, string applianceName)
     {
         if (this.gameController.uiController.GetSystemInfoVisibility())
         {

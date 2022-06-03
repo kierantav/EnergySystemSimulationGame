@@ -43,27 +43,27 @@ public class ObjectModificationHelperTests
     [Test]
     public void ObjectModificationHelperAddPositionTestPasses()
     {
-        helper.PrepareObjectForModification(gridPosition1, solarPanelName, "Energy");
+        helper.PrepareObjectForModification(gridPosition1, solarPanelName, "", "Energy");
         GameObject objectInDictionary1 = helper.AccessStructureInDictionary(gridPosition1);
         Assert.AreEqual(tempObject, objectInDictionary1);
 
-        helper.PrepareObjectForModification(gridPosition2, windTurbineName, "Energy");
+        helper.PrepareObjectForModification(gridPosition2, windTurbineName, "", "Energy");
         GameObject objectInDictionary2 = helper.AccessStructureInDictionary(gridPosition2);
         Assert.AreEqual(tempObject, objectInDictionary2);
 
-        helper.PrepareObjectForModification(gridPosition3, chargeControllerName, "Energy");
+        helper.PrepareObjectForModification(gridPosition3, chargeControllerName, "", "Energy");
         GameObject objectInDictionary3 = helper.AccessStructureInDictionary(gridPosition3);
         Assert.AreEqual(tempObject, objectInDictionary3);
 
-        helper.PrepareObjectForModification(gridPosition4, invertorName, "Energy");
+        helper.PrepareObjectForModification(gridPosition4, invertorName, "", "Energy");
         GameObject objectInDictionary4 = helper.AccessStructureInDictionary(gridPosition4);
         Assert.AreEqual(tempObject, objectInDictionary4);
 
-        helper.PrepareObjectForModification(gridPosition5, batteryName, "Energy");
+        helper.PrepareObjectForModification(gridPosition5, batteryName, "", "Energy");
         GameObject objectInDictionary5 = helper.AccessStructureInDictionary(gridPosition5);
         Assert.AreEqual(tempObject, objectInDictionary5);
 
-        helper.PrepareObjectForModification(gridPosition6, dieselGeneratorName, "Energy");
+        helper.PrepareObjectForModification(gridPosition6, dieselGeneratorName, "", "Energy");
         GameObject objectInDictionary6 = helper.AccessStructureInDictionary(gridPosition6);
         Assert.AreEqual(tempObject, objectInDictionary6);
     }
@@ -71,8 +71,8 @@ public class ObjectModificationHelperTests
     [Test]
     public void ObjectModificationHelperRemoveFromPositionTestPasses()
     {
-        helper.PrepareObjectForModification(gridPosition1, solarPanelName, "Energy");
-        helper.PrepareObjectForModification(gridPosition1, solarPanelName, "Energy");
+        helper.PrepareObjectForModification(gridPosition1, solarPanelName, "", "Energy");
+        helper.PrepareObjectForModification(gridPosition1, solarPanelName, "", "Energy");
         GameObject objectInDictionary = helper.AccessStructureInDictionary(gridPosition1);
         Assert.IsNull(objectInDictionary);
     }
@@ -80,8 +80,8 @@ public class ObjectModificationHelperTests
     [Test]
     public void ObjectModificationHelperAddMultiplePositionsTestPasses()
     {
-        helper.PrepareObjectForModification(gridPosition1, solarPanelName, "Energy");
-        helper.PrepareObjectForModification(gridPosition2, solarPanelName, "Energy");
+        helper.PrepareObjectForModification(gridPosition1, solarPanelName, "", "Energy");
+        helper.PrepareObjectForModification(gridPosition2, solarPanelName, "", "Energy");
         GameObject objectInDictionary1 = helper.AccessStructureInDictionary(gridPosition1);
         GameObject objectInDictionary2 = helper.AccessStructureInDictionary(gridPosition2);
         Assert.AreEqual(tempObject, objectInDictionary1);
@@ -91,8 +91,8 @@ public class ObjectModificationHelperTests
     [Test]
     public void ObjectModificationHelperRemoveFromMultiplePositionsTestPasses()
     {
-        helper.PrepareObjectForModification(gridPosition1, solarPanelName, "Energy");
-        helper.PrepareObjectForModification(gridPosition2, solarPanelName, "Energy");
+        helper.PrepareObjectForModification(gridPosition1, solarPanelName, "", "Energy");
+        helper.PrepareObjectForModification(gridPosition2, solarPanelName, "", "Energy");
         helper.CancelModifications("Energy");
         GameObject objectInDictionary1 = helper.AccessStructureInDictionary(gridPosition1);
         GameObject objectInDictionary2 = helper.AccessStructureInDictionary(gridPosition2);
@@ -103,8 +103,8 @@ public class ObjectModificationHelperTests
     [Test]
     public void ObjectModificationHelperAddToGridTestPasses()
     {
-        helper.PrepareObjectForModification(gridPosition1, solarPanelName, "Energy");
-        helper.PrepareObjectForModification(gridPosition2, solarPanelName, "Energy");
+        helper.PrepareObjectForModification(gridPosition1, solarPanelName, "", "Energy");
+        helper.PrepareObjectForModification(gridPosition2, solarPanelName, "", "Energy");
         helper.ConfirmModifications("Energy");
         List<Vector3> gridPositionList1 = new List<Vector3>();
         gridPositionList1.Add(gridPosition1);

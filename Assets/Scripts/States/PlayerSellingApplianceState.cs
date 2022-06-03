@@ -1,4 +1,4 @@
-using System.Collections;
+/*using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -13,7 +13,7 @@ public class PlayerSellingApplianceState : PlayerState
     public override void OnCancel()
     {
         this.purchasingApplianceController.CancelModification();
-        this.gameController.TransitionToState(this.gameController.selectionState, null);
+        //this.gameController.TransitionToState(this.gameController.selectionState, null);
     }
 
     public override void OnConfirm()
@@ -43,3 +43,4 @@ public class PlayerSellingApplianceState : PlayerState
 
 
 }
+*/
