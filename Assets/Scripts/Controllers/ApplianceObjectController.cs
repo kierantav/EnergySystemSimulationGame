@@ -77,15 +77,13 @@ public class ApplianceObjectController
 
     public void PrepareApplianceForModification(Vector3 inputPosition, string objectName, string applianceName)
     {
-        //try
-        //{
-            Debug.Log(objectName);
+        try
+        {
             objectModificationHelper.PrepareObjectForModification(inputPosition, objectName, applianceName, "Appliance");
-        //}
-        //catch
-        //{
-        //    throw new Exception("No such appliance type." + objectName);
-
-        //}
+        }
+        catch
+        {
+            throw new Exception("No such appliance type." + objectName);
+        }
     }
 }

@@ -14,19 +14,7 @@ public class ObjectPlacementHelper: ObjectModificationHelper
     {
         base.PrepareObjectForModification(inputPosition, objectName, applianceName, type);
         GameObject objectPrefab = GetObjectType(type);
-        Debug.Log(objectPrefab.name);
-        Debug.Log(inputPosition);
-        //Debug.Log(type);
         List<Vector3> positionList = GetPositionListByName(inputPosition, objectName, applianceName, type); // Get and update object positions List
-        //Debug.Log(positionList);
-        /*if (type.Equals("Appliance"))
-        {
-            //Debug.Log(objectPrefab);
-            AddObjectForPlacement(objectPrefab, positionList);
-            resourceController.SpendMoney(applianceData.purchaseCost);
-        }
-        else
-        {*/
             if (!grid.IsCellTaken(positionList)) // If the cells are not taken 
             {
                 List<Vector3> currentPositionList = CheckExisting(positionList);
@@ -40,7 +28,6 @@ public class ObjectPlacementHelper: ObjectModificationHelper
                             RevokeObjectFromBeingPlaced(currentPositionList);
                         } else
                         {
-                            //Debug.Log(applianceData.purchaseCost);
                             resourceController.AddMoney(applianceData.purchaseCost);
                             RevokeObjectFromBeingPlaced(currentPositionList);
                         }

@@ -56,7 +56,9 @@ public class GameController : MonoBehaviour
     public PlayerPurchasingWashingMachineState purchasingWashingMachineState;
     public PlayerPurchasingFridgeState purchasingFridgeState;
 
-    public Vector3 DieselGeneratorPosition, WindTurbinePosition, BatteryPosition, InvertorPosition, ChargeControllerPosition, PowerLinesPosition, ACPosition, WashingMachinePosition, FridgePosition;
+    public Vector3 DieselGeneratorPosition, WindTurbinePosition, BatteryPosition, InvertorPosition, ChargeControllerPosition, PowerLinesPosition, 
+        WashingMachinePosition, 
+        FridgePosition;
 
     public CameraMovement cameraMovementController;
 
@@ -107,7 +109,7 @@ public class GameController : MonoBehaviour
         purchasingInvertorState = new PlayerPurchasingInvertorState(this, purchasingObjectController, InvertorPosition, uiController);
         purchasingPowerLinesState = new PlayerPurchasingPowerLinesState(this, purchasingObjectController, PowerLinesPosition, uiController);
 
-        purchasingACState = new PlayerPurchasingACState(this, purchasingApplianceController, ACPosition, uiController);
+        purchasingACState = new PlayerPurchasingACState(this, purchasingApplianceController, uiController);
         purchasingWashingMachineState = new PlayerPurchasingWashingMachineState(this, purchasingApplianceController, WashingMachinePosition, uiController);
         purchasingFridgeState = new PlayerPurchasingFridgeState(this, purchasingApplianceController, FridgePosition, uiController);
 

@@ -154,7 +154,7 @@ public class UIController : MonoBehaviour
 
     private void OnToggleLoadPanel()
     {
-        if (breakerPanelHelper.mainLoadPanel.gameObject.activeSelf)
+        if (breakerPanelHelper.loadPanelHelper.gameObject.activeSelf)
         {
             breakerPanelHelper.HideLoadPanel();
         } else
@@ -364,7 +364,6 @@ public class UIController : MonoBehaviour
         }
         else
         {
-            Debug.Log("OnShopCallback");
             OnApplianceHandler?.Invoke(objectName, applianceName);
         }
     }

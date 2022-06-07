@@ -146,7 +146,6 @@ GameObject:
   - component: {fileID: 6541427497168192417}
   - component: {fileID: 6541427497168192416}
   - component: {fileID: 6541427497168192419}
-  - component: {fileID: 6541427497168192418}
   m_Layer: 5
   m_Name: ApplianceOptionBtnPrefab
   m_TagString: Untagged
@@ -247,22 +246,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &6541427497168192418
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6541427497168192420}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a81a9e081a4afa64dae6b9d42bc38c9f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  description: balabalabal
-  tooltipRect: {fileID: 0}
-  descriptionText: {fileID: 0}
-  tooltipAnimator: {fileID: 0}
 --- !u!1 &6541427497744733142
 GameObject:
   m_ObjectHideFlags: 0

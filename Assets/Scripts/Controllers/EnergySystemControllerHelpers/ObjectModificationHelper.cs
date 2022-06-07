@@ -70,14 +70,9 @@ public abstract class ObjectModificationHelper
                 energySystemData = this.objectRepository.GetEnergySystemData(objectName);
             }
         } else {
-            Debug.Log(applianceData.GetType());
             if (applianceData.GetType() == typeof(NullApplianceSO))
             {
-                //Debug.Log(this.applianceRepository);
-                //Debug.Log(objectName + " object");
                 applianceData = this.applianceRepository.GetApplianceData(objectName, applianceName);
-                Debug.Log(applianceData.GetType());
-                //Debug.Log(applianceData);
             }
         }
         

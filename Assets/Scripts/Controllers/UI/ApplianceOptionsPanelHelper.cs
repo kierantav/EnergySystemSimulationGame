@@ -87,7 +87,6 @@ public class ApplianceOptionsPanelHelper : MonoBehaviour
                 titleImage.sprite = objectData.objectIcon;
                 titleText.text = objectData.objectDescription.ToString();
 
-                button.GetComponent<TooltipContent>().description = objectData.name;
                 button.onClick.AddListener(() => OnApplianceCallback(objectData.objectDescription.ToString(), objectData.objectName));
             }
         }
