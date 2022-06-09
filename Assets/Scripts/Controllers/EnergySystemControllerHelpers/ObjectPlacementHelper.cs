@@ -10,21 +10,11 @@ public class ObjectPlacementHelper: ObjectModificationHelper
     {
     }
 
-    public override void PrepareObjectForModification(Vector3 inputPosition, string objectName, string type)
+    public override void PrepareObjectForModification(Vector3 inputPosition, string objectName, string applianceName, string type)
     {
-        base.PrepareObjectForModification(inputPosition, objectName, type);
+        base.PrepareObjectForModification(inputPosition, objectName, applianceName, type);
         GameObject objectPrefab = GetObjectType(type);
-        //Debug.Log(type);
-        List<Vector3> positionList = GetPositionListByName(inputPosition, objectName, type); // Get and update object positions List
-        //Debug.Log(positionList);
-        /*if (type.Equals("Appliance"))
-        {
-            //Debug.Log(objectPrefab);
-            AddObjectForPlacement(objectPrefab, positionList);
-            resourceController.SpendMoney(applianceData.purchaseCost);
-        }
-        else
-        {*/
+        List<Vector3> positionList = GetPositionListByName(inputPosition, objectName, applianceName, type); // Get and update object positions List
             if (!grid.IsCellTaken(positionList)) // If the cells are not taken 
             {
                 List<Vector3> currentPositionList = CheckExisting(positionList);
@@ -38,7 +28,6 @@ public class ObjectPlacementHelper: ObjectModificationHelper
                             RevokeObjectFromBeingPlaced(currentPositionList);
                         } else
                         {
-                            //Debug.Log(applianceData.purchaseCost);
                             resourceController.AddMoney(applianceData.purchaseCost);
                             RevokeObjectFromBeingPlaced(currentPositionList);
                         }
@@ -77,16 +66,13 @@ public class ObjectPlacementHelper: ObjectModificationHelper
     private GameObject GetObjectType(string type)
     {
         GameObject objectPrefab = null;
-        //Debug.Log(type);
         if (type.Equals("Energy"))
         {
             objectPrefab = energySystemData.objectPrefab; // Get object prefab
         }
         else
         {
-            //Debug.Log(applianceData.objectPrefab);
             objectPrefab = applianceData.objectPrefab;
-            //Debug.Log(objectPrefab);
         }
         return objectPrefab;
     }
@@ -105,18 +91,18 @@ public class ObjectPlacementHelper: ObjectModificationHelper
     }
 
     // return positionlist
-    private List<Vector3> GetPositionListByName(Vector3 inputPosition, string objectName, string type)
+    private List<Vector3> GetPositionListByName(Vector3 inputPosition, string objectName, string applianceName, string type)
     {
         List<Vector3> positionList = new List<Vector3>();
         Vector3 gridPosition = grid.CalculateGridPosition(inputPosition); // Convert mouse position into grid position
         Vector3 p; // temp position
-        List<int> objectSize;
+        List<float> objectSize;
         if (type.Equals("Energy"))
         {
             objectSize = this.objectRepository.GetObjectSize(objectName);
         } else
         {
-            objectSize = this.applianceRepository.GetObjectSize(objectName);
+            objectSize = this.applianceRepository.GetObjectSize(objectName, applianceName);
         }
         
         // Adding current mouse/grid position with object volume

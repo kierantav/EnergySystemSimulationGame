@@ -42,12 +42,12 @@ public abstract class PlayerState
 
     }
 
-    public virtual void OnPuchasingAppliance(string objectName)
+    public virtual void OnPuchasingAppliance(string objectName, string applianceName)
     {
 
     }
 
-    public virtual void EnterState(string objectVariable)
+    public virtual void EnterState(string objectVariable, string applianceName)
     {
 
     }
@@ -55,7 +55,7 @@ public abstract class PlayerState
 
     public virtual void OnSellingObject()
     {
-        this.gameController.TransitionToState(this.gameController.sellingObjectState, null);
+        this.gameController.TransitionToState(this.gameController.sellingObjectState, null, "");
     }
 
     /*public virtual void OnSellingAppliance()

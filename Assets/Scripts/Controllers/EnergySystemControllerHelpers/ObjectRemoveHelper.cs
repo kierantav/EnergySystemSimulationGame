@@ -10,7 +10,7 @@ public class ObjectRemoveHelper: ObjectModificationHelper
     {
     }
 
-    public override void PrepareObjectForModification(Vector3 inputPosition, string objectName, string type)
+    public override void PrepareObjectForModification(Vector3 inputPosition, string objectName, string applianceName, string type)
     {
         Vector3 gridPosition = grid.CalculateGridPosition(inputPosition);
         List<Vector3> positionList = new List<Vector3>();

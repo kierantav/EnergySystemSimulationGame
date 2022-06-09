@@ -43,7 +43,7 @@ public class ObjectRemoveHelperTests
     [Test]
     public void ObjectRemoveHelperSelectForRemoveTestPasses()
     {
-        helper.PrepareObjectForModification(gridPositionList1[0], "", "Energy");
+        helper.PrepareObjectForModification(gridPositionList1[0], "", "", "Energy");
         GameObject objectInDictionary1 = helper.AccessStructureInDictionary(gridPositionList1[0]);
         Assert.AreEqual(tempObject, objectInDictionary1);
     }
@@ -51,7 +51,7 @@ public class ObjectRemoveHelperTests
     [Test]
     public void ObjectRemoveHelperCancelRemoveTestPasses()
     {
-        helper.PrepareObjectForModification(gridPositionList1[0], "", "Energy");
+        helper.PrepareObjectForModification(gridPositionList1[0], "", "", "Energy");
         helper.CancelModifications("Energy");
         Assert.IsTrue(grid.IsCellTaken( gridPositionList1));
     }
@@ -59,7 +59,7 @@ public class ObjectRemoveHelperTests
     [Test]
     public void ObjectRemoveHelperConfirmRemoveTestPasses()
     {
-        helper.PrepareObjectForModification(gridPositionList1[0], "", "Energy");
+        helper.PrepareObjectForModification(gridPositionList1[0], "", "", "Energy");
         helper.ConfirmModifications("Energy");
         Assert.IsFalse(grid.IsCellTaken(gridPositionList1));
     }

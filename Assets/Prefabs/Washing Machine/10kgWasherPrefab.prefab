@@ -106,7 +106,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1368070399781517286}
   m_Layer: 0
-  m_Name: WashingMachinePrefab
+  m_Name: 10kgWasherPrefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -121,7 +121,7 @@ Transform:
   m_GameObject: {fileID: 1853104163479907676}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 69, y: 5.16, z: 68.24}
-  m_LocalScale: {x: 6, y: 6, z: 6}
+  m_LocalScale: {x: 7, y: 7, z: 7}
   m_Children:
   - {fileID: 7502258089487883301}
   - {fileID: 4744948969741693345}

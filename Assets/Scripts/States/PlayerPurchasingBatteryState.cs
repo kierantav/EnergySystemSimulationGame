@@ -21,7 +21,7 @@ public class PlayerPurchasingBatteryState : PlayerState
         this.uiController = uiController;
     }
 
-    public override void EnterState(string objectName)
+    public override void EnterState(string objectName, string applianceName)
     {
         purchasingObjectController.PreparePurchasingObjectController(GetType());
         purchasingObjectController.UpdateSystemAttributesToEnergySystemData();
@@ -35,7 +35,7 @@ public class PlayerPurchasingBatteryState : PlayerState
     public override void OnCancel()
     {
         this.purchasingObjectController.CancelModification();
-        this.gameController.TransitionToState(this.gameController.selectionState, null);
+        this.gameController.TransitionToState(this.gameController.selectionState, null, "");
     }
 
     public override void OnConfirm()
@@ -43,7 +43,7 @@ public class PlayerPurchasingBatteryState : PlayerState
         this.purchasingObjectController.ConfirmModification();
         uiController.InstalledEnergySystems = purchasingObjectController.GetListOfAllObjects();
         purchasingObjectController.UpdateSystemAttributesToEnergySystemData();
-        this.gameController.TransitionToState(this.gameController.selectionState, null);
+        this.gameController.TransitionToState(this.gameController.selectionState, null, "");
         /*foreach (var obj in uiController.InstalledEnergySystems)
         {
             Debug.Log(obj.objectName);

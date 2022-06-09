@@ -56,7 +56,9 @@ public class GameController : MonoBehaviour
     public PlayerPurchasingWashingMachineState purchasingWashingMachineState;
     public PlayerPurchasingFridgeState purchasingFridgeState;
 
-    public Vector3 DieselGeneratorPosition, WindTurbinePosition, BatteryPosition, InvertorPosition, ChargeControllerPosition, PowerLinesPosition, ACPosition, WashingMachinePosition, FridgePosition;
+    public Vector3 DieselGeneratorPosition, WindTurbinePosition, BatteryPosition, InvertorPosition, ChargeControllerPosition, PowerLinesPosition, 
+        WashingMachinePosition, 
+        FridgePosition;
 
     public CameraMovement cameraMovementController;
 
@@ -107,9 +109,9 @@ public class GameController : MonoBehaviour
         purchasingInvertorState = new PlayerPurchasingInvertorState(this, purchasingObjectController, InvertorPosition, uiController);
         purchasingPowerLinesState = new PlayerPurchasingPowerLinesState(this, purchasingObjectController, PowerLinesPosition, uiController);
 
-        purchasingACState = new PlayerPurchasingACState(this, purchasingApplianceController, ACPosition, uiController);
-        purchasingWashingMachineState = new PlayerPurchasingWashingMachineState(this, purchasingApplianceController, WashingMachinePosition, uiController);
-        purchasingFridgeState = new PlayerPurchasingFridgeState(this, purchasingApplianceController, FridgePosition, uiController);
+        purchasingACState = new PlayerPurchasingACState(this, purchasingApplianceController, uiController);
+        purchasingWashingMachineState = new PlayerPurchasingWashingMachineState(this, purchasingApplianceController, uiController);
+        purchasingFridgeState = new PlayerPurchasingFridgeState(this, purchasingApplianceController, uiController);
 
         // initialize state
         state = selectionState;
@@ -125,11 +127,13 @@ public class GameController : MonoBehaviour
     private void AssignUIControllerListeners()
     {
         uiController.AddListenerOnPurchasingEvent((objectName) => state.OnPuchasingEnergySystem(objectName));  // transfer to purchase energy system state
-        uiController.AddListenerOnPurchasingApplianceEvent((objectName) => state.OnPuchasingAppliance(objectName));
+        uiController.AddListenerOnPurchasingApplianceEvent((objectName, applianceName) => state.OnPuchasingAppliance(objectName, applianceName));
         uiController.AddListenerOnCancelEvent(() => state.OnCancel());
         uiController.AddListenerOnSellEvent(() => state.OnSellingObject());
         //uiController.AddListenerOnSellApplianceEvent(() => state.OnSellingAppliance());
         uiController.AddListenerOnConfirmEvent(() => state.OnConfirm());
+
+        //applianceOp
     }
 
     private void AssignInputListeners()
@@ -138,10 +142,10 @@ public class GameController : MonoBehaviour
         inputController.AddListenerOnPointerChangeEvent((position) => state.OnInputPointerChange(position));
     }
 
-    public void TransitionToState(PlayerState newState, string objectVariable)
+    public void TransitionToState(PlayerState newState, string objectVariable, string applianceName)
     {
         this.state = newState;
-        this.state.EnterState(objectVariable);
+        this.state.EnterState(objectVariable, applianceName);
     }
 
 }

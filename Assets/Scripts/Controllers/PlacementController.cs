@@ -18,7 +18,7 @@ public class PlacementController : MonoBehaviour, IPlacementController
 
     public GameObject CreateGhostObject(List<Vector3> objectPositions, GameObject objectPrefab)
     {
-        GameObject newObject = Instantiate(objectPrefab, ground.position + objectPositions[0], Quaternion.identity);
+        GameObject newObject = Instantiate(objectPrefab, ground.position + objectPositions[0], objectPrefab.transform.rotation);
         //Debug.Log("GhostObjectCreated");
         Color colorToSet = Color.green;
         colorToSet.a = 0.5f;

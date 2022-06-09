@@ -61,7 +61,7 @@ public class StatsPanelHelper : MonoBehaviour
     {
         if (energySystemData.Count > 0 /*&& !energySystemData[dieselIndex].isRunning*/)
         {
-            return energySystemData[dieselIndex].emissionGeneratedAmount + energySystemData[gridPowerIndex].emissionGeneratedAmount;
+            return energySystemData[dieselIndex].emissionGeneratedAmount;
         }
         return 0.0f;
     }

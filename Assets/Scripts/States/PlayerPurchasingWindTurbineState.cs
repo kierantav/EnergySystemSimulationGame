@@ -23,7 +23,7 @@ public class PlayerPurchasingWindTurbineState : PlayerState
 
         this.purchasingObjectController.CancelModification();
 
-        this.gameController.TransitionToState(this.gameController.selectionState, null);
+        this.gameController.TransitionToState(this.gameController.selectionState, null, "");
     }
 
     public override void OnConfirm()
@@ -31,10 +31,10 @@ public class PlayerPurchasingWindTurbineState : PlayerState
         this.purchasingObjectController.ConfirmModification();
         purchasingObjectController.UpdateSystemAttributesToEnergySystemData();
         uiController.InstalledEnergySystems = purchasingObjectController.GetListOfAllObjects();
-        this.gameController.TransitionToState(this.gameController.selectionState, null);
+        this.gameController.TransitionToState(this.gameController.selectionState, null, "");
     }
 
-    public  override void EnterState(string objectName)
+    public  override void EnterState(string objectName, string applianceName)
     {
         this.purchasingObjectController.PreparePurchasingObjectController(GetType());
         purchasingObjectController.UpdateSystemAttributesToEnergySystemData();

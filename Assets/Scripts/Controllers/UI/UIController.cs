@@ -17,10 +17,11 @@ public class UIController : MonoBehaviour
 {
     // Use delegate to inform the game manager about buttons clicked
     private Action<string> OnShopHandler;
-    private Action<string> OnApplianceHandler;
+    private Action<string, string> OnApplianceHandler;
     private Action OnCancelHandler;
     private Action OnConfirmHandler;
     private Action OnSellActionHandler;
+    private bool isLoadPanelClicked;
     //private Action OnSellApplianceActionHandler;
 
     // modify - cancel & confirm to place or remove objects
@@ -118,6 +119,7 @@ public class UIController : MonoBehaviour
     public CameraMovement CameraMovementController { get => cameraMovementController; set => cameraMovementController = value; } // exploit the cameraMovementController to GameController
     public List<ApplianceBaseSO> InstalledAppliances { get => installedAppliances; set => installedAppliances = value; }
     public List<EnergySystemGeneratorBaseSO> InstalledEnergySystems { get => installedEnergySystems; set => installedEnergySystems = value; }
+    public bool IsLoadPanelClicked { get => isLoadPanelClicked; set => isLoadPanelClicked = value; }
 
     void Start()
     {
@@ -146,6 +148,15 @@ public class UIController : MonoBehaviour
         openLoadPanelBtn.onClick.AddListener(OnToggleLoadPanel);
     }
     
+    public bool isUIClicked(bool value)
+    {
+        if (isLoadPanelClicked)
+        {
+            isLoadPanelClicked = false;
+            return true;
+        }
+        return false;
+    }
 
     private void PurchaseFuel()
     {
@@ -154,7 +165,7 @@ public class UIController : MonoBehaviour
 
     private void OnToggleLoadPanel()
     {
-        if (breakerPanelHelper.mainLoadPanel.gameObject.activeSelf)
+        if (breakerPanelHelper.loadPanelHelper.gameObject.activeSelf)
         {
             breakerPanelHelper.HideLoadPanel();
         } else
@@ -308,7 +319,7 @@ public class UIController : MonoBehaviour
     private void PreparePurchaseMenu()
     {
         CreateButtonsInEnergyPanel(energySystemPurchasePanel.transform, objectRepository.GetEnergySystemGeneratorObjects());
-        CreateButtonsInAppliancePanel(appliancePurchasePanel.transform, applianceRepository.GetApplianceObjects());
+        CreateButtonsInAppliancePanel(appliancePurchasePanel.transform, RefineApplianceData());
     }
 
     private void CreateButtonsInEnergyPanel(Transform panelTransform, List<EnergySystemGeneratorBaseSO> data)
@@ -346,12 +357,12 @@ public class UIController : MonoBehaviour
 
                 button.GetComponentsInChildren<Image>()[0].sprite = objectData.objectIcon;
                 button.GetComponentsInChildren<Image>()[2].sprite = objectData.objectIcon;
-                button.onClick.AddListener(() => OnShopCallback(button.GetComponentsInChildren<TextMeshProUGUI>()[0].text));
+                button.onClick.AddListener(() => OnShopCallback(button.GetComponentsInChildren<TextMeshProUGUI>()[0].text, ""));
             }
         }
     }
 
-    private void OnShopCallback(string objectName)
+    public void OnShopCallback(string objectName, string applianceName)
     {
         modifyPanel.SetActive(true);
         mainMenuPanel.SetActive(false);
@@ -364,8 +375,7 @@ public class UIController : MonoBehaviour
         }
         else
         {
-            //Debug.Log("OnShopCallback");
-            OnApplianceHandler?.Invoke(objectName);
+            OnApplianceHandler?.Invoke(objectName, applianceName);
         }
     }
 
@@ -389,20 +399,39 @@ public class UIController : MonoBehaviour
             if (button != null)
             {
                 ApplianceBaseSO objectData = data[i];
-                button.GetComponentsInChildren<TextMeshProUGUI>()[0].text = objectData.objectName;
-                button.GetComponentsInChildren<TextMeshProUGUI>()[1].text = objectData.objectName;
+                button.GetComponentsInChildren<TextMeshProUGUI>()[0].text = objectData.objectDescription.ToString();
+                button.GetComponentsInChildren<TextMeshProUGUI>()[1].text = objectData.objectDescription.ToString();
                 button.GetComponent<TooltipContent>().description = objectData.objectDescription.ToString();
                 //button.GetComponentsInChildren<TextMeshProUGUI>()[8].text = objectData.objectDescription.ToString();
                 button.GetComponentsInChildren<Image>()[0].sprite = objectData.objectIcon;
                 button.GetComponentsInChildren<Image>()[2].sprite = objectData.objectIcon;
-                button.onClick.AddListener(() => OnShopCallback(button.GetComponentsInChildren<TextMeshProUGUI>()[0].text));
+                button.onClick.AddListener(() => OnApplianceCallback(button.GetComponentsInChildren<TextMeshProUGUI>()[0].text));
             }
         }
     }
 
     private void OnApplianceCallback(string objectName)
     {
-        applianceOptionsPanelHelper.gameObject.SetActive(true);
+        //applianceOptionsPanelHelper.
+        applianceOptionsPanelHelper.ObjectName = objectName;
+        applianceOptionsPanelHelper.ApplianceData = applianceRepository.GetApplianceObjects();
+        applianceOptionsPanelHelper.OpenApplianceOptionsPanel();
+    }
+
+    private List<ApplianceBaseSO> RefineApplianceData()
+    {
+        List<ApplianceBaseSO> generalApplianceData = applianceRepository.GetApplianceObjects();
+        int i = generalApplianceData.Count - 1;
+        while (i >= 0)
+        {
+            if (generalApplianceData.FindAll(item => item.GetType() == generalApplianceData[i].GetType()).Count > 1)
+            {
+                generalApplianceData.Remove(generalApplianceData[i]);
+
+            }
+            --i;
+        }
+        return generalApplianceData;
     }
 
     //public void PurchasingApplianceObject(string objectName)
@@ -430,6 +459,7 @@ public class UIController : MonoBehaviour
     private void OnCloseShopMenuHandler()
     {
         shopMenuPanel.SetActive(false);
+        applianceOptionsPanelHelper.CloseApplianceOptionsPanel();
         EnableCameraMovement(true);
     }
     #endregion
@@ -446,12 +476,12 @@ public class UIController : MonoBehaviour
         OnShopHandler -= listener;
     }
 
-    public void AddListenerOnPurchasingApplianceEvent(Action<string> listener)
+    public void AddListenerOnPurchasingApplianceEvent(Action<string, string> listener)
     {
         OnApplianceHandler += listener;
     }
 
-    public void RemoveListenerOnShopApplianceEvent(Action<string> listener)
+    public void RemoveListenerOnShopApplianceEvent(Action<string, string> listener)
     {
         OnApplianceHandler -= listener;
     }

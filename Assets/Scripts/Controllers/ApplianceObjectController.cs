@@ -61,7 +61,7 @@ public class ApplianceObjectController
     public void PrepareApplianceForSellingAt(Vector3 inputPosition)
     {
         //Debug.Log(objectModificationHelper);
-        objectModificationHelper.PrepareObjectForModification(inputPosition, "", "Appliance");
+        objectModificationHelper.PrepareObjectForModification(inputPosition, "", "", "Appliance");
     }
 
     public void UpdateSystemAttributesToApplianceData()
@@ -75,17 +75,15 @@ public class ApplianceObjectController
         objectModificationHelper.ConfirmModifications("Appliance");
     }
 
-    public void PrepareApplianceForModification(Vector3 inputPosition, string objectName)
+    public void PrepareApplianceForModification(Vector3 inputPosition, string objectName, string applianceName)
     {
-        try
-        {
-            //Debug.Log("1");
-            objectModificationHelper.PrepareObjectForModification(inputPosition, objectName, "Appliance");
-        }
-        catch
-        {
-            throw new Exception("No such appliance type." + objectName);
-
-        }
+        //try
+        //{
+            objectModificationHelper.PrepareObjectForModification(inputPosition, objectName, applianceName, "Appliance");
+        //}
+        //catch
+        //{
+            //throw new Exception("No such appliance type." + objectName);
+        //}
     }
 }

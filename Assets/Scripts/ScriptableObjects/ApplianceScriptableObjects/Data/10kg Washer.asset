@@ -9,25 +9,25 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ca48d47eab8394899b8f267238343c80, type: 3}
-  m_Name: New Fridge
+  m_Script: {fileID: 11500000, guid: 6278f0ab8d8c84dae935bbf5450b8a21, type: 3}
+  m_Name: 10kg Washer
   m_EditorClassIdentifier: 
-  objectIcon: {fileID: 21300000, guid: 491004833cbc8462496e3d5ffdac760f, type: 3}
-  objectName: Fridge
-  objectDescription: Fridge
+  objectIcon: {fileID: 21300000, guid: 0d082d759bd79834fb953dd96e0ae89f, type: 3}
+  objectName: 10kg Washer
+  objectDescription: Washing Machine
   objectType: Appliance
-  objectPrefab: {fileID: 6161978639738040497, guid: a0d4554a9e840214fb4fd4552a0a3e3e,
+  objectPrefab: {fileID: 1853104163479907676, guid: ba65cb89fcb6b8747890446587ac99e4,
     type: 3}
-  emissionRate: 0.03
+  emissionRate: 0.6
   emissionAmount: 0
-  purchaseCost: 1000
+  purchaseCost: 750
   upkeepCost: 0
   purchaseExperience: 0
   greenPointExperience: 0
-  powerNeededRate: 2
+  powerNeededRate: 0.6
   powerNeededAmount: 0
   happiness: 0
   isTurnedOn: 0
-  objectWidth: 7
-  objectHeight: 7
-  objectLength: 7
+  objectWidth: 6
+  objectHeight: 6
+  objectLength: 6

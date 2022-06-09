@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: Small AC
   m_EditorClassIdentifier: 
   objectIcon: {fileID: 21300000, guid: eeb6b5e19ac9e49d284c66f64e520baf, type: 3}
-  objectName: Small
-  objectDescription: Small Air Conditioner
+  objectName: Small AC
+  objectDescription: Air Conditioner
   objectType: Appliance
-  objectPrefab: {fileID: 3870592461289821970, guid: 302c88d5f7edb634a9b06aca1ba186cf,
+  objectPrefab: {fileID: 167904411508576394, guid: 632cab814acabbd4fbc9fb586d86623f,
     type: 3}
   emissionRate: 0.03
   emissionAmount: 0
@@ -28,6 +28,6 @@ MonoBehaviour:
   powerNeededAmount: 0
   happiness: 0
   isTurnedOn: 0
-  objectWidth: 7
-  objectHeight: 2
-  objectLength: 3
+  objectWidth: 0.1
+  objectHeight: 0.08
+  objectLength: 0.06

@@ -5,10 +5,10 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "New Appliance Collection", menuName = "EnergySystemSimulation/ApplianceCollection")]
 public class ApplianceCollection : ScriptableObject
 {
-    public ACSO acSO;
-    public WashingMachineSO washingMachineSO;
+    public ACSO smallACSO, mediumACSO, largeACSO;
+    public WashingMachineSO smallWasherSO, largeWasherSO;
     //public LightSO lightSO;
-    public FridgeSO fridgeSO;
+    public FridgeSO smallFridgeSO, largeFridgeSO;
     //public FanSO fanSO;
     //public DryerSO dryerSO;
 

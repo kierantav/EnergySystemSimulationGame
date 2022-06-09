@@ -93,9 +93,9 @@ public class ObjectRepository : MonoBehaviour
     #endregion
 
     #region GetEnergySystemSizePrafabByName
-    public List<int> GetObjectSize(string objectName)
+    public List<float> GetObjectSize(string objectName)
     {
-        List<int> objectSizeToReturn = null;
+        List<float> objectSizeToReturn = null;
         switch (objectName)
         {
             case "Diesel Generator":
@@ -130,60 +130,60 @@ public class ObjectRepository : MonoBehaviour
         return objectSizeToReturn;
     }
 
-    private List<int> GetHybirdChargeControllerSize()
+    private List<float> GetHybirdChargeControllerSize()
     {
-        List<int> temp = new List<int>();
+        List<float> temp = new List<float>();
         temp.Add(scriptableObjectCollection.hybirdChargeControllerSO.objectWidth);
         temp.Add(scriptableObjectCollection.hybirdChargeControllerSO.objectHeight);
         temp.Add(scriptableObjectCollection.hybirdChargeControllerSO.objectLength);
         return temp;
     }
 
-    private List<int> GetInvertorSize()
+    private List<float> GetInvertorSize()
     {
-        List<int> temp = new List<int>();
+        List<float> temp = new List<float>();
         temp.Add(scriptableObjectCollection.invertorSO.objectWidth);
         temp.Add(scriptableObjectCollection.invertorSO.objectHeight);
         temp.Add(scriptableObjectCollection.invertorSO.objectLength);
         return temp;
     }
 
-    public List<int> GetDieselGeneratorSize()
+    public List<float> GetDieselGeneratorSize()
     {
-        List<int> temp = new List<int>();
+        List<float> temp = new List<float>();
         temp.Add(scriptableObjectCollection.dieselGeneratorSO.objectWidth);
         temp.Add(scriptableObjectCollection.dieselGeneratorSO.objectHeight);
         temp.Add(scriptableObjectCollection.dieselGeneratorSO.objectLength);
         return temp;
     }
-    public List<int> GetBatterySize()
+    public List<float> GetBatterySize()
     {
-        List<int> temp = new List<int>();
+        List<float> temp = new List<float>();
         temp.Add(scriptableObjectCollection.batterySO.objectWidth);
         temp.Add(scriptableObjectCollection.batterySO.objectHeight);
         temp.Add(scriptableObjectCollection.batterySO.objectLength);
         return temp;
     }
-    public List<int> GetSolarPanelSize()
+    public List<float> GetSolarPanelSize()
     {
-        List<int> temp = new List<int>();
+        List<float> temp = new List<float>();
         temp.Add(scriptableObjectCollection.solarPanelSO.objectWidth);
         temp.Add(scriptableObjectCollection.solarPanelSO.objectHeight);
         temp.Add(scriptableObjectCollection.solarPanelSO.objectLength);
         return temp;
     }
-    public List<int> GetWindTurbineSize()
+    public List<float> GetWindTurbineSize()
     {
-        List<int> temp = new List<int>();
+        List<float> temp = new List<float>();
         temp.Add(scriptableObjectCollection.windTurbineSO.objectWidth);
         temp.Add(scriptableObjectCollection.windTurbineSO.objectHeight);
         temp.Add(scriptableObjectCollection.windTurbineSO.objectLength);
         return temp;
     }
 
-    public List<int> GetPowerLinesSize()
+    public List<float> GetPowerLinesSize()
     {
-        List<int> temp = new List<int>();
+        List<float> temp = new List<float>();
         temp.Add(scriptableObjectCollection.powerLinesSO.objectWidth);
         temp.Add(scriptableObjectCollection.powerLinesSO.objectHeight);
         temp.Add(scriptableObjectCollection.powerLinesSO.objectLength);

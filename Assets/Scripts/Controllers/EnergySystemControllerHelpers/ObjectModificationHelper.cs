@@ -61,7 +61,7 @@ public abstract class ObjectModificationHelper
         ResetHelperData();
     }
 
-    public virtual void PrepareObjectForModification(Vector3 inputPosition, string objectName, string type)
+    public virtual void PrepareObjectForModification(Vector3 inputPosition, string objectName, string applianceName, string type)
     {   
         if (type.Equals("Energy"))
         {
@@ -70,13 +70,9 @@ public abstract class ObjectModificationHelper
                 energySystemData = this.objectRepository.GetEnergySystemData(objectName);
             }
         } else {
-        
             if (applianceData.GetType() == typeof(NullApplianceSO))
             {
-                //Debug.Log(this.applianceRepository);
-                //Debug.Log(objectName + " object");
-                applianceData = this.applianceRepository.GetApplianceData(objectName);
-                //Debug.Log(applianceData);
+                applianceData = this.applianceRepository.GetApplianceData(objectName, applianceName);
             }
         }
         
