@@ -131,8 +131,8 @@ public class ObjectRepositoryTests
     [Test]
     public void StructureRepositoryEditModeGetSolarPanelSizeTestPasses()
     {
-        List<int> returnList = objectRepository.GetObjectSize("Solar Panel");
-        List<int> testList = new List<int>() { 1, 1, 1 };
+        List<float> returnList = objectRepository.GetObjectSize("Solar Panel");
+        List<float> testList = new List<float>() { 1, 1, 1 };
         Assert.AreEqual(testList, returnList);
     }
 
@@ -140,40 +140,40 @@ public class ObjectRepositoryTests
     [Test]
     public void StructureRepositoryEditModeGetWindTurbineSizeTestPasses()
     {
-        List<int> returnList = objectRepository.GetObjectSize("Wind Turbine");
-        List<int> testList = new List<int>() { 2, 2, 2 };
+        List<float> returnList = objectRepository.GetObjectSize("Wind Turbine");
+        List<float> testList = new List<float>() { 2, 2, 2 };
         Assert.AreEqual(testList, returnList);
     }
 
     [Test]
     public void StructureRepositoryEditModeGetDieselGeneratorSizeTestPasses()
     {
-        List<int> returnList = objectRepository.GetObjectSize("Diesel Generator");
-        List<int> testList = new List<int>() { 3, 3, 3 };
+        List<float> returnList = objectRepository.GetObjectSize("Diesel Generator");
+        List<float> testList = new List<float>() { 3, 3, 3 };
         Assert.AreEqual(testList, returnList);
     }
 
     [Test]
     public void StructureRepositoryEditModeGetInvertorSizeTestPasses()
     {
-        List<int> returnList = objectRepository.GetObjectSize("Invertor");
-        List<int> testList = new List<int>() { 4, 4, 4 };
+        List<float> returnList = objectRepository.GetObjectSize("Invertor");
+        List<float> testList = new List<float>() { 4, 4, 4 };
         Assert.AreEqual(testList, returnList);
     }
 
     [Test]
     public void StructureRepositoryEditModeGetChargeControllerSizeTestPasses()
     {
-        List<int> returnList = objectRepository.GetObjectSize("Charge Controller");
-        List<int> testList = new List<int>() { 5,5, 5 };
+        List<float> returnList = objectRepository.GetObjectSize("Charge Controller");
+        List<float> testList = new List<float>() { 5,5, 5 };
         Assert.AreEqual(testList, returnList);
     }
 
     [Test]
     public void StructureRepositoryEditModeGetBatterySizeTestPasses()
     {
-        List<int> returnList = objectRepository.GetObjectSize("Battery");
-        List<int> testList = new List<int>() { 6, 6, 6 };
+        List<float> returnList = objectRepository.GetObjectSize("Battery");
+        List<float> testList = new List<float>() { 6, 6, 6 };
         Assert.AreEqual(testList, returnList);
     }
 

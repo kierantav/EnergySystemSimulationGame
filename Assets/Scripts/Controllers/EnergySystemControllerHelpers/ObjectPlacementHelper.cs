@@ -66,16 +66,13 @@ public class ObjectPlacementHelper: ObjectModificationHelper
     private GameObject GetObjectType(string type)
     {
         GameObject objectPrefab = null;
-        //Debug.Log(type);
         if (type.Equals("Energy"))
         {
             objectPrefab = energySystemData.objectPrefab; // Get object prefab
         }
         else
         {
-            //Debug.Log(applianceData.objectPrefab);
             objectPrefab = applianceData.objectPrefab;
-            //Debug.Log(objectPrefab);
         }
         return objectPrefab;
     }
@@ -99,7 +96,7 @@ public class ObjectPlacementHelper: ObjectModificationHelper
         List<Vector3> positionList = new List<Vector3>();
         Vector3 gridPosition = grid.CalculateGridPosition(inputPosition); // Convert mouse position into grid position
         Vector3 p; // temp position
-        List<int> objectSize;
+        List<float> objectSize;
         if (type.Equals("Energy"))
         {
             objectSize = this.objectRepository.GetObjectSize(objectName);

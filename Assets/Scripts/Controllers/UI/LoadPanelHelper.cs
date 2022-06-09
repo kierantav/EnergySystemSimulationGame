@@ -34,7 +34,7 @@ public class LoadPanelHelper : MonoBehaviour
 
     private void UpdateCurrentLoadText()
     {
-        currentLoadText.text = currentLoad.ToString();
+        currentLoadText.text = Math.Round(currentLoad, 2).ToString();
     }
 
     private void UpdateLoadPanel()
@@ -143,5 +143,12 @@ public class LoadPanelHelper : MonoBehaviour
                 }
             }
         }
+    }
+
+    private void OnMouseOver()
+    {
+        if (!Input.GetMouseButton(0)) return;
+
+        uiController.isUIClicked(true);
     }
 }

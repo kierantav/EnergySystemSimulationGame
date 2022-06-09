@@ -10,24 +10,24 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6278f0ab8d8c84dae935bbf5450b8a21, type: 3}
-  m_Name: Medium Washing Machine
+  m_Name: 10kg Washer
   m_EditorClassIdentifier: 
-  objectIcon: {fileID: 21300000, guid: 2960fe79bf69a48469c451d56e2fe760, type: 3}
-  objectName: Medium
+  objectIcon: {fileID: 21300000, guid: 0d082d759bd79834fb953dd96e0ae89f, type: 3}
+  objectName: 10kg Washer
   objectDescription: Washing Machine
   objectType: Appliance
-  objectPrefab: {fileID: 1853104163479907676, guid: 96ee093969a93dd4ba2bdb72f523f5ed,
+  objectPrefab: {fileID: 1853104163479907676, guid: ba65cb89fcb6b8747890446587ac99e4,
     type: 3}
-  emissionRate: 0.02
+  emissionRate: 0.6
   emissionAmount: 0
-  purchaseCost: 500
+  purchaseCost: 750
   upkeepCost: 0
   purchaseExperience: 0
   greenPointExperience: 0
-  powerNeededRate: 2
+  powerNeededRate: 0.6
   powerNeededAmount: 0
   happiness: 0
   isTurnedOn: 0
-  objectWidth: 5
-  objectHeight: 5
-  objectLength: 5
+  objectWidth: 6
+  objectHeight: 6
+  objectLength: 6

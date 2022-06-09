@@ -8,9 +8,6 @@ public class PlayerPurchasingACState : PlayerState
     UIController uiController;
     string objectName;
 
-    //Vector3 cameraPosition = new Vector3(70.65f, 10f, 54.84f);
-    //Quaternion cameraRotation = Quaternion.Euler(0f, 111.38f, 0f);
-
     public PlayerPurchasingACState(GameController gameController, ApplianceObjectController purchasingApplianceController, UIController uiController) : base(gameController)
     {
         this.purchasingApplianceController = purchasingApplianceController;
@@ -49,12 +46,12 @@ public class PlayerPurchasingACState : PlayerState
                 cameraRotation = Quaternion.Euler(0f, -74.871f, 0f);
                 break;
             case "Medium AC":
-                cameraPosition = new Vector3(70.65f, 10f, 54.84f);
-                cameraRotation = Quaternion.Euler(0f, 111.38f, 0f);
+                cameraPosition = new Vector3(69.46967f, 11f, 42.3863f);
+                cameraRotation = Quaternion.Euler(0f, 27.215f, 0f);
                 break;
             case "Large AC":
-                cameraPosition = new Vector3(0f, 0f, 0f);
-                cameraRotation = Quaternion.Euler(0f, 0f, 0f);
+                cameraPosition = new Vector3(70.65f, 10f, 54.84f);
+                cameraRotation = Quaternion.Euler(0f, 111.38f, 0f);
                 break;
             default:
                 break;
@@ -66,13 +63,13 @@ public class PlayerPurchasingACState : PlayerState
         switch (applianceName)
         {
             case "Small AC":
-                ACPosition = new Vector3(45.0f, 17.16f, 56.8f);
+                ACPosition = new Vector3(45.51f, 15f, 56.41f);
                 break;
             case "Medium AC":
-                ACPosition = new Vector3(97.04f, 17.1f, 38.8f);
+                ACPosition = new Vector3(77f, 14f, 61f);
                 break;
             case "Large AC":
-                ACPosition = new Vector3(45.0f, 17.16f, 56.8f);
+                ACPosition = new Vector3(96f, 14f, 38f);
                 break;
             default:
                 break;

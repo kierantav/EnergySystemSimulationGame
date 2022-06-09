@@ -31,6 +31,7 @@ public class ApplianceOptionsPanelHelper : MonoBehaviour
     {
         gameObject.SetActive(false);
         closeApplianceOptionsBtn.onClick.AddListener(CloseApplianceOptionsPanel);
+        titleText.text = "Options";
     }
 
     // Update is called once per frame
@@ -85,34 +86,15 @@ public class ApplianceOptionsPanelHelper : MonoBehaviour
                 button.GetComponentsInChildren<TextMeshProUGUI>()[7].text = "$ " + objectData.purchaseCost.ToString();
 
                 titleImage.sprite = objectData.objectIcon;
-                titleText.text = objectData.objectDescription.ToString();
+                //titleText.text = objectData.objectDescription.ToString();
 
-                button.onClick.AddListener(() => OnApplianceCallback(objectData.objectDescription.ToString(), objectData.objectName));
+                button.onClick.AddListener(() => OnPurchaseAppliance(objectData.objectDescription.ToString(), objectData.objectName));
             }
         }
     }
 
-    private void OnApplianceCallback(string applianceType, string applianceName)
+    private void OnPurchaseAppliance(string applianceType, string applianceName)
     {
-        switch (applianceType)
-        {
-            case "Air Conditioner":
-                OnPurchaseAC(applianceType, applianceName);
-                break;
-            case "Washing Machine":
-
-                break;
-            case "Fridge":
-
-                break;
-            default:
-                break;
-        }
-    }
-
-    private void OnPurchaseAC(string applianceType, string applianceName)
-    {
-        //this.gameController.TransitionToState()
         uiController.OnShopCallback(applianceType, applianceName);
     }
 

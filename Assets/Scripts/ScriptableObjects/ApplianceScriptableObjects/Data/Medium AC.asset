@@ -16,7 +16,7 @@ MonoBehaviour:
   objectName: Medium AC
   objectDescription: Air Conditioner
   objectType: Appliance
-  objectPrefab: {fileID: 489162215231928842, guid: 09be987dc29bb684f969930e70695f44,
+  objectPrefab: {fileID: 167904411508576394, guid: 4d523c6b61e6c9b479803e0309c1d053,
     type: 3}
   emissionRate: 0.05
   emissionAmount: 0
@@ -28,6 +28,6 @@ MonoBehaviour:
   powerNeededAmount: 0
   happiness: 0
   isTurnedOn: 0
-  objectWidth: 10
-  objectHeight: 3
-  objectLength: 3
+  objectWidth: 0.16
+  objectHeight: 0.1
+  objectLength: 0.08

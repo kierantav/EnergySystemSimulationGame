@@ -94,7 +94,6 @@ public class PlayerSelectionState : PlayerState
 
     public override void OnPuchasingAppliance(string objectName, string applianceName)
     {
-
         switch (objectName)
         {
             case "Air Conditioner":

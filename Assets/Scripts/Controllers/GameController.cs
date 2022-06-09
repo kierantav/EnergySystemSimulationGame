@@ -110,8 +110,8 @@ public class GameController : MonoBehaviour
         purchasingPowerLinesState = new PlayerPurchasingPowerLinesState(this, purchasingObjectController, PowerLinesPosition, uiController);
 
         purchasingACState = new PlayerPurchasingACState(this, purchasingApplianceController, uiController);
-        purchasingWashingMachineState = new PlayerPurchasingWashingMachineState(this, purchasingApplianceController, WashingMachinePosition, uiController);
-        purchasingFridgeState = new PlayerPurchasingFridgeState(this, purchasingApplianceController, FridgePosition, uiController);
+        purchasingWashingMachineState = new PlayerPurchasingWashingMachineState(this, purchasingApplianceController, uiController);
+        purchasingFridgeState = new PlayerPurchasingFridgeState(this, purchasingApplianceController, uiController);
 
         // initialize state
         state = selectionState;

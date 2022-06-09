@@ -13,8 +13,10 @@ public class ApplianceRepository : MonoBehaviour
         systemObjects.Add(applianceCollection.smallACSO);
         systemObjects.Add(applianceCollection.mediumACSO);
         systemObjects.Add(applianceCollection.largeACSO);
-        systemObjects.Add(applianceCollection.mediumWashingMachineSO);
+        systemObjects.Add(applianceCollection.smallWasherSO);
+        systemObjects.Add(applianceCollection.largeWasherSO);
         //systemObjects.Add(applianceCollection.lightSO);
+        systemObjects.Add(applianceCollection.smallFridgeSO);
         systemObjects.Add(applianceCollection.largeFridgeSO);
         //systemObjects.Add(applianceCollection.fanSO);
         //systemObjects.Add(applianceCollection.dryerSO);
@@ -28,9 +30,9 @@ public class ApplianceRepository : MonoBehaviour
             case "Air Conditioner":
                 return GetACData(applianceName);
             case "Washing Machine":
-                return applianceCollection.mediumWashingMachineSO;
+                return GetWasherData(applianceName);
             case "Fridge":
-                return applianceCollection.largeFridgeSO;
+                return GetFridgeData(applianceName);
             default:
                 return null;
         }
@@ -44,23 +46,49 @@ public class ApplianceRepository : MonoBehaviour
                 return applianceCollection.smallACSO;
             case "Medium AC":
                 return applianceCollection.mediumACSO;
-            case "Large":
-                return applianceCollection.smallACSO;
+            case "Large AC":
+                return applianceCollection.largeACSO;
             default:
                 return null;
         }
     }
 
-    public List<int> GetObjectSize(string objectName, string applianceName)
+    private ApplianceBaseSO GetFridgeData(string objectName)
     {
-        List<int> objectSizeToReturn = null;
+        switch (objectName)
+        {
+            case "Small Fridge":
+                return applianceCollection.smallFridgeSO;
+            case "Large Fridge":
+                return applianceCollection.largeFridgeSO;
+            default:
+                return null;
+        }
+    }
+
+    private ApplianceBaseSO GetWasherData(string objectName)
+    {
+        switch (objectName)
+        {
+            case "7kg Washer":
+                return applianceCollection.smallWasherSO;
+            case "10kg Washer":
+                return applianceCollection.largeWasherSO;
+            default:
+                return null;
+        }
+    }
+
+    public List<float> GetObjectSize(string objectName, string applianceName)
+    {
+        List<float> objectSizeToReturn = null;
         switch (objectName)
         {
             case "Air Conditioner":
                 objectSizeToReturn = GetACSize(applianceName);
                 break;
             case "Washing Machine":
-                objectSizeToReturn = GetWashingMachineSize();
+                objectSizeToReturn = GetWashingMachineSize(applianceName);
                 break;
             case "Fridge":
                 objectSizeToReturn = GetFridgeSize();
@@ -76,18 +104,30 @@ public class ApplianceRepository : MonoBehaviour
         return objectSizeToReturn;
     }
 
-    private List<int> GetWashingMachineSize()
+    private List<float> GetWashingMachineSize(string objectName)
     {
-        List<int> temp = new List<int>();
-        /*temp.Add(applianceCollection.washingMachineSO.objectWidth);
-        temp.Add(applianceCollection.washingMachineSO.objectHeight);
-        temp.Add(applianceCollection.washingMachineSO.objectLength);*/
+        List<float> temp = new List<float>();
+        switch (objectName)
+        {
+            case "7kg Washer":
+                temp.Add(applianceCollection.smallWasherSO.objectWidth);
+                temp.Add(applianceCollection.smallWasherSO.objectHeight);
+                temp.Add(applianceCollection.smallWasherSO.objectLength);
+                break;
+            case "10kg Washer":
+                temp.Add(applianceCollection.largeWasherSO.objectWidth);
+                temp.Add(applianceCollection.largeWasherSO.objectHeight);
+                temp.Add(applianceCollection.largeWasherSO.objectLength);
+                break;
+            default:
+                break;
+        }
         return temp;
     }
 
-    private List<int> GetACSize(string objectName)
+    private List<float> GetACSize(string objectName)
     {
-        List<int> temp = new List<int>();
+        List<float> temp = new List<float>();
         switch (objectName)
         {
             case "Small AC":
@@ -111,12 +151,12 @@ public class ApplianceRepository : MonoBehaviour
         return temp;
     }
 
-    private List<int> GetFridgeSize()
+    private List<float> GetFridgeSize()
     {
-        List<int> temp = new List<int>();
-        /*temp.Add(applianceCollection.fridgeSO.objectWidth);
-        temp.Add(applianceCollection.fridgeSO.objectHeight);
-        temp.Add(applianceCollection.fridgeSO.objectLength);*/
+        List<float> temp = new List<float>();
+        temp.Add(applianceCollection.smallFridgeSO.objectWidth);
+        temp.Add(applianceCollection.smallFridgeSO.objectHeight);
+        temp.Add(applianceCollection.smallFridgeSO.objectLength);
         return temp;
     }
 }

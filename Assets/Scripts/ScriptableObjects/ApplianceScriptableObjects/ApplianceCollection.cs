@@ -6,9 +6,9 @@ using UnityEngine;
 public class ApplianceCollection : ScriptableObject
 {
     public ACSO smallACSO, mediumACSO, largeACSO;
-    public WashingMachineSO mediumWashingMachineSO;
+    public WashingMachineSO smallWasherSO, largeWasherSO;
     //public LightSO lightSO;
-    public FridgeSO largeFridgeSO;
+    public FridgeSO smallFridgeSO, largeFridgeSO;
     //public FanSO fanSO;
     //public DryerSO dryerSO;
 

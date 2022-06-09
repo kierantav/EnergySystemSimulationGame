@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: Large AC
   m_EditorClassIdentifier: 
   objectIcon: {fileID: 21300000, guid: eeb6b5e19ac9e49d284c66f64e520baf, type: 3}
-  objectName: Large
+  objectName: Large AC
   objectDescription: Air Conditioner
   objectType: Appliance
-  objectPrefab: {fileID: 489162215231928842, guid: 09be987dc29bb684f969930e70695f44,
+  objectPrefab: {fileID: 167904411508576394, guid: 97cb84697ce344849a6392614cc80577,
     type: 3}
   emissionRate: 0.07
   emissionAmount: 0
@@ -28,6 +28,6 @@ MonoBehaviour:
   powerNeededAmount: 0
   happiness: 0
   isTurnedOn: 0
-  objectWidth: 10
-  objectHeight: 3
-  objectLength: 3
+  objectWidth: 0.15
+  objectHeight: 0.1
+  objectLength: 0.1

@@ -21,6 +21,7 @@ public class UIController : MonoBehaviour
     private Action OnCancelHandler;
     private Action OnConfirmHandler;
     private Action OnSellActionHandler;
+    private bool isLoadPanelClicked;
     //private Action OnSellApplianceActionHandler;
 
     // modify - cancel & confirm to place or remove objects
@@ -118,6 +119,7 @@ public class UIController : MonoBehaviour
     public CameraMovement CameraMovementController { get => cameraMovementController; set => cameraMovementController = value; } // exploit the cameraMovementController to GameController
     public List<ApplianceBaseSO> InstalledAppliances { get => installedAppliances; set => installedAppliances = value; }
     public List<EnergySystemGeneratorBaseSO> InstalledEnergySystems { get => installedEnergySystems; set => installedEnergySystems = value; }
+    public bool IsLoadPanelClicked { get => isLoadPanelClicked; set => isLoadPanelClicked = value; }
 
     void Start()
     {
@@ -146,6 +148,15 @@ public class UIController : MonoBehaviour
         openLoadPanelBtn.onClick.AddListener(OnToggleLoadPanel);
     }
     
+    public bool isUIClicked(bool value)
+    {
+        if (isLoadPanelClicked)
+        {
+            isLoadPanelClicked = false;
+            return true;
+        }
+        return false;
+    }
 
     private void PurchaseFuel()
     {
