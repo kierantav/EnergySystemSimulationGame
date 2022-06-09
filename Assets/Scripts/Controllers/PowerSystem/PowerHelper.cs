@@ -81,15 +81,12 @@ public class PowerHelper
             {
                 UpdatePowerLinesInfoFromObject(obj);
             }
-        }
-
-        foreach (var obj in objects)
-        {
             if (obj.objectName == "Solar Panel")
             {
                 UpdateSolarPanelPowerInfoFromObject(obj, period, poa);
             }
         }
+
 
         // Update this first
         solarPanelsOutputRate = solarPanelCount * solarPanelPowerRateTemp;
