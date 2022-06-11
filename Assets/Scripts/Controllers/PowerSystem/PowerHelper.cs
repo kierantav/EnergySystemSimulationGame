@@ -85,10 +85,6 @@ public class PowerHelper
             {
                 UpdatePowerLinesInfoFromObject(obj);
             }
-        }
-
-        foreach (var obj in objects)
-        {
             if (obj.objectName == "Solar Panel")
             {
                 //UpdateSolarPanelPowerInfoFromObject(obj, period, poa);
@@ -104,14 +100,7 @@ public class PowerHelper
             }
         }
 
-        if (renewablesOutput < loadValue)
-        {
-            Debug.Log("Cant run go to battery");
-        }
-        Debug.Log(renewablesOutput);*/
 
-        // if battery is fully charged, turn off charge controller
-        // 97% efficiency charge controller
 
         // Update this first
         solarPanelsOutputRate = solarPanelCount * solarPanelPowerRateTemp;
