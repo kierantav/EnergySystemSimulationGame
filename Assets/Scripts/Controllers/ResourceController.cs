@@ -73,6 +73,7 @@ public class ResourceController : MonoBehaviour, IResourceController
         this.applianceObjectController = applianceObjectController;
       
         InvokeRepeating("TimePeriod", 0, 1);
+        //InvokeRepeating("CalculateRenewablesOutput", 0, 1);
         //InvokeRepeating("CalculatePropertyIncome", 0, moneyCalculationInterval);
     }
 
@@ -91,6 +92,7 @@ public class ResourceController : MonoBehaviour, IResourceController
         meterHelper.TargetLoadRate = GetCurrentTotalLoad();
         meterHelper.TargetPowerRate = powerHelper.TotalOutputRate;
 
+        uIController.systemInfoPanelHelper.BatteryWarning = powerHelper.BatteryWarningText;
 
 
         //if (!isPopNotiDone)
@@ -165,11 +167,35 @@ public class ResourceController : MonoBehaviour, IResourceController
         return timeController.SolarRadiation;
     }
 
+    /*public void CalculateRenewablesOutput()
+    {
+        foreach (var obj in purchasingObjectController.GetAllObjects())
+        {
+            if (IsInvertorOn() && obj.objectName.Equals("Solar Panel") || obj.objectName.Equals("Wind Turbine") && obj.isTurnedOn)
+            {
+                obj.powerGeneratedAmount += obj.powerGeneratedRate / 60;
+            }
+        }
+    }*/
+
+    private bool IsInvertorOn()
+    {
+        foreach (var obj in purchasingObjectController.GetAllObjects())
+        {
+            if (obj.objectName.Equals("Invertor") && obj.isTurnedOn)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public void TimePeriod()
     {
         currentPoA = GetPoA();
         string endTime = GetTime();
 
+        //Debug.Log(startTime + ", " + endTime);
         if(startTime!=endTime)
             CalculateTimePeriod(startTime, endTime);
         startTime = endTime;
@@ -186,18 +212,23 @@ public class ResourceController : MonoBehaviour, IResourceController
         float startMin = int.Parse(startResult[1]);
         float endHr = int.Parse(endResult[0]);
         float endMin = int.Parse(endResult[1]);
+        //Debug.Log(startHr + ", " + startMin + ", " + endHr + ", " + endMin);
 
         if (startHr != endHr)
         {
             float previousHr = (60f - startMin)/60f;
+            //Debug.Log("previous hr: " + previousHr);
+            //Debug.Log("end min / 60f: " + endMin / 60f);
             powerHelper.CalculatePowerOutput(purchasingObjectController.GetAllObjects(), previousHr, previousPoA);
             powerHelper.CalculatePowerOutput(purchasingObjectController.GetAllObjects(), endMin / 60f, previousPoA);
+            
         }
         else
         {
-            
             float period = (endMin-startMin)/60;
-            powerHelper.CalculatePowerOutput(purchasingObjectController.GetAllObjects(), period, currentPoA);
+            //Debug.Log("period: " + period);
+            powerHelper.CalculateRenewablesOutput(purchasingObjectController.GetAllObjects(), period, currentPoA);
+            //powerHelper.CalculatePowerOutput(purchasingObjectController.GetAllObjects(), period, currentPoA);
         }
         //powerHelper.CalculateSolaPanelToMainLoadOutputRate(purchasingObjectController.GetAllObjects());
     }

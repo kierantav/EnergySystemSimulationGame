@@ -20,7 +20,7 @@ public class PowerHelper
     bool isMainLoadSwitchOnBreaker = false;
     bool isDGSwitchOnBreaker = false;
     bool isMainSwitchOnBreaker = false;
-    
+
     // solarPanelInfo
     int solarPanelCount = 0;
     float solarPanelPowerRateTemp = 0f;
@@ -32,6 +32,7 @@ public class PowerHelper
 
     float invertorlPowerRateTemp = 0f;
     float batteryPreviousSavedAmount = 0f;
+    bool batteryOutOfPower = false;
     float loadValue = 0f;
     private float restTaken = 0f;
     public bool pop = false;
@@ -54,6 +55,9 @@ public class PowerHelper
     public float LoadDiff { get => loadDiff; set => loadDiff = value; }
     public float TotalOutputRate { get => totalOutputRate;  }
 
+    string batteryWarningText = "";
+    public string BatteryWarningText { get => batteryWarningText; set => batteryWarningText = value; }
+
     public void CalculatePowerOutput(IEnumerable<EnergySystemGeneratorBaseSO> objects, float period, float poa)
     {
         solarPanelCount = 0;
@@ -63,7 +67,7 @@ public class PowerHelper
         {
             if (obj.objectName == "Invertor")
             {
-                UpdateInvertorInfoFromObject(obj);
+                //UpdateInvertorInfoFromObject(obj);
             }
             if (obj.objectName == "Charge Controller")
             {
@@ -87,9 +91,27 @@ public class PowerHelper
         {
             if (obj.objectName == "Solar Panel")
             {
-                UpdateSolarPanelPowerInfoFromObject(obj, period, poa);
+                //UpdateSolarPanelPowerInfoFromObject(obj, period, poa);
             }
         }
+
+        /*List<EnergySystemGeneratorBaseSO> renewablesData = GetRenewablesData(objects);
+        if (renewablesData != null)
+        {
+            foreach (var obj in renewablesData)
+            {
+                renewablesOutput += obj.powerGeneratedAmount;
+            }
+        }
+
+        if (renewablesOutput < loadValue)
+        {
+            Debug.Log("Cant run go to battery");
+        }
+        Debug.Log(renewablesOutput);*/
+
+        // if battery is fully charged, turn off charge controller
+        // 97% efficiency charge controller
 
         // Update this first
         solarPanelsOutputRate = solarPanelCount * solarPanelPowerRateTemp;
@@ -111,7 +133,7 @@ public class PowerHelper
         {
             if (obj.objectName == "Battery")
             {
-                UpdateBatteryStorageAmount(obj);
+                //UpdateBatteryStorageAmount(obj);
             }
             if (obj.objectName == "Diesel Generator")
             {
@@ -133,18 +155,216 @@ public class PowerHelper
         {
             if (LoadExisted())
             {
-                totalOutputRate = loadValue + batteryPreviousSavedAmount +solarPanelOutputWentToBattery;
-          
+                totalOutputRate = loadValue + batteryPreviousSavedAmount + solarPanelOutputWentToBattery;
+
             }
             else
             {
                 totalOutputRate = batteryPreviousSavedAmount + solarPanelOutputWentToBattery;
             }
-            
+
         }
 
+        //RefreshValues();
+    }
+
+    public void CalculateRenewablesOutput(IEnumerable<EnergySystemGeneratorBaseSO> objects, float period, float poa)
+    {
+        UpdateEnergySystemInfo(objects, period, poa);
+
+        if (isBatteryRunning && isChargeControllerExisted && isInvertorExisted && isInverterSwitchOnBreaker && isInvertorRunning)
+        {
+            float renewablesOutputRate = GetRenewablesOutputRate(GetRenewablesData(objects));
+            float batteryChargeRate = GetBatteryChargeRate(renewablesOutputRate);
+
+            bool canRenewablesHandleLoad;
+            foreach (var obj in objects)
+            {
+                if (obj.objectName.Equals("Battery") && loadValue >= 0 && renewablesOutputRate > 0)
+                {
+                    // Check if renewables can handle load
+                    canRenewablesHandleLoad = CheckRenewables(renewablesOutputRate);
+
+                    // Check if battery was out off power
+                    CheckBatteryPower(period, renewablesOutputRate, batteryChargeRate, canRenewablesHandleLoad, obj);
+
+                    //Debug.Log(obj.powerInputRate + " * " + period);
+
+
+                    BalanceLoad(period, renewablesOutputRate, canRenewablesHandleLoad, obj);
+
+                    // If the battery runs out of power
+                    if (obj.batteryStorageAmount <= 0)
+                    {
+                        BatteryOutOfPower(renewablesOutputRate, obj);
+                    }
+
+                    // Max battery power at 9 kwh
+                    if (obj.batteryStorageAmount > 9)
+                    {
+                        obj.batteryStorageAmount = 9;
+                    }
+                }
+            }
+        } else
+        {
+            batteryWarningText = "Renewables not connected.";
+            foreach (var obj in objects)
+            {
+                if (obj.objectName.Equals("Battery"))
+                {
+                    obj.powerInputRate = 0;
+                }
+            }
+        }
         RefreshValues();
     }
+
+    private void BatteryOutOfPower(float renewablesOutputRate, EnergySystemGeneratorBaseSO obj)
+    {
+        obj.batteryStorageAmount = 0;
+        //Debug.Log("Battery out of power");
+
+        if (!isPowerLinesRunning && !isDGRunning)
+        {
+            BatteryWarningText = "Battery out of power.";
+            Debug.Log("Nothing to support load. Install a diesel generator or power lines to handle load.");
+        }
+        else if (renewablesOutputRate > 0)
+        {
+            batteryOutOfPower = true;
+            BatteryWarningText = "Battery out of power. Charging...";
+        }
+    }
+
+    private void BalanceLoad(float period, float renewablesOutputRate, bool canRenewablesHandleLoad, EnergySystemGeneratorBaseSO obj)
+    {
+        // If there is a load and the battery CAN handle it
+        if (loadValue > 0 && obj.batteryStorageAmount > 0 && batteryPreviousSavedAmount >= loadValue)
+        {
+            batteryOutOfPower = false;
+            obj.batteryStorageAmount += obj.powerInputRate * period;
+            if (!canRenewablesHandleLoad)
+            {
+                BatteryWarningText = "Insufficient renewables power. Transferring load to battery";
+            }
+            else
+            {
+                BatteryWarningText = "Excess renewables power. Charging...";
+            }
+        }
+
+        // If there is a load and the battery CANNOT handle it
+        else if (loadValue > 0 && obj.batteryStorageAmount > 0 && batteryOutOfPower == false)
+        {
+            obj.batteryStorageAmount += obj.powerInputRate * period;
+            if (!canRenewablesHandleLoad)
+            {
+                BatteryWarningText = "Insufficient battery power. Your battery will run out of juice!";
+            }
+            else
+            {
+                BatteryWarningText = "Excess renewables power. Charging...";
+            }
+        }
+
+        // If there is no load
+        else if (loadValue == 0 && batteryOutOfPower == false)
+        {
+            BatteryWarningText = "Charging...";
+            obj.batteryStorageAmount += renewablesOutputRate * period;
+        }
+    }
+
+    private bool CheckRenewables(float renewablesOutputRate)
+    {
+        if (renewablesOutputRate >= loadValue)
+        {
+            batteryOutOfPower = false;
+            return true;
+        }
+        return false;
+    }
+
+    private void CheckBatteryPower(float period, float renewablesOutputRate, float batteryChargeRate, bool canRenewablesHandleLoad, EnergySystemGeneratorBaseSO obj)
+    {
+        if (batteryOutOfPower == true && canRenewablesHandleLoad == false)
+        {
+            // Charge battery at full renewables power rate
+            obj.powerInputRate = renewablesOutputRate;
+            obj.batteryStorageAmount += renewablesOutputRate * period;
+        }
+        else
+        {
+            // Charge/Drain battery
+            obj.powerInputRate = batteryChargeRate;
+            obj.batteryStorageAmount += obj.powerInputRate * period;
+        }
+    }
+
+    private void UpdateEnergySystemInfo(IEnumerable<EnergySystemGeneratorBaseSO> objects, float period, float poa)
+    {
+        foreach (var obj in objects)
+        {
+            switch (obj.objectName)
+            {
+                case "Invertor":
+                    UpdateInvertorInfoFromObject(obj);
+                    break;
+                case "Solar Panel":
+                    UpdateSolarPanelPowerInfoFromObject(obj, period, poa);
+                    break;
+                case "Charge Controller":
+                    UpdateChargeControllerInfoFromObject(obj);
+                    break;
+                case "Battery":
+                    UpdateBatteryInfoFromObject(obj);
+                    break;
+                case "On-Grid Power":
+                    UpdatePowerLinesInfoFromObject(obj);
+                    break;
+                case "Diesel Generator":
+                    UpdateDGInfoFromObject(obj);
+                    break;
+            }
+        }
+    }
+
+    private List<EnergySystemGeneratorBaseSO> GetRenewablesData(IEnumerable<EnergySystemGeneratorBaseSO> objects)
+    {
+        List<EnergySystemGeneratorBaseSO> renewablesData = new List<EnergySystemGeneratorBaseSO>();
+        foreach (var obj in objects)
+        {
+            if (obj.objectName.Equals("Solar Panel") || obj.objectName.Equals("Wind Turbine"))
+            {
+                //Debug.Log(true);
+                renewablesData.Add(obj);
+            }
+        }
+        return renewablesData;
+    }
+
+    private float GetRenewablesOutputRate(List<EnergySystemGeneratorBaseSO> renewablesData)
+    {
+        float renewablesOutputRate = 0;
+        foreach (var obj in renewablesData)
+        {
+            renewablesOutputRate += obj.powerGeneratedRate;
+        }
+        //Debug.Log("Renewables Output: " + renewablesOutputRate);
+        return renewablesOutputRate;
+    }
+
+    private float GetBatteryChargeRate(float renewablesOutputRate)
+    {
+        float batteryChargeRate = 0;
+        if (isBatteryRunning && isChargeControllerExisted && isInvertorExisted && isInverterSwitchOnBreaker && isInvertorRunning)
+        {
+            batteryChargeRate = renewablesOutputRate - loadValue;
+        }
+        return batteryChargeRate;
+    }
+
     private void RefreshValues()
     {
         dieselGeneratorPreviousFuelAmount = 0f;
@@ -268,7 +488,7 @@ public class PowerHelper
                     CheckDieselGeneratorAccessibility(period, (energyNeeded - batteryPreviousSavedAmount) / period);
                 } else if (isMainSwitchOnBreaker && isPowerLinesExisted && isPowerLinesRunning)
                 {
-                    CheckPowerLinesAccessibility(period, (energyNeeded - batteryPreviousSavedAmount) / period);
+                    //CheckPowerLinesAccessibility(period, (energyNeeded - batteryPreviousSavedAmount) / period);
                 }
                 else
                 {
@@ -370,7 +590,7 @@ public class PowerHelper
     // reviewed
     private void UpdateSingleSolarPanelOutputRate(EnergySystemGeneratorBaseSO solarPanel, float poa)
     {
-        if (poa < 300 && poa > 0)
+        if (poa > 0 && poa < 300)
         {
             solarPanel.powerGeneratedRate = (poa / 1000f) * (solarPanel.efficiency / 100f);
         }
@@ -415,7 +635,11 @@ public class PowerHelper
     private void UpdateInvertorInfoFromObject(EnergySystemGeneratorBaseSO invertor)
     {
         isInvertorExisted = true;
-        isInvertorRunning = invertor.isRunning;
+        if (invertor.isRunning && isInverterSwitchOnBreaker)
+        {
+            isInvertorRunning = invertor.isRunning;
+        }
+
     }
 
     //reviewed
@@ -423,6 +647,7 @@ public class PowerHelper
     {
         isChargeControllerExisted = true;
         isChargeControllerRunning = obj.isRunning;
+        // take 22.60% off power
     }
 
     //reviewed

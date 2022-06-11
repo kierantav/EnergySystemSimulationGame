@@ -140,6 +140,7 @@ public class LoadPanelHelper : MonoBehaviour
                 {
                     currentLoad -= obj.powerNeededRate;
                     obj.isTurnedOn = false;
+                    obj.powerNeededAmount = 0f;
                 }
             }
         }
