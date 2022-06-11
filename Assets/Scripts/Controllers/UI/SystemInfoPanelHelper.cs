@@ -9,7 +9,7 @@ using UnityEngine.Events;
 
 public class SystemInfoPanelHelper : MonoBehaviour
 {
-    public TextMeshProUGUI objectName, storage, efficiency, inputRate, OutputRate, powerRate, powerAmount, emissionRate, emissionAmount, fuelAmount;
+    public TextMeshProUGUI objectName, storage, efficiency, inputRate, OutputRate, powerRate, powerAmount, emissionRate, emissionAmount, fuelAmount, batteryWarningText;
 
     public Image objectIcon;
 
@@ -20,9 +20,12 @@ public class SystemInfoPanelHelper : MonoBehaviour
 
     public Button fuelPurchaseBtn, maintenanceBtn;
 
+    private string batteryWarning;
 
     EnergySystemGeneratorBaseSO data;
     ApplianceBaseSO applianceData;
+
+    public string BatteryWarning { get => batteryWarning; set => batteryWarning = value; }
 
     // Start is called before the first frame update
     void Start()
@@ -101,6 +104,7 @@ public class SystemInfoPanelHelper : MonoBehaviour
         HideElement(emissionRate.gameObject);
         HideElement(emissionAmount.gameObject);
         HideElement(applianceSwitch.gameObject);
+        HideElement(powerAmount.gameObject);
 
         //further Usage
         //todo
@@ -118,8 +122,8 @@ public class SystemInfoPanelHelper : MonoBehaviour
     private void UpdateSolarPanelInfo(EnergySystemGeneratorBaseSO data)
     {
         SetText(efficiency, data.efficiency+" %");
-        SetText(powerRate, data.powerGeneratedRate+ " kw");
-        SetText(powerAmount, data.powerGeneratedAmount + " kwh");
+        SetText(powerRate, Math.Round(data.powerGeneratedRate, 2) + " kwh");
+        //SetText(powerAmount, data.powerGeneratedAmount + " kwh");
         SetToggle(statusToggle, data.isRunning);
     }
 
@@ -250,9 +254,16 @@ public class SystemInfoPanelHelper : MonoBehaviour
 
     private void UpdateBatteryInfo(EnergySystemGeneratorBaseSO data)
     {
-        SetText(inputRate, data.powerInputRate +" kw");
-        SetText(OutputRate, data.powerOutputRate + " kw");
-        SetText(storage, data.batteryStorageAmount + " kwh");
+        SetText(batteryWarningText, batteryWarning);
+        if (data.powerInputRate < 0)
+        {
+            SetText(inputRate, "0 kwh");
+        } else
+        {
+            SetText(inputRate, Math.Round(data.powerInputRate, 2) + " kwh");
+        }
+        SetText(OutputRate, Math.Round(data.powerOutputRate, 2) + " kwh");
+        SetText(storage, Math.Round(data.batteryStorageAmount, 2) + " kwh");
         SetToggle(statusToggle, data.isRunning);
     }
 
