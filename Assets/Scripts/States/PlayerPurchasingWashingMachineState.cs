@@ -156,11 +156,11 @@ public class PlayerPurchasingWashingMachineState : PlayerState
     {
         switch (applianceName)
         {
-            case "7kg Washer":
+            case "Washer 7kg":
                 cameraPosition = new Vector3(68.86999f, 9f, 49.99437f);
                 cameraRotation = Quaternion.Euler(0f, 1.569f, 0f);
                 break;
-            case "10kg Washer":
+            case "Washer 10kg":
                 cameraPosition = new Vector3(66.18116f, 12f, 57.93915f);
                 cameraRotation = Quaternion.Euler(0f, 33.957f, 0f);
                 break;
@@ -173,10 +173,10 @@ public class PlayerPurchasingWashingMachineState : PlayerState
     {
         switch (applianceName)
         {
-            case "7kg Washer":
+            case "Washer 7kg":
                 WasherPosition = new Vector3(69f, 0f, 68.24f);
                 break;
-            case "10kg Washer":
+            case "Washer 10kg":
                 WasherPosition = new Vector3(75.9f, 0f, 67.28f);
                 break;
             default:

@@ -189,6 +189,7 @@ public class GridStructure
 
             if (CheckGridIndexInRange(cellIndex))
             {
+                //Debug.Log(grid[cellIndex.x, cellIndex.y, cellIndex.z]);
                 if (grid[cellIndex.x, cellIndex.y, cellIndex.z].IsTaken == true)
                     // return the result of if the cell has been taken or not
                     return true;

@@ -17,8 +17,7 @@ public class PlayerPurchasingACState : PlayerState
     public override void EnterState(string objectName, string applianceName)
     {
         // Get AC position
-        Vector3 ACPosition = new Vector3(0, 0, 0);
-        ACPosition = GetACPosition(applianceName, ACPosition);
+        Vector3 ACPosition = GetAppliancePosition(applianceName);
 
         // Get AC camera position & rotation
         Vector3 cameraPosition = new Vector3(0f, 0f, 0f);
@@ -41,41 +40,21 @@ public class PlayerPurchasingACState : PlayerState
     {
         switch (applianceName)
         {
-            case "Small AC":
+            case "AC Small":
                 cameraPosition = new Vector3(61.22f, 12f, 57.24f);
                 cameraRotation = Quaternion.Euler(0f, -74.871f, 0f);
                 break;
-            case "Medium AC":
-                cameraPosition = new Vector3(69.46967f, 11f, 42.3863f);
-                cameraRotation = Quaternion.Euler(0f, 27.215f, 0f);
+            case "AC Medium":
+                cameraPosition = new Vector3(70.50482f, 11f, 52.69537f);
+                cameraRotation = Quaternion.Euler(0f, -111.623f, 0f);
                 break;
-            case "Large AC":
+            case "AC Large":
                 cameraPosition = new Vector3(70.65f, 10f, 54.84f);
                 cameraRotation = Quaternion.Euler(0f, 111.38f, 0f);
                 break;
             default:
                 break;
         }
-    }
-
-    private Vector3 GetACPosition(string applianceName, Vector3 ACPosition)
-    {
-        switch (applianceName)
-        {
-            case "Small AC":
-                ACPosition = new Vector3(45.51f, 15f, 56.41f);
-                break;
-            case "Medium AC":
-                ACPosition = new Vector3(77f, 14f, 61f);
-                break;
-            case "Large AC":
-                ACPosition = new Vector3(96f, 14f, 38f);
-                break;
-            default:
-                break;
-        }
-
-        return ACPosition;
     }
 
     public override void OnCancel()

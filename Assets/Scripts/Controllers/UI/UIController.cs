@@ -404,7 +404,11 @@ public class UIController : MonoBehaviour
                 button.GetComponent<TooltipContent>().description = objectData.objectDescription.ToString();
                 //button.GetComponentsInChildren<TextMeshProUGUI>()[8].text = objectData.objectDescription.ToString();
                 button.GetComponentsInChildren<Image>()[0].sprite = objectData.objectIcon;
+                button.GetComponentsInChildren<Image>()[0].color = new Color32(42, 49, 35, 255); /*new Color32(Convert.ToByte(0.1647), Convert.ToByte(0.1921), Convert.ToByte(0.1372), Convert.ToByte(1))*/
+                //Debug.Log(button.GetComponentsInChildren<Image>()[0].color);
                 button.GetComponentsInChildren<Image>()[2].sprite = objectData.objectIcon;
+                button.GetComponentsInChildren<Image>()[2].color = new Color32(51, 153, 204, 255);
+                //Debug.Log(button.GetComponentsInChildren<Image>()[2].color);
                 button.onClick.AddListener(() => OnApplianceCallback(button.GetComponentsInChildren<TextMeshProUGUI>()[0].text));
             }
         }

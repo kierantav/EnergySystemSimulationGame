@@ -9,25 +9,25 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b4cd7aa8a20154a13a9b164b27853e55, type: 3}
-  m_Name: Small AC
+  m_Script: {fileID: 11500000, guid: ca48d47eab8394899b8f267238343c80, type: 3}
+  m_Name: Fridge Large
   m_EditorClassIdentifier: 
-  objectIcon: {fileID: 21300000, guid: eeb6b5e19ac9e49d284c66f64e520baf, type: 3}
-  objectName: Small AC
-  objectDescription: Air Conditioner
+  objectIcon: {fileID: 21300000, guid: 00eb7954afbe2ae45a4b2a3a110993f7, type: 3}
+  objectName: Large
+  objectDescription: Fridge
   objectType: Appliance
-  objectPrefab: {fileID: 167904411508576394, guid: 632cab814acabbd4fbc9fb586d86623f,
+  objectPrefab: {fileID: 6161978639738040497, guid: a0d4554a9e840214fb4fd4552a0a3e3e,
     type: 3}
-  emissionRate: 0.03
+  emissionRate: 1.18
   emissionAmount: 0
   purchaseCost: 1000
   upkeepCost: 0
-  purchaseExperience: 30
+  purchaseExperience: 0
   greenPointExperience: 0
-  powerNeededRate: 2.5
+  powerNeededRate: 1
   powerNeededAmount: 0
   happiness: 0
   isTurnedOn: 0
-  objectWidth: 0.1
-  objectHeight: 0.08
-  objectLength: 0.06
+  objectWidth: 7
+  objectHeight: 7
+  objectLength: 7

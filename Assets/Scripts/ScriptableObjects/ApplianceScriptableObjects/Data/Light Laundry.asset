@@ -9,19 +9,25 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5f00e693d1c894bad9deb9574253bbaf, type: 3}
-  m_Name: New Dryer
+  m_Script: {fileID: 11500000, guid: bc0b744b0cd934a3e87f54b586761ff5, type: 3}
+  m_Name: Light Laundry
   m_EditorClassIdentifier: 
-  objectIcon: {fileID: 0}
-  objectName: Dryer
-  objectDescription: 
+  objectIcon: {fileID: 21300000, guid: e762d609730ca8447b2a846b77a2dc22, type: 3}
+  objectName: Laundry
+  objectDescription: Light
+  objectType: Appliance
+  objectPrefab: {fileID: 908560766125434470, guid: 593062be75f8689409e048f14c3202e6,
+    type: 3}
   emissionRate: 0
   emissionAmount: 0
-  purchaseCost: 0
+  purchaseCost: 100
   upkeepCost: 0
   purchaseExperience: 0
   greenPointExperience: 0
-  powerNeededRate: 0
+  powerNeededRate: 0.025
   powerNeededAmount: 0
   happiness: 0
   isTurnedOn: 0
+  objectWidth: 0
+  objectHeight: 0
+  objectLength: 0

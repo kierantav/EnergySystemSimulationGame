@@ -12,7 +12,7 @@ public class ApplianceOptionsPanelHelper : MonoBehaviour
     //GameController gameController;
 
     public GameObject applianceOptionBtnPrefab;
-    public GameObject applianceOptionsPanel;
+    public GameObject applianceOptionsWindow;
     public UIController uiController;
     public Image titleImage;
     public TextMeshProUGUI titleText;
@@ -52,7 +52,13 @@ public class ApplianceOptionsPanelHelper : MonoBehaviour
             case "Washing Machine":
                 applianceOptions = new List<ApplianceBaseSO>(ApplianceData.FindAll(item => item.objectDescription == objectName));
                 break;
+            case "Light":
+                applianceOptions = new List<ApplianceBaseSO>(ApplianceData.FindAll(item => item.objectDescription == objectName));
+                break;
             case "Fridge":
+                applianceOptions = new List<ApplianceBaseSO>(ApplianceData.FindAll(item => item.objectDescription == objectName));
+                break;
+            case "Ceiling Fan":
                 applianceOptions = new List<ApplianceBaseSO>(ApplianceData.FindAll(item => item.objectDescription == objectName));
                 break;
             default:
@@ -88,7 +94,7 @@ public class ApplianceOptionsPanelHelper : MonoBehaviour
                 titleImage.sprite = objectData.objectIcon;
                 //titleText.text = objectData.objectDescription.ToString();
 
-                button.onClick.AddListener(() => OnPurchaseAppliance(objectData.objectDescription.ToString(), objectData.objectName));
+                button.onClick.AddListener(() => OnPurchaseAppliance(objectData.objectDescription.ToString(), objectData.name));
             }
         }
     }
@@ -100,10 +106,10 @@ public class ApplianceOptionsPanelHelper : MonoBehaviour
 
     private void ClearPanel()
     {
-        GameObject[] allChildren = new GameObject[applianceOptionsPanel.transform.childCount];
-        for (int i = 0; i < applianceOptionsPanel.transform.childCount; i++)
+        GameObject[] allChildren = new GameObject[applianceOptionsWindow.transform.childCount];
+        for (int i = 0; i < applianceOptionsWindow.transform.childCount; i++)
         {
-            allChildren[i] = applianceOptionsPanel.transform.GetChild(i).gameObject;
+            allChildren[i] = applianceOptionsWindow.transform.GetChild(i).gameObject;
         }
 
         foreach (GameObject child in allChildren)
@@ -119,7 +125,7 @@ public class ApplianceOptionsPanelHelper : MonoBehaviour
 
     public void OpenApplianceOptionsPanel()
     {
-        CreateNamesInApplianceOptionsPanel(applianceOptionsPanel.transform, ObjectName);
+        CreateNamesInApplianceOptionsPanel(applianceOptionsWindow.transform, ObjectName);
         gameObject.SetActive(true);
     }
 }

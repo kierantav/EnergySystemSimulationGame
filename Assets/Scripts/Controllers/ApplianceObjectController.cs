@@ -86,4 +86,29 @@ public class ApplianceObjectController
             //throw new Exception("No such appliance type." + objectName);
         //}
     }
+
+    public bool FanExists(string applianceName)
+    {
+        foreach (var appliance in GetListOfAllAppliances())
+        {
+            if (appliance.name.Split(' ')[1].Equals(applianceName.Split(' ')[1]) && !appliance.name.Split(' ')[0].Equals("Light"))
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /*public void SetLightComponent(string applianceName)
+    {
+        foreach (var appliance in GetListOfAllAppliances())
+        {
+            Debug.Log(appliance.objectDescription);
+            Debug.Log(appliance.name + ", " + applianceName);
+            if (appliance.objectDescription.Equals("Light") && appliance.name.Equals(applianceName))
+            {
+                appliance.objectPrefab.gameObject.transform.GetChild(1).GetComponent<Light>().intensity = 0;
+            }
+        }
+    }*/
 }

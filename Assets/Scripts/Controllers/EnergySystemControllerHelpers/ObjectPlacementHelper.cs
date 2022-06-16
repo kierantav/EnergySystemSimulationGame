@@ -15,52 +15,73 @@ public class ObjectPlacementHelper: ObjectModificationHelper
         base.PrepareObjectForModification(inputPosition, objectName, applianceName, type);
         GameObject objectPrefab = GetObjectType(type);
         List<Vector3> positionList = GetPositionListByName(inputPosition, objectName, applianceName, type); // Get and update object positions List
-            if (!grid.IsCellTaken(positionList)) // If the cells are not taken 
+
+        if (!grid.IsCellTaken(positionList)) // If the cells are not taken 
+        {
+            List<Vector3> currentPositionList = CheckExisting(positionList);
+            if (currentPositionList != null)
             {
-                List<Vector3> currentPositionList = CheckExisting(positionList);
-                if (currentPositionList != null)
-                {
-                    if (currentPositionList.Contains(positionList[0]))
-                    {
-                        if (type.Equals("Energy"))
-                        {
-                            resourceController.AddMoney(energySystemData.purchaseCost);
-                            RevokeObjectFromBeingPlaced(currentPositionList);
-                        } else
-                        {
-                            resourceController.AddMoney(applianceData.purchaseCost);
-                            RevokeObjectFromBeingPlaced(currentPositionList);
-                        }
-                    }
-                    else
-                    {
-                        Debug.Log("Cell has been taken by the existing ghost object");
-                    }
-                }
-                else if (resourceController.CanIBuyIt(energySystemData.purchaseCost))
+                if (currentPositionList.Contains(positionList[0]))
                 {
                     if (type.Equals("Energy"))
                     {
-                        AddObjectForPlacement(objectPrefab, positionList);
-                        resourceController.SpendMoney(energySystemData.purchaseCost);
+                        resourceController.AddMoney(energySystemData.purchaseCost);
+                        RevokeObjectFromBeingPlaced(currentPositionList);
+                    } else
+                    {
+                        resourceController.AddMoney(applianceData.purchaseCost);
+                        RevokeObjectFromBeingPlaced(currentPositionList);
                     }
-                    else
+                }
+                else
+                {
+                    Debug.Log("Cell has been taken by the existing ghost object");
+                }
+            }
+            else if (resourceController.CanIBuyIt(energySystemData.purchaseCost))
+            {
+                if (type.Equals("Energy"))
+                {
+                    AddObjectForPlacement(objectPrefab, positionList);
+                        
+                    resourceController.SpendMoney(energySystemData.purchaseCost);
+                }
+                else
+                {
+                    if (!ApplianceExists(applianceName))
                     {
                         AddObjectForPlacement(objectPrefab, positionList);
                         resourceController.SpendMoney(applianceData.purchaseCost);
+                    } else
+                    {
+                        Debug.Log("Cell has been taken!!!");
                     }
                 }
             }
-            else
-            {
-                //Todo: Create a notification here (Only one item can be generated)
-                //foreach(Vector3 p in positionList)
-                //{
-                //    //Debug.Log(p);
-                //}
-                Debug.Log("Cell has been taken!!!");
-            }
+        }
+        else
+        {
+            //Todo: Create a notification here (Only one item can be generated)
+            //foreach(Vector3 p in positionList)
+            //{
+            //    //Debug.Log(p);
+            //}
+            Debug.Log("Cell has been taken!!!");
+        }
         //}
+    }
+
+    private bool ApplianceExists(string applianceName)
+    {
+        List<ApplianceBaseSO> applianceList = grid.GetListOfAllAppliances();
+        foreach (var appliance in applianceList)
+        {
+            if (appliance.name.Split('(')[0].Equals(applianceName)) 
+            {
+                return true;
+            }
+        }
+        return false;
     }
 
     private GameObject GetObjectType(string type)
@@ -96,13 +117,16 @@ public class ObjectPlacementHelper: ObjectModificationHelper
         List<Vector3> positionList = new List<Vector3>();
         Vector3 gridPosition = grid.CalculateGridPosition(inputPosition); // Convert mouse position into grid position
         Vector3 p; // temp position
-        List<float> objectSize;
+        List<float> objectSize = new List<float>() { 0f, 0f, 0f };
         if (type.Equals("Energy"))
         {
             objectSize = this.objectRepository.GetObjectSize(objectName);
         } else
         {
-            objectSize = this.applianceRepository.GetObjectSize(objectName, applianceName);
+            for (int i = 0; i < objectSize.Count; i++)
+            {
+                objectSize[i] = applianceData.objectPrefab.gameObject.transform.localScale[i];
+            }
         }
         
         // Adding current mouse/grid position with object volume

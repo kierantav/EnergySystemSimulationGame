@@ -24,8 +24,4 @@ public abstract class ApplianceBaseSO : ScriptableObject
     public int happiness;
 
     public bool isTurnedOn;
-
-    public float objectWidth;
-    public float objectHeight;
-    public float objectLength;
 }

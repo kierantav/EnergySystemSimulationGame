@@ -98,11 +98,11 @@ public class PlayerPurchasingFridgeState : PlayerState
     {
         switch (applianceName)
         {
-            case "Small Fridge":
+            case "Fridge Small":
                 cameraPosition = new Vector3(47.23401f, 9f, 51.08803f);
                 cameraRotation = Quaternion.Euler(0f, 115.881f, 0f);
                 break;
-            case "Large Fridge":
+            case "Fridge Large":
                 cameraPosition = new Vector3(78.21294f, 9f, 51.89795f);
                 cameraRotation = Quaternion.Euler(0f, -98.958f, 0f);
                 break;
@@ -115,10 +115,10 @@ public class PlayerPurchasingFridgeState : PlayerState
     {
         switch (applianceName)
         {
-            case "Small Fridge":
+            case "Fridge Small":
                 FridgePosition = new Vector3(63.12f, 6.12f, 40.83f);
                 break;
-            case "Large Fridge":
+            case "Fridge Large":
                 FridgePosition = new Vector3(48.8f, 0f, 49.9f);
                 break;
             default:

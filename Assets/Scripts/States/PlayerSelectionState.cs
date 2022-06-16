@@ -102,8 +102,14 @@ public class PlayerSelectionState : PlayerState
             case "Washing Machine":
                 this.gameController.TransitionToState(this.gameController.purchasingWashingMachineState, objectName, applianceName);
                 break;
+            case "Light":
+                this.gameController.TransitionToState(this.gameController.purchasingLightState, objectName, applianceName);
+                break;
             case "Fridge":
                 this.gameController.TransitionToState(this.gameController.purchasingFridgeState, objectName, applianceName);
+                break;
+            case "Ceiling Fan":
+                this.gameController.TransitionToState(this.gameController.purchasingFanState, objectName, applianceName);
                 break;
             default:
                 throw new Exception("No such appliance type." + objectName);

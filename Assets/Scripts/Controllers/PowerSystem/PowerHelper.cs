@@ -98,7 +98,7 @@ public class PowerHelper
             {
                 renewablesOutput += obj.powerGeneratedAmount;
             }
-        }
+        }*/
 
 
 

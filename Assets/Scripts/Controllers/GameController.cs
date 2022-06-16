@@ -54,7 +54,9 @@ public class GameController : MonoBehaviour
 
     public PlayerPurchasingACState purchasingACState;
     public PlayerPurchasingWashingMachineState purchasingWashingMachineState;
+    public PlayerPurchasingLightState purchasingLightState;
     public PlayerPurchasingFridgeState purchasingFridgeState;
+    public PlayerPurchasingFanState purchasingFanState;
 
     public Vector3 DieselGeneratorPosition, WindTurbinePosition, BatteryPosition, InvertorPosition, ChargeControllerPosition, PowerLinesPosition, 
         WashingMachinePosition, 
@@ -111,7 +113,9 @@ public class GameController : MonoBehaviour
 
         purchasingACState = new PlayerPurchasingACState(this, purchasingApplianceController, uiController);
         purchasingWashingMachineState = new PlayerPurchasingWashingMachineState(this, purchasingApplianceController, uiController);
+        purchasingLightState = new PlayerPurchasingLightState(this, purchasingApplianceController, uiController);
         purchasingFridgeState = new PlayerPurchasingFridgeState(this, purchasingApplianceController, uiController);
+        purchasingFanState = new PlayerPurchasingFanState(this, purchasingApplianceController, uiController);
 
         // initialize state
         state = selectionState;

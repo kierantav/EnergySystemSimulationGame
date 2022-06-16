@@ -43,14 +43,14 @@ public class EnergySystemObjectController
     #region PlacementAction
     public void PrepareObjectForModification(Vector3 inputPosition, string objectName)
     {
-        try
-        {
+        //try
+        //{
             objectModificationHelper.PrepareObjectForModification(inputPosition, objectName, "", "Energy");
-        }
-        catch
-        {
-            throw new Exception("No such energy system type." + objectName);
-        }
+        //}
+        //catch
+        //{
+            //throw new Exception("No such energy system type." + objectName);
+        //}
     }
 
 

@@ -47,6 +47,22 @@ public abstract class PlayerState
 
     }
 
+    public virtual Vector3 GetAppliancePosition(string applianceName)
+    {
+        Vector3 appliancePosition = new Vector3(0, 0, 0);
+        List<ApplianceBaseSO> applianceData = this.gameController.uiController.applianceRepository.GetApplianceObjects();
+
+        foreach (var appliance in applianceData)
+        {
+            if (applianceName.Equals(appliance.name))
+            {
+                appliancePosition = appliance.objectPrefab.gameObject.transform.localPosition;
+            }
+        }
+
+        return appliancePosition;
+    }
+
     public virtual void EnterState(string objectVariable, string applianceName)
     {
 

@@ -1,7 +1,6 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using Michsky.UI.ModernUIPack;
+using System;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -86,6 +85,7 @@ public class LoadPanelHelper : MonoBehaviour
     private void UpdateAppliancesInLoadPanel(Transform panelTransform)
     {
         List<ApplianceBaseSO> applianceData = new List<ApplianceBaseSO>(uiController.InstalledAppliances);
+        applianceData.Sort((x, y) => x.objectName.CompareTo(y.objectName));
         if (applianceData.Count > panelTransform.childCount)
         {
             for (int i = 0; i < applianceData.Count; i++)
@@ -111,6 +111,7 @@ public class LoadPanelHelper : MonoBehaviour
     {
         // Update switch status if appliance is turned on
         SwitchManager applianceSwitch = child.GetChild(2).GetChild(0).GetComponent<SwitchManager>();
+
         if (appliance.isTurnedOn)
         {
             applianceSwitch.isOn = true;
@@ -143,6 +144,16 @@ public class LoadPanelHelper : MonoBehaviour
                     obj.powerNeededAmount = 0f;
                 }
             }
+            ToggleLight(appliance);
+        }
+    }
+
+    private void ToggleLight(ApplianceBaseSO appliance)
+    {
+        Light light = GameObject.Find(appliance.name.Split('(')[0]).GetComponent<Light>();
+        if (light != null)
+        {
+            light.enabled = !light.enabled;
         }
     }
 

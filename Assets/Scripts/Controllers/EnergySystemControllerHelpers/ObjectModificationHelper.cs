@@ -4,7 +4,7 @@ using UnityEngine;
 
 public abstract class ObjectModificationHelper 
 {
-    protected readonly GridStructure grid;
+    public GridStructure grid;
     protected readonly IPlacementController placementController;
     protected readonly ObjectRepository objectRepository;
     protected readonly ApplianceRepository applianceRepository;
