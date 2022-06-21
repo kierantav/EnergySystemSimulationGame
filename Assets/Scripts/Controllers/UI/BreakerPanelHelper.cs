@@ -47,12 +47,10 @@ public class BreakerPanelHelper : MonoBehaviour
         {
             gridPower.isRunning = false;
             gridPower.isTurnedOn = false;
-            Debug.Log(gridPower.isRunning);
         } else if (!mainSwitch.isOn && gridPower != null)
         {
             gridPower.isRunning = true;
             gridPower.isTurnedOn = true;
-            Debug.Log(gridPower.isRunning);
         } else
         {
             Debug.Log("House must be connected to the grid!");

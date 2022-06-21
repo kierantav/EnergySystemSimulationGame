@@ -62,6 +62,8 @@ public class GameController : MonoBehaviour
         WashingMachinePosition, 
         FridgePosition;
 
+    public GameObject fanLightBedroom, fanLightKitchen, fanLightLivingRoom;
+
     public CameraMovement cameraMovementController;
 
     // Exploit the state for play mode test
@@ -91,6 +93,11 @@ public class GameController : MonoBehaviour
         // Add Listener to event
         AssignInputListeners();
         AssignUIControllerListeners();
+
+        foreach (var obj in applianceRepository.GetApplianceObjects())
+        {
+            obj.isTurnedOn = false;
+        }
     }
 
 

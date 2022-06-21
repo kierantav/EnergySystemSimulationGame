@@ -51,12 +51,17 @@ public class PowerHelper
     bool isPowerLinesExisted = false;
     bool isPowerLinesRunning = false;
 
+    private bool canRenewableSystemHandleLoad = false;
+
     float totalOutputRate = 0f;
     public float LoadDiff { get => loadDiff; set => loadDiff = value; }
     public float TotalOutputRate { get => totalOutputRate;  }
 
     string batteryWarningText = "";
     public string BatteryWarningText { get => batteryWarningText; set => batteryWarningText = value; }
+    public bool CanRenewableSystemHandleLoad { get => canRenewableSystemHandleLoad; set => canRenewableSystemHandleLoad = value; }
+    public bool IsDGRunning { get => isDGRunning; set => isDGRunning = value; }
+    public bool IsPowerLinesRunning { get => isPowerLinesRunning; set => isPowerLinesRunning = value; }
 
     public void CalculatePowerOutput(IEnumerable<EnergySystemGeneratorBaseSO> objects, float period, float poa)
     {
@@ -160,10 +165,11 @@ public class PowerHelper
     public void CalculateRenewablesOutput(IEnumerable<EnergySystemGeneratorBaseSO> objects, float period, float poa)
     {
         UpdateEnergySystemInfo(objects, period, poa);
+        float renewablesOutputRate = GetRenewablesOutputRate(GetRenewablesData(objects));
 
         if (isBatteryRunning && isChargeControllerExisted && isInvertorExisted && isInverterSwitchOnBreaker && isInvertorRunning)
         {
-            float renewablesOutputRate = GetRenewablesOutputRate(GetRenewablesData(objects));
+            
             float batteryChargeRate = GetBatteryChargeRate(renewablesOutputRate);
 
             bool canRenewablesHandleLoad;
@@ -185,6 +191,7 @@ public class PowerHelper
                     // If the battery runs out of power
                     if (obj.batteryStorageAmount <= 0)
                     {
+                        canRenewableSystemHandleLoad = false;
                         BatteryOutOfPower(renewablesOutputRate, obj);
                     }
 
@@ -195,8 +202,15 @@ public class PowerHelper
                     }
                 }
             }
-        } else
+        }
+        else if (loadValue >= 0 && (isPowerLinesRunning || (isDGRunning && isDGSwitchOnBreaker)))
         {
+            canRenewableSystemHandleLoad = false;
+            totalOutputRate = loadValue;
+        }
+        else
+        {
+            totalOutputRate = 0f;
             batteryWarningText = "Renewables not connected.";
             foreach (var obj in objects)
             {
@@ -206,6 +220,19 @@ public class PowerHelper
                 }
             }
         }
+
+        /*foreach (var obj in objects)
+        {
+            if (obj.objectName == "Diesel Generator")
+            {
+                UpdateDGInformationAfterRunning(obj);
+            }
+            if (obj.objectName == "On-Grid Power")
+            {
+                UpdatePowerLinesInfoAfterRunning(obj);
+            }
+        }*/
+
         RefreshValues();
     }
 
@@ -222,6 +249,7 @@ public class PowerHelper
         else if (renewablesOutputRate > 0)
         {
             batteryOutOfPower = true;
+            totalOutputRate = loadValue;
             BatteryWarningText = "Battery out of power. Charging...";
         }
     }
@@ -231,14 +259,19 @@ public class PowerHelper
         // If there is a load and the battery CAN handle it
         if (loadValue > 0 && obj.batteryStorageAmount > 0 && batteryPreviousSavedAmount >= loadValue)
         {
+            canRenewableSystemHandleLoad = true;
             batteryOutOfPower = false;
             obj.batteryStorageAmount += obj.powerInputRate * period;
+            // If renewables can't handle load but battery can
             if (!canRenewablesHandleLoad)
             {
+                totalOutputRate = obj.batteryStorageAmount;
                 BatteryWarningText = "Insufficient renewables power. Transferring load to battery";
             }
+            // If renewables can handle load and do not require battery output
             else
             {
+                totalOutputRate = renewablesOutputRate - (renewablesOutputRate - loadValue);
                 BatteryWarningText = "Excess renewables power. Charging...";
             }
         }
@@ -249,10 +282,13 @@ public class PowerHelper
             obj.batteryStorageAmount += obj.powerInputRate * period;
             if (!canRenewablesHandleLoad)
             {
+                totalOutputRate = obj.batteryStorageAmount;
                 BatteryWarningText = "Insufficient battery power. Your battery will run out of juice!";
             }
             else
             {
+                canRenewableSystemHandleLoad = true;
+                totalOutputRate = renewablesOutputRate - (renewablesOutputRate - loadValue);
                 BatteryWarningText = "Excess renewables power. Charging...";
             }
         }
@@ -260,6 +296,7 @@ public class PowerHelper
         // If there is no load
         else if (loadValue == 0 && batteryOutOfPower == false)
         {
+            totalOutputRate = 0f;
             BatteryWarningText = "Charging...";
             obj.batteryStorageAmount += renewablesOutputRate * period;
         }
@@ -356,6 +393,7 @@ public class PowerHelper
 
     private void RefreshValues()
     {
+
         dieselGeneratorPreviousFuelAmount = 0f;
         dieselGeneratorEmissionRate = 0f;
         dieselGeneratorPreviousEmissionAmount = 0f;

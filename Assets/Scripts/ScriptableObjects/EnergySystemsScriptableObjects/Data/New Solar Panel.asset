@@ -29,7 +29,7 @@ MonoBehaviour:
   powerGeneratedRate: 0
   powerGeneratedAmount: 0
   efficiency: 80
-  emissionRate: 0.3
+  emissionRate: 1.27
   emissionGeneratedAmount: 0
   powerInputRate: 0
   powerOutputRate: 0
@@ -42,8 +42,6 @@ MonoBehaviour:
   isConnectedToBattery: 0
   isTurnedOn: 0
   isRunning: 0
-  purchaseFuelBtn: {fileID: 0}
-  maintenanceBtn: {fileID: 0}
   objectWidth: 6
   objectHeight: 1
   objectLength: 10

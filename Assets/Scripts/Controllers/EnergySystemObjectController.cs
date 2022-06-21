@@ -117,7 +117,7 @@ public class EnergySystemObjectController
 
     public void UpdateSystemAttributesToEnergySystemData()
     {
-        objectUpdateHelper.GetSystemData(grid.GetListOfAllObjects(), grid.GetListOfAllAppliances(), grid);
+        objectUpdateHelper.GetSystemData(grid.GetListOfAllObjects(), grid.GetListOfAllAppliances(applianceRepository.GetApplianceObjects()), grid);
         objectUpdateHelper.UpdateSystemObjectAttributes();
 
     }

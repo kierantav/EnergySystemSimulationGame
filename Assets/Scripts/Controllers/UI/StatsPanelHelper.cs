@@ -17,6 +17,11 @@ public class StatsPanelHelper : MonoBehaviour
     private TextMeshProUGUI dieselCo2ProducedText, gridPowerCo2ProducedText, solarPanelCo2OffsetText, windTurbineCo2OffsetText;
     private int dieselIndex, gridPowerIndex, solarPanelIndex, windTurbineIndex = -1;
 
+    private float gridEmissions = 0f;
+    private float dieselEmissions = 0f;
+    private float solarPanelsOffset = 0f;
+    private float windTurbineOffset = 0f;
+
     List<EnergySystemGeneratorBaseSO> energySystemData = new List<EnergySystemGeneratorBaseSO>();
     List<EnergySystemGeneratorBaseSO> renewablesData = new List<EnergySystemGeneratorBaseSO>();
 
@@ -33,27 +38,33 @@ public class StatsPanelHelper : MonoBehaviour
             if (dieselCo2ProducedText != null)
             {
                 dieselCo2ProducedText.text = Math.Round(energySystemData[dieselIndex].emissionGeneratedAmount, 2) + " kg";
+                dieselEmissions = float.Parse(dieselCo2ProducedText.text.Split(' ')[0]);
             }
             if (gridPowerCo2ProducedText != null)
             {
                 gridPowerCo2ProducedText.text = Math.Round(energySystemData[gridPowerIndex].emissionGeneratedAmount, 2) + " kg";
+                gridEmissions = float.Parse(gridPowerCo2ProducedText.text.Split(' ')[0]);
             }
-            if (dieselIndex != -1 && gridPowerIndex != -1)
+            totalEmissionsText.text = "Total Emissions: " + Math.Round(gridEmissions + dieselEmissions, 2) + " kg";
+            /*if (dieselIndex != -1 && gridPowerIndex != -1)
             {
                 //totalEmissionsText.text = "Total Emissions: " + (Math.Round(energySystemData[dieselIndex].emissionGeneratedAmount, 2) + Math.Round(energySystemData[gridPowerIndex].emissionGeneratedAmount, 2)) + " kg";
-            }
+            }*/
         }
 
         if (renewablesData != null)
         {
             if (solarPanelCo2OffsetText != null)
             {
-                solarPanelCo2OffsetText.text = "- " + Math.Round(GetCo2Offset(), 2) + " kg";
+                solarPanelCo2OffsetText.text = "- " + Math.Round(renewablesData[solarPanelIndex].emissionGeneratedAmount, 2) + " kg";
+                solarPanelsOffset = float.Parse(solarPanelCo2OffsetText.text.Split(' ')[1]);
             }
             if (windTurbineCo2OffsetText != null)
             {
                 windTurbineCo2OffsetText.text = "- " + Math.Round(GetCo2Offset(), 2) + " kg";
+                windTurbineOffset = float.Parse(windTurbineCo2OffsetText.text.Split(' ')[1]);
             }
+            totalOffsetText.text = "Total Offset: " + Math.Round(solarPanelsOffset + windTurbineOffset, 2) + " kg";
         }
     }
 
@@ -142,6 +153,7 @@ public class StatsPanelHelper : MonoBehaviour
                         case ("Diesel Generator"):
                             dieselCo2ProducedText = child.GetComponentsInChildren<TextMeshProUGUI>()[1];
                             dieselIndex = index1;
+                            Debug.Log(dieselCo2ProducedText + ", " + dieselIndex);
                             break;
                         case ("On-Grid Power"):
                             gridPowerCo2ProducedText = child.GetComponentsInChildren<TextMeshProUGUI>()[1];

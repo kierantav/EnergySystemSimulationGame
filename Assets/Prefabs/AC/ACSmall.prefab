@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 943824698328112957}
   m_Layer: 0
   m_Name: ACSmall
-  m_TagString: Untagged
+  m_TagString: Appliance
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

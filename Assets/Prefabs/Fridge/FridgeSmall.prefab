@@ -93,8 +93,8 @@ GameObject:
   - component: {fileID: 8630436425536153049}
   - component: {fileID: 5774053951728800019}
   m_Layer: 0
-  m_Name: Fridge
-  m_TagString: Untagged
+  m_Name: FridgeSmall
+  m_TagString: Appliance
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

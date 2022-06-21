@@ -90,7 +90,7 @@ public class PlayerPurchasingFridgeState : PlayerState
         this.objectName = objectName;
         if (!FridgePosition.Equals(Vector3.zero))
         {
-            purchasingApplianceController.PrepareApplianceForModification(FridgePosition, this.objectName, applianceName);
+            purchasingApplianceController.PrepareApplianceForModification(FridgePosition, this.objectName, applianceName, null);
         }
     }
 

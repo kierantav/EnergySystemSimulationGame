@@ -28,6 +28,3 @@ MonoBehaviour:
   powerNeededAmount: 0
   happiness: 0
   isTurnedOn: 0
-  objectWidth: 0
-  objectHeight: 0
-  objectLength: 0

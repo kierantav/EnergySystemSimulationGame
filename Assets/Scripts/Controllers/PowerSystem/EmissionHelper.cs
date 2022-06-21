@@ -6,9 +6,13 @@ public class EmissionHelper
     private float solarPanelEmissionAmount = 0f;
     private float dieselGeneratorEmissionAmout = 0f;
     private float windTurbineEmissionAmout = 0f;
+    private PowerHelper powerHelper;
 
-    public EmissionHelper()
+    private bool isPowerLinesRunning, isDGRunning = false;
+
+    public EmissionHelper(PowerHelper powerHelper)
     {
+        this.powerHelper = powerHelper;
     }
 
 
@@ -16,7 +20,22 @@ public class EmissionHelper
     {
         foreach (var obj in objects)
         {
-            //Debug.Log(obj.objectName);
+            switch (obj.objectName)
+            {
+                case "On-Grid Power":
+                    CalculateGridPowerEmissions(obj, period);
+                    break;
+                case "Diesel Generator":
+                    break;
+                case "Solar Panel":
+                    CalculateSolarPanelOffset(obj, period);
+                    break;
+                case "Wind Turbine":
+                    break;
+                default:
+                    break;
+            }
+            /*//Debug.Log(obj.objectName);
             if (obj.objectName == "Solar Panel")
             {
                 CalculateSolarPanelEmissions(period, obj);
@@ -29,7 +48,31 @@ public class EmissionHelper
             {
                 CalculateWindTurbineEmissions(period, obj);
             }
-            //todo
+            //todo*/
+        }
+    }
+
+    private void CalculateGridPowerEmissions(EnergySystemGeneratorBaseSO obj, float period)
+    {
+        if (obj.isRunning)
+        {
+            isPowerLinesRunning = true;
+            obj.emissionGeneratedAmount += obj.emissionRate * period;
+        } else
+        {
+            isPowerLinesRunning = false;
+        }
+    }
+    private void CalculateDieselGeneratorEmissions(float period, EnergySystemGeneratorBaseSO obj)
+    {
+        dieselGeneratorEmissionAmout += period * obj.emissionRate;
+    }
+
+    private void CalculateSolarPanelOffset(EnergySystemGeneratorBaseSO obj, float period)
+    {
+        if (powerHelper.CanRenewableSystemHandleLoad && (!isPowerLinesRunning && !isDGRunning))
+        {
+            obj.emissionGeneratedAmount += obj.emissionRate * period;
         }
     }
 
@@ -38,13 +81,7 @@ public class EmissionHelper
         windTurbineEmissionAmout += period * obj.emissionRate;
     }
 
-    private void CalculateDieselGeneratorEmissions(float period, EnergySystemGeneratorBaseSO obj)
-    {
-        dieselGeneratorEmissionAmout += period * obj.emissionRate;
-    }
+    
 
-    private void CalculateSolarPanelEmissions(float period, EnergySystemGeneratorBaseSO obj)
-    {
-        solarPanelEmissionAmount += period * obj.emissionRate;
-    }
+    
 }

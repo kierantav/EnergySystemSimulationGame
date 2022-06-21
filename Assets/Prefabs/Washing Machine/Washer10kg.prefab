@@ -106,8 +106,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1368070399781517286}
   m_Layer: 0
-  m_Name: 10kgWasherPrefab
-  m_TagString: Untagged
+  m_Name: Washer10kg
+  m_TagString: Appliance
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

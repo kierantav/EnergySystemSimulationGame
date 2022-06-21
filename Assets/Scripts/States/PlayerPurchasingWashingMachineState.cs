@@ -148,7 +148,7 @@ public class PlayerPurchasingWashingMachineState : PlayerState
         this.objectName = objectName;
         if (!WasherPosition.Equals(Vector3.zero))
         {
-            purchasingApplianceController.PrepareApplianceForModification(WasherPosition, this.objectName, applianceName);
+            purchasingApplianceController.PrepareApplianceForModification(WasherPosition, this.objectName, applianceName, null);
         }
     }
 

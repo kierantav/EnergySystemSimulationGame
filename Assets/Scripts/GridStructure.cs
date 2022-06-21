@@ -8,6 +8,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class GridStructure
@@ -90,10 +91,22 @@ public class GridStructure
         return applianceDataList;
     }
 
-    public List<ApplianceBaseSO> GetListOfAllAppliances()
+    public List<ApplianceBaseSO> GetListOfAllAppliances(List<ApplianceBaseSO> applianceData)
     {
         List<ApplianceBaseSO> applianceDataList = new List<ApplianceBaseSO>();
-        foreach (var list in existedObjectsPositions)
+        GameObject[] appliances = GameObject.FindGameObjectsWithTag("Appliance");
+        foreach (var item in applianceData)
+        {
+            foreach (var obj in appliances)
+            {
+                if (obj.name.Split('(')[0].Equals(String.Concat(item.name.Where(c => !Char.IsWhiteSpace(c)))))
+                {
+                    applianceDataList.Add(item);
+                }
+            }
+        }
+        
+        /*foreach (var list in existedObjectsPositions)
         {
             Vector3 position = list[0];
             var data = grid[(int)position.x, (int)position.y, (int)position.z].GetApplianceData();
@@ -102,6 +115,7 @@ public class GridStructure
                 applianceDataList.Add(data);
             }
         }
+        */
         return applianceDataList;
     }
     #region InputPosition=>GridPosition=>GridIndex

@@ -29,7 +29,6 @@ public class ApplianceRepository : MonoBehaviour
         systemObjects.Add(applianceCollection.fanLivingRoomSO);
         systemObjects.Add(applianceCollection.fanKitchenSO);
         systemObjects.Add(applianceCollection.fanBedroomSO);
-
         //systemObjects.Add(applianceCollection.dryerSO);
         return systemObjects;
     }

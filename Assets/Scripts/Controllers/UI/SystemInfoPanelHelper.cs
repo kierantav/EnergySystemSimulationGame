@@ -90,6 +90,7 @@ public class SystemInfoPanelHelper : MonoBehaviour
     {
         Show();
         this.data = data;
+        HideElement(batteryWarningText.gameObject);
         HideElement(storage.gameObject);
         HideElement(inputRate.gameObject);
         HideElement(OutputRate.gameObject);
@@ -131,6 +132,7 @@ public class SystemInfoPanelHelper : MonoBehaviour
     {
         Show();
         this.data = data;
+        HideElement(batteryWarningText.gameObject);
         HideElement(storage.gameObject);
         HideElement(inputRate.gameObject);
         HideElement(OutputRate.gameObject);
@@ -180,6 +182,7 @@ public class SystemInfoPanelHelper : MonoBehaviour
     {
         Show();
         this.data = data;
+        HideElement(batteryWarningText.gameObject);
         HideElement(inputRate.gameObject);
         HideElement(OutputRate.gameObject);
         HideElement(storage.gameObject);
@@ -273,6 +276,7 @@ public class SystemInfoPanelHelper : MonoBehaviour
     {
         Show();
         this.data = data;
+        HideElement(batteryWarningText.gameObject);
         HideElement(inputRate.gameObject);
         HideElement(OutputRate.gameObject);
         HideElement(storage.gameObject);
@@ -307,6 +311,7 @@ public class SystemInfoPanelHelper : MonoBehaviour
     {
         Show();
         this.data = data;
+        HideElement(batteryWarningText.gameObject);
         HideElement(inputRate.gameObject);
         HideElement(OutputRate.gameObject);
         HideElement(storage.gameObject);
@@ -342,6 +347,7 @@ public class SystemInfoPanelHelper : MonoBehaviour
         Show();
         this.applianceData = applianceData;
 
+        HideElement(batteryWarningText.gameObject);
         HideElement(efficiency.gameObject);
         HideElement(storage.gameObject);
         HideElement(inputRate.gameObject);

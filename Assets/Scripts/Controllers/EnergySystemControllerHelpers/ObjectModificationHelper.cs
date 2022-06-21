@@ -13,6 +13,10 @@ public abstract class ObjectModificationHelper
     protected ApplianceBaseSO applianceData;
     protected IResourceController resourceController;
 
+    private GameObject fanLightPrefab;
+
+    public GameObject FanLightPrefab { get => fanLightPrefab; set => fanLightPrefab = value; }
+
     public ObjectModificationHelper(GridStructure grid, IPlacementController placementController, ObjectRepository objectRepository, ApplianceRepository applianceRepository, IResourceController resourceController)
     {
         this.grid = grid;

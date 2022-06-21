@@ -32,10 +32,9 @@ public class PlayerPurchasingACState : PlayerState
         this.objectName = objectName;
         if (!ACPosition.Equals(Vector3.zero))
         {
-            purchasingApplianceController.PrepareApplianceForModification(ACPosition, this.objectName, applianceName);
+            purchasingApplianceController.PrepareApplianceForModification(ACPosition, this.objectName, applianceName, null);
         }
     }
-
     private void GetCameraOptions(string applianceName, ref Vector3 cameraPosition, ref Quaternion cameraRotation)
     {
         switch (applianceName)

@@ -15,7 +15,7 @@ public class LoadPanelHelper : MonoBehaviour
     public TextMeshProUGUI currentLoadText, noAppliancesText;
 
     private int loadPanelChildCount = 0;
-    private float currentLoad;
+    private float totalLoad;
 
     // Start is called before the first frame update
     void Start()
@@ -33,7 +33,7 @@ public class LoadPanelHelper : MonoBehaviour
 
     private void UpdateCurrentLoadText()
     {
-        currentLoadText.text = Math.Round(currentLoad, 2).ToString();
+        currentLoadText.text = Math.Round(totalLoad, 2).ToString();
     }
 
     private void UpdateLoadPanel()
@@ -132,14 +132,14 @@ public class LoadPanelHelper : MonoBehaviour
         {
             foreach (var obj in applianceData)
             {
-                if (obj.objectName.Equals(appliance.objectName) && !obj.isTurnedOn)
+                if (obj.name.Equals(appliance.name) && !obj.isTurnedOn)
                 {
-                    currentLoad += obj.powerNeededRate;
+                    totalLoad += obj.powerNeededRate;
                     obj.isTurnedOn = true;
                 }
-                else if (obj.objectName.Equals(appliance.objectName))
+                else if (obj.name.Equals(appliance.name))
                 {
-                    currentLoad -= obj.powerNeededRate;
+                    totalLoad -= obj.powerNeededRate;
                     obj.isTurnedOn = false;
                     obj.powerNeededAmount = 0f;
                 }
@@ -150,10 +150,13 @@ public class LoadPanelHelper : MonoBehaviour
 
     private void ToggleLight(ApplianceBaseSO appliance)
     {
-        Light light = GameObject.Find(appliance.name.Split('(')[0]).GetComponent<Light>();
-        if (light != null)
+        if (appliance.objectDescription.Equals("Light"))
         {
-            light.enabled = !light.enabled;
+            Light light = GameObject.Find(appliance.name.Split('(')[0]).GetComponent<Light>();
+            if (light != null)
+            {
+                light.enabled = !light.enabled;
+            }
         }
     }
 

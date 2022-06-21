@@ -16,23 +16,30 @@ public class PlayerPurchasingFanState : PlayerState
 
     public override void EnterState(string objectName, string applianceName)
     {
-        // Get AC position
-        Vector3 fanPosition = GetAppliancePosition(applianceName);
-
-        // Get AC camera position & rotation
-        Vector3 cameraPosition = new Vector3(0f, 0f, 0f);
-        Quaternion cameraRotation = Quaternion.Euler(0f, 0f, 0f);
-        GetCameraOptions(applianceName, ref cameraPosition, ref cameraRotation);
-
-        // Set camera
-        this.uiController.CameraMovementController.SetPosition(cameraPosition, cameraRotation);
-
-        // Prepare AC purchase
-        purchasingApplianceController.PreparePurchasingApplianceController(GetType());
-        this.objectName = objectName;
-        if (!fanPosition.Equals(Vector3.zero))
+        if (purchasingApplianceController.LightExists(applianceName))
         {
-            purchasingApplianceController.PrepareApplianceForModification(fanPosition, this.objectName, applianceName);
+            Debug.Log("Light already exists. First remove light, then install fan!");
+        }
+        else
+        {
+            // Get AC position
+            Vector3 fanPosition = GetAppliancePosition(applianceName);
+
+            // Get AC camera position & rotation
+            Vector3 cameraPosition = new Vector3(0f, 0f, 0f);
+            Quaternion cameraRotation = Quaternion.Euler(0f, 0f, 0f);
+            GetCameraOptions(applianceName, ref cameraPosition, ref cameraRotation);
+
+            // Set camera
+            this.uiController.CameraMovementController.SetPosition(cameraPosition, cameraRotation);
+
+            // Prepare AC purchase
+            purchasingApplianceController.PreparePurchasingApplianceController(GetType());
+            this.objectName = objectName;
+            if (!fanPosition.Equals(Vector3.zero))
+            {
+                purchasingApplianceController.PrepareApplianceForModification(fanPosition, this.objectName, applianceName, null);
+            }
         }
     }
 

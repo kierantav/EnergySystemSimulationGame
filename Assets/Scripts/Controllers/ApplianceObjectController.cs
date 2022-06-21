@@ -20,6 +20,7 @@ public class ApplianceObjectController
     {
         grid = new GridStructure(cellSize, width, height, length);
         this.objectRepository = objectRepository;
+        this.applianceRepository = applianceRepository;
         this.placementController = placementController;
         objectModificationFactory = new ObjectModificationFactory(grid, placementController, objectRepository, applianceRepository, resourceController);
         objectUpdateHelper = new ObjectUpdateHelper();
@@ -43,7 +44,7 @@ public class ApplianceObjectController
 
     public List<ApplianceBaseSO> GetListOfAllAppliances()
     {
-        return grid.GetListOfAllAppliances();
+        return grid.GetListOfAllAppliances(applianceRepository.GetApplianceObjects());
     }
 
     public void CancelModification()
@@ -66,7 +67,7 @@ public class ApplianceObjectController
 
     public void UpdateSystemAttributesToApplianceData()
     {
-        objectUpdateHelper.GetSystemData(grid.GetListOfAllObjects(), grid.GetListOfAllAppliances(), grid);
+        objectUpdateHelper.GetSystemData(grid.GetListOfAllObjects(), grid.GetListOfAllAppliances(applianceRepository.GetApplianceObjects()), grid);
         objectUpdateHelper.UpdateSystemObjectAttributes();
     }
 
@@ -75,11 +76,14 @@ public class ApplianceObjectController
         objectModificationHelper.ConfirmModifications("Appliance");
     }
 
-    public void PrepareApplianceForModification(Vector3 inputPosition, string objectName, string applianceName)
+    public void PrepareApplianceForModification(Vector3 inputPosition, string objectName, string applianceName, GameObject fanLightPrefab)
     {
         //try
         //{
+            objectModificationHelper.FanLightPrefab = fanLightPrefab;
             objectModificationHelper.PrepareObjectForModification(inputPosition, objectName, applianceName, "Appliance");
+            //Debug.Log(fanLightPrefab);
+            
         //}
         //catch
         //{
@@ -87,28 +91,27 @@ public class ApplianceObjectController
         //}
     }
 
-    public bool FanExists(string applianceName)
+    public ApplianceBaseSO GetExistingFan(string applianceName)
     {
         foreach (var appliance in GetListOfAllAppliances())
         {
-            if (appliance.name.Split(' ')[1].Equals(applianceName.Split(' ')[1]) && !appliance.name.Split(' ')[0].Equals("Light"))
+            if (appliance.name.Split(' ')[1].Split('(')[0].Equals(applianceName.Split(' ')[1]) && !appliance.name.Split(' ')[0].Equals("Light"))
+            {
+                return appliance;
+            }
+        }
+        return null;
+    }
+
+    public bool LightExists(string applianceName)
+    {
+        foreach (var appliance in GetListOfAllAppliances())
+        {
+            if (appliance.name.Split(' ')[1].Equals(applianceName.Split(' ')[1]) && !appliance.name.Split(' ')[0].Equals("Fan"))
             {
                 return true;
             }
         }
         return false;
     }
-
-    /*public void SetLightComponent(string applianceName)
-    {
-        foreach (var appliance in GetListOfAllAppliances())
-        {
-            Debug.Log(appliance.objectDescription);
-            Debug.Log(appliance.name + ", " + applianceName);
-            if (appliance.objectDescription.Equals("Light") && appliance.name.Equals(applianceName))
-            {
-                appliance.objectPrefab.gameObject.transform.GetChild(1).GetComponent<Light>().intensity = 0;
-            }
-        }
-    }*/
 }

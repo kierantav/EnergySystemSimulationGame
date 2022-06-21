@@ -49,7 +49,7 @@ public abstract class PlayerState
 
     public virtual Vector3 GetAppliancePosition(string applianceName)
     {
-        Vector3 appliancePosition = new Vector3(0, 0, 0);
+        Vector3 appliancePosition = new Vector3(0f, 0f, 0f);
         List<ApplianceBaseSO> applianceData = this.gameController.uiController.applianceRepository.GetApplianceObjects();
 
         foreach (var appliance in applianceData)

@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 1700996456458799027}
   m_Layer: 0
   m_Name: LightLivingRoom
-  m_TagString: Untagged
+  m_TagString: Appliance
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

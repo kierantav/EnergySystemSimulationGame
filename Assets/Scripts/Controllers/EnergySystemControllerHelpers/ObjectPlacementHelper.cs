@@ -13,10 +13,21 @@ public class ObjectPlacementHelper: ObjectModificationHelper
     public override void PrepareObjectForModification(Vector3 inputPosition, string objectName, string applianceName, string type)
     {
         base.PrepareObjectForModification(inputPosition, objectName, applianceName, type);
-        GameObject objectPrefab = GetObjectType(type);
+
+        //Debug.Log(applianceData);
+        //Debug.Log(FanLightPrefab);
+        GameObject objectPrefab = null;
+        if (FanLightPrefab != null)
+        {
+            objectPrefab = FanLightPrefab;
+        } else
+        {
+            objectPrefab = GetObjectType(type);
+        }
+
         List<Vector3> positionList = GetPositionListByName(inputPosition, objectName, applianceName, type); // Get and update object positions List
 
-        if (!grid.IsCellTaken(positionList)) // If the cells are not taken 
+        if (!grid.IsCellTaken(positionList) || objectName.Equals("Light")) // If the cells are not taken 
         {
             List<Vector3> currentPositionList = CheckExisting(positionList);
             if (currentPositionList != null)
@@ -73,7 +84,7 @@ public class ObjectPlacementHelper: ObjectModificationHelper
 
     private bool ApplianceExists(string applianceName)
     {
-        List<ApplianceBaseSO> applianceList = grid.GetListOfAllAppliances();
+        List<ApplianceBaseSO> applianceList = grid.GetListOfAllAppliances(applianceRepository.GetApplianceObjects());
         foreach (var appliance in applianceList)
         {
             if (appliance.name.Split('(')[0].Equals(applianceName)) 

@@ -40,6 +40,7 @@ public class ResourceController : MonoBehaviour, IResourceController
     private float previousPoA; 
 
     private PowerHelper powerHelper;
+    private EmissionHelper emissionHelper;
     public MeterHelper meterHelper;
 
     //public NotificationManager popupNotification;
@@ -58,6 +59,7 @@ public class ResourceController : MonoBehaviour, IResourceController
         moneyHelper = new MoneyHelper(startMoneyAmount);
         levelHelper = new LevelHelper(startLevel,experience, experienceToNextLevel);
         powerHelper = new PowerHelper();
+        emissionHelper = new EmissionHelper(powerHelper);
         UpdateMoneyValueUI();
         UpdateExperienceValueUI();
         levelHelper.OnExperienceChanged += LevelHelper_OnExperienceChanged;
@@ -120,8 +122,8 @@ public class ResourceController : MonoBehaviour, IResourceController
     public float GetCurrentTotalLoad()
     {
         float totalLoad = 0;
-        foreach (var appliance in applianceObjectController.GetAllAppliances())
-        { 
+        foreach (var appliance in applianceObjectController.GetListOfAllAppliances())
+        {
             if (appliance.isTurnedOn)
             {
                 totalLoad += appliance.powerNeededRate;
@@ -219,8 +221,8 @@ public class ResourceController : MonoBehaviour, IResourceController
             float previousHr = (60f - startMin)/60f;
             //Debug.Log("previous hr: " + previousHr);
             //Debug.Log("end min / 60f: " + endMin / 60f);
-            powerHelper.CalculatePowerOutput(purchasingObjectController.GetAllObjects(), previousHr, previousPoA);
-            powerHelper.CalculatePowerOutput(purchasingObjectController.GetAllObjects(), endMin / 60f, previousPoA);
+            //powerHelper.CalculatePowerOutput(purchasingObjectController.GetAllObjects(), previousHr, previousPoA);
+            //powerHelper.CalculatePowerOutput(purchasingObjectController.GetAllObjects(), endMin / 60f, previousPoA);
             
         }
         else
@@ -228,6 +230,7 @@ public class ResourceController : MonoBehaviour, IResourceController
             float period = (endMin-startMin)/60;
             //Debug.Log("period: " + period);
             powerHelper.CalculateRenewablesOutput(purchasingObjectController.GetAllObjects(), period, currentPoA);
+            emissionHelper.CalculateEmissions(purchasingObjectController.GetAllObjects(), period);
             //powerHelper.CalculatePowerOutput(purchasingObjectController.GetAllObjects(), period, currentPoA);
         }
         //powerHelper.CalculateSolaPanelToMainLoadOutputRate(purchasingObjectController.GetAllObjects());
