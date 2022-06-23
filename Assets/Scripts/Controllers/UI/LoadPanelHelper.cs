@@ -13,6 +13,7 @@ public class LoadPanelHelper : MonoBehaviour
     public GameObject appliancePanelPrefab;
     public Button closeLoadPanelBtn;
     public TextMeshProUGUI currentLoadText, noAppliancesText;
+    public Material lightMaterial;
 
     private int loadPanelChildCount = 0;
     private float totalLoad;
@@ -145,18 +146,49 @@ public class LoadPanelHelper : MonoBehaviour
                 }
             }
             ToggleLight(appliance);
+            ToggleFan(appliance);
         }
     }
 
     private void ToggleLight(ApplianceBaseSO appliance)
     {
+        Color originalColor = Color.white;
+        Color lightOn = new Color(255f / 255f, 235f / 255f, 163f / 255f);
         if (appliance.objectDescription.Equals("Light"))
         {
             Light light = GameObject.Find(appliance.name.Split('(')[0]).GetComponent<Light>();
+            Material lightMaterial = GameObject.Find(appliance.name.Replace(" ", "") + "(Clone)").transform.GetComponent<Renderer>().material;
+            if (lightMaterial.name != "Material (Instance)")
+            {
+                lightMaterial = GameObject.Find(appliance.name.Replace(" ", "") + "(Clone)").transform.GetChild(1).GetComponent<Renderer>().material;
+            }
+
+            if (lightMaterial.color != lightOn)
+            {
+                originalColor = lightMaterial.color;
+                lightMaterial.color = lightOn;
+                lightMaterial.EnableKeyword("_EMISSION");
+                lightMaterial.SetColor("_EmissionColor", lightOn);
+            } else
+            {
+                lightMaterial.color = originalColor;
+                lightMaterial.SetColor("_EmissionColor", originalColor);
+                lightMaterial.DisableKeyword("_EMISSION");
+            }
+
             if (light != null)
             {
                 light.enabled = !light.enabled;
             }
+        }
+    }
+
+    private void ToggleFan(ApplianceBaseSO appliance)
+    {
+        if (appliance.objectDescription.Equals("Ceiling Fan"))
+        {
+            Animator fan = GameObject.Find(appliance.name.Replace(" ", "") + "(Clone)").transform.GetChild(1).GetComponent<Animator>();
+            fan.enabled = !fan.enabled;
         }
     }
 

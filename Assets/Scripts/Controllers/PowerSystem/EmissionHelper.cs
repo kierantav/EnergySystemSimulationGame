@@ -26,6 +26,7 @@ public class EmissionHelper
                     CalculateGridPowerEmissions(obj, period);
                     break;
                 case "Diesel Generator":
+                    CalculateDieselGeneratorEmissions(obj, period);
                     break;
                 case "Solar Panel":
                     CalculateSolarPanelOffset(obj, period);
@@ -63,9 +64,17 @@ public class EmissionHelper
             isPowerLinesRunning = false;
         }
     }
-    private void CalculateDieselGeneratorEmissions(float period, EnergySystemGeneratorBaseSO obj)
+    private void CalculateDieselGeneratorEmissions(EnergySystemGeneratorBaseSO obj, float period)
     {
-        dieselGeneratorEmissionAmout += period * obj.emissionRate;
+        if (obj.isRunning)
+        {
+            isDGRunning = true;
+            obj.emissionGeneratedAmount += obj.emissionRate * period;
+        }
+        else
+        {
+            isDGRunning = false;
+        }
     }
 
     private void CalculateSolarPanelOffset(EnergySystemGeneratorBaseSO obj, float period)

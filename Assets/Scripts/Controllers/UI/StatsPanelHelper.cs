@@ -153,7 +153,6 @@ public class StatsPanelHelper : MonoBehaviour
                         case ("Diesel Generator"):
                             dieselCo2ProducedText = child.GetComponentsInChildren<TextMeshProUGUI>()[1];
                             dieselIndex = index1;
-                            Debug.Log(dieselCo2ProducedText + ", " + dieselIndex);
                             break;
                         case ("On-Grid Power"):
                             gridPowerCo2ProducedText = child.GetComponentsInChildren<TextMeshProUGUI>()[1];
