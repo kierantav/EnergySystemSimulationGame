@@ -1,14 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using UnityEngine;
 
 public class EmissionHelper
 {
-    private float solarPanelEmissionAmount = 0f;
-    private float dieselGeneratorEmissionAmout = 0f;
-    private float windTurbineEmissionAmout = 0f;
     private PowerHelper powerHelper;
 
-    private bool isPowerLinesRunning, isDGRunning = false;
+    // bool isPowerLinesRunning, isDGRunning = false;
 
     public EmissionHelper(PowerHelper powerHelper)
     {
@@ -18,6 +16,8 @@ public class EmissionHelper
 
     public void CalculateEmissions(IEnumerable<EnergySystemGeneratorBaseSO> objects, float period)
     {
+        float totalSolarPanelOutput = GetTotalSolarPanelOutput(objects);
+
         foreach (var obj in objects)
         {
             switch (obj.objectName)
@@ -29,9 +29,10 @@ public class EmissionHelper
                     CalculateDieselGeneratorEmissions(obj, period);
                     break;
                 case "Solar Panel":
-                    CalculateSolarPanelOffset(obj, period);
+                    CalculateSolarPanelOffset(obj, totalSolarPanelOutput);
                     break;
                 case "Wind Turbine":
+                    CalculateWindTurbineOffset(obj);
                     break;
                 default:
                     break;
@@ -51,43 +52,65 @@ public class EmissionHelper
             }
             //todo*/
         }
+
+    }
+
+    private float GetTotalSolarPanelOutput(IEnumerable<EnergySystemGeneratorBaseSO> objects)
+    {
+        float totalSolarPanelOutput = 0;
+        foreach (var obj in objects)
+        {
+            if (obj.objectName.Equals("Solar Panel"))
+            {
+                totalSolarPanelOutput += obj.powerGeneratedRate;
+            }
+        }
+
+        return totalSolarPanelOutput;
     }
 
     private void CalculateGridPowerEmissions(EnergySystemGeneratorBaseSO obj, float period)
     {
         if (obj.isRunning)
         {
-            isPowerLinesRunning = true;
+            //isPowerLinesRunning = true;
             obj.emissionGeneratedAmount += obj.emissionRate * period;
         } else
         {
-            isPowerLinesRunning = false;
+            //isPowerLinesRunning = false;
         }
     }
     private void CalculateDieselGeneratorEmissions(EnergySystemGeneratorBaseSO obj, float period)
     {
         if (obj.isRunning)
         {
-            isDGRunning = true;
+            //isDGRunning = true;
             obj.emissionGeneratedAmount += obj.emissionRate * period;
         }
         else
         {
-            isDGRunning = false;
+            //isDGRunning = false;
         }
     }
 
-    private void CalculateSolarPanelOffset(EnergySystemGeneratorBaseSO obj, float period)
+    private void CalculateSolarPanelOffset(EnergySystemGeneratorBaseSO obj, float totalSolarPanelOutput)
     {
-        if (powerHelper.CanRenewableSystemHandleLoad && (!isPowerLinesRunning && !isDGRunning))
+        if (powerHelper.RenewablesConnected && powerHelper.LoadValue > 0)
         {
-            obj.emissionGeneratedAmount += obj.emissionRate * period;
+            Debug.Log(totalSolarPanelOutput + " / " + powerHelper.LoadValue);
+            obj.emissionGeneratedAmount = (totalSolarPanelOutput / powerHelper.LoadValue) * 100;
         }
     }
 
-    private void CalculateWindTurbineEmissions(float period, EnergySystemGeneratorBaseSO obj)
+    private void CalculateWindTurbineOffset(EnergySystemGeneratorBaseSO obj)
     {
-        windTurbineEmissionAmout += period * obj.emissionRate;
+        //if (powerHelper.CanRenewableSystemHandleLoad && (!isPowerLinesRunning && !isDGRunning))
+        //{
+        if (powerHelper.RenewablesConnected)
+        {
+            obj.emissionGeneratedAmount = (obj.powerGeneratedRate / powerHelper.LoadValue) * 100;
+        }
+        //}
     }
 
     

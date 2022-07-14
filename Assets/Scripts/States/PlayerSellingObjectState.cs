@@ -16,6 +16,8 @@ public class PlayerSellingObjectState : PlayerState
 
     public override void OnCancel()
     {
+        Debug.Log("cancel");
+        //GameObject.Find("BreakerPrefab").gameObject.GetComponent<BoxCollider>().enabled = true;
         this.purchasingObjectController.CancelModification();
         this.purchasingApplianceController.CancelModification();
         this.gameController.TransitionToState(this.gameController.selectionState, null, "");
@@ -23,6 +25,7 @@ public class PlayerSellingObjectState : PlayerState
 
     public override void OnConfirm()
     {
+        //GameObject.Find("BreakerPrefab").gameObject.GetComponent<BoxCollider>().enabled = true;
         this.purchasingObjectController.ConfirmModification();
         this.purchasingApplianceController.ConfirmModification();
         purchasingObjectController.UpdateSystemAttributesToEnergySystemData();
@@ -44,13 +47,15 @@ public class PlayerSellingObjectState : PlayerState
 
     public override void OnInputPointerDown(Vector3 position)
     {
+        
         EnergySystemGeneratorBaseSO obj = this.purchasingObjectController.GetEnergySystemDataFromPosition(position);
+        ApplianceBaseSO applianceObj = this.purchasingApplianceController.GetApplianceDataFromPosition(position);
         if (obj != null && obj.objectType.Equals("Energy"))
         {
-            this.purchasingObjectController.PrepareObjectForSellingAt(position);
-        } else
+            this.purchasingObjectController.PrepareObjectForSellingAt(position, obj.objectName);
+        } else if (applianceObj != null && applianceObj.objectType.Equals("Appliance"))
         {
-            this.purchasingApplianceController.PrepareApplianceForSellingAt(position);
+            this.purchasingApplianceController.PrepareApplianceForSellingAt(position, applianceObj.objectDescription, applianceObj.name.Split('(')[0]);
         }
     }
 
@@ -60,6 +65,7 @@ public class PlayerSellingObjectState : PlayerState
     }
     public override void EnterState(string objectVariable, string applianceName)
     {
+        //GameObject.Find("BreakerPrefab").gameObject.GetComponent<BoxCollider>().enabled = false;
         this.purchasingObjectController.PreparePurchasingObjectController(GetType());
         this.purchasingApplianceController.PreparePurchasingApplianceController(GetType());
         purchasingObjectController.UpdateSystemAttributesToEnergySystemData();

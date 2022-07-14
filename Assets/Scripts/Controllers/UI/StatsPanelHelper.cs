@@ -22,6 +22,8 @@ public class StatsPanelHelper : MonoBehaviour
     private float solarPanelsOffset = 0f;
     private float windTurbineOffset = 0f;
 
+    
+
     List<EnergySystemGeneratorBaseSO> energySystemData = new List<EnergySystemGeneratorBaseSO>();
     List<EnergySystemGeneratorBaseSO> renewablesData = new List<EnergySystemGeneratorBaseSO>();
 
@@ -56,15 +58,15 @@ public class StatsPanelHelper : MonoBehaviour
         {
             if (solarPanelCo2OffsetText != null)
             {
-                solarPanelCo2OffsetText.text = "- " + Math.Round(renewablesData[solarPanelIndex].emissionGeneratedAmount, 2) + " kg";
-                solarPanelsOffset = float.Parse(solarPanelCo2OffsetText.text.Split(' ')[1]);
+                solarPanelCo2OffsetText.text = Math.Round(renewablesData[solarPanelIndex].emissionGeneratedAmount) + " %";
+                solarPanelsOffset = float.Parse(solarPanelCo2OffsetText.text.Split(' ')[0]);
             }
             if (windTurbineCo2OffsetText != null)
             {
-                windTurbineCo2OffsetText.text = "- " + Math.Round(GetCo2Offset(), 2) + " kg";
-                windTurbineOffset = float.Parse(windTurbineCo2OffsetText.text.Split(' ')[1]);
+                windTurbineCo2OffsetText.text = Math.Round(renewablesData[windTurbineIndex].emissionGeneratedAmount) + " %";
+                windTurbineOffset = float.Parse(windTurbineCo2OffsetText.text.Split(' ')[0]);
             }
-            totalOffsetText.text = "Total Offset: " + Math.Round(solarPanelsOffset + windTurbineOffset, 2) + " kg";
+            totalOffsetText.text = "Total Offset: " + Math.Round(solarPanelsOffset + windTurbineOffset) + " %";
         }
     }
 

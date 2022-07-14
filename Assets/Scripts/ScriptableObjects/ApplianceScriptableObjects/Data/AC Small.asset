@@ -24,10 +24,7 @@ MonoBehaviour:
   upkeepCost: 0
   purchaseExperience: 30
   greenPointExperience: 0
-  powerNeededRate: 2.5
+  powerNeededRate: 2
   powerNeededAmount: 0
   happiness: 0
   isTurnedOn: 0
-  objectWidth: 0.1
-  objectHeight: 0.08
-  objectLength: 0.06

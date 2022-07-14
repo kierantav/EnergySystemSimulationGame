@@ -20,14 +20,11 @@ MonoBehaviour:
     type: 3}
   emissionRate: 0.05
   emissionAmount: 0
-  purchaseCost: 2000
+  purchaseCost: 1500
   upkeepCost: 0
   purchaseExperience: 30
   greenPointExperience: 0
-  powerNeededRate: 3.5
+  powerNeededRate: 3
   powerNeededAmount: 0
   happiness: 0
   isTurnedOn: 0
-  objectWidth: 0.16
-  objectHeight: 0.1
-  objectLength: 0.08

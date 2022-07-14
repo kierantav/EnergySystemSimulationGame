@@ -43,14 +43,14 @@ public class EnergySystemObjectController
     #region PlacementAction
     public void PrepareObjectForModification(Vector3 inputPosition, string objectName)
     {
-        //try
-        //{
+        try
+        {
             objectModificationHelper.PrepareObjectForModification(inputPosition, objectName, "", "Energy");
-        //}
-        //catch
-        //{
-            //throw new Exception("No such energy system type." + objectName);
-        //}
+        }
+        catch
+        {
+            throw new Exception("No such energy system type." + objectName);
+        }
     }
 
 
@@ -67,10 +67,18 @@ public class EnergySystemObjectController
     #endregion
 
     #region RemoveAction
-    public void PrepareObjectForSellingAt(Vector3 inputPosition)
+    public void PrepareObjectForSellingAt(Vector3 inputPosition, string objectName)
     {
         //Debug.Log(objectModificationHelper);
-        objectModificationHelper.PrepareObjectForModification(inputPosition,"", "", "Energy");
+        try
+        {
+            objectModificationHelper.PrepareObjectForModification(inputPosition, objectName, "", "Energy");
+        }
+        catch
+        {
+            throw new Exception("No component installed at this position.");
+        }
+        
     }
 
     #endregion

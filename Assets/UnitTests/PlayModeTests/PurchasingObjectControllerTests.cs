@@ -55,7 +55,7 @@ public class PurchasingObjectControllerTests
     {
         purchasingObjectController.ConfirmModification();
         purchasingObjectController.PreparePurchasingObjectController(typeof(PlayerSellingObjectState));
-        purchasingObjectController.PrepareObjectForSellingAt(inputPosition);
+        purchasingObjectController.PrepareObjectForSellingAt(inputPosition, "Solar Panel");
     }
 
     private Vector3 PreparePlacement()

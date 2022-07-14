@@ -59,7 +59,7 @@ public class ObjectPlacementHelper: ObjectModificationHelper
                 }
                 else
                 {
-                    if (!ApplianceExists(applianceName))
+                    if (!base.ApplianceExists(applianceName))
                     {
                         AddObjectForPlacement(objectPrefab, positionList);
                         resourceController.SpendMoney(applianceData.purchaseCost);
@@ -82,7 +82,7 @@ public class ObjectPlacementHelper: ObjectModificationHelper
         //}
     }
 
-    private bool ApplianceExists(string applianceName)
+    /*private bool ApplianceExists(string applianceName)
     {
         List<ApplianceBaseSO> applianceList = grid.GetListOfAllAppliances(applianceRepository.GetApplianceObjects());
         foreach (var appliance in applianceList)
@@ -93,7 +93,7 @@ public class ObjectPlacementHelper: ObjectModificationHelper
             }
         }
         return false;
-    }
+    }*/
 
     private GameObject GetObjectType(string type)
     {

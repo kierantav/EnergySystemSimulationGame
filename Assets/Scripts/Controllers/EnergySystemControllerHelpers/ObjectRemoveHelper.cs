@@ -12,6 +12,8 @@ public class ObjectRemoveHelper: ObjectModificationHelper
 
     public override void PrepareObjectForModification(Vector3 inputPosition, string objectName, string applianceName, string type)
     {
+        base.PrepareObjectForModification(inputPosition, objectName, applianceName, type);
+
         Vector3 gridPosition = grid.CalculateGridPosition(inputPosition);
         List<Vector3> positionList = new List<Vector3>();
         positionList.Add(gridPosition);
@@ -22,27 +24,43 @@ public class ObjectRemoveHelper: ObjectModificationHelper
             var obj = grid.GetObjectFromTheGrid(gridPosition);
             //Debug.Log(obj);
             List<Vector3> list = grid.GetObjectPositionListFromTheGrid(gridPosition);
-            if (objectToBeModified.ContainsKey(list))
+            /*if (objectToBeModified.ContainsKey(list))
             {
-                resourceController.AddMoney(resourceController.removeCost);
+                Debug.Log(true);
+                resourceController.SpendMoney(energySystemData.purchaseCost / 2);
                 StopObjectsFromBeingSelled(list, obj);
             }
             else if (resourceController.CanIBuyIt(resourceController.removeCost))
-            {
-                AddObjectsForSelling(list, obj);
-                resourceController.SpendMoney(resourceController.removeCost);
-            }
+            {*/
+            //AddObjectsForSelling(list, obj);
+            //resourceController.SpendMoney(resourceController.removeCost);
+                if (type.Equals("Energy"))
+                {
+                    AddObjectsForSelling(list, obj);
+                    resourceController.AddMoney(energySystemData.purchaseCost / 2);
+                }
+                else
+                {
+                    if (base.ApplianceExists(applianceName))
+                    {
+                        AddObjectsForSelling(list, obj);
+                        resourceController.AddMoney(applianceData.purchaseCost / 2);
+                    }
+                }
+            //}
         }
         
     }
 
     public override void CancelModifications(string type)
     {
+        Debug.Log("cancel");
         foreach (var item in objectToBeModified)
         {
-            resourceController.AddMoney(resourceController.removeCost);
+            resourceController.SpendMoney(energySystemData.purchaseCost / 2);
         }
         //Debug.Log(objectToBeModified.Values);
+        Debug.Log(objectToBeModified.Values);
         this.placementController.PlaceObjectsOnTheMap(objectToBeModified.Values);
         objectToBeModified.Clear();
     }

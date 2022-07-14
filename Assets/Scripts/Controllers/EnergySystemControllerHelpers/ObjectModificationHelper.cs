@@ -66,20 +66,35 @@ public abstract class ObjectModificationHelper
     }
 
     public virtual void PrepareObjectForModification(Vector3 inputPosition, string objectName, string applianceName, string type)
-    {   
+    {
         if (type.Equals("Energy"))
         {
             if (energySystemData.GetType() == typeof(NullObjectSO))
             {
                 energySystemData = this.objectRepository.GetEnergySystemData(objectName);
             }
-        } else {
+        } 
+        else if (type.Equals("Appliance"))
+        {
             if (applianceData.GetType() == typeof(NullApplianceSO))
             {
                 applianceData = this.applianceRepository.GetApplianceData(objectName, applianceName);
             }
         }
         
+    }
+
+    public virtual bool ApplianceExists(string applianceName)
+    {
+        List<ApplianceBaseSO> applianceList = grid.GetListOfAllAppliances(applianceRepository.GetApplianceObjects());
+        foreach (var appliance in applianceList)
+        {
+            if (appliance.name.Split('(')[0].Equals(applianceName))
+            {
+                return true;
+            }
+        }
+        return false;
     }
 
     private void ResetHelperData()

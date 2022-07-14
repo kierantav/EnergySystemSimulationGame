@@ -49,8 +49,7 @@ public class ApplianceObjectController
 
     public void CancelModification()
     {
-        if (objectModificationHelper != null)
-            objectModificationHelper.CancelModifications("Appliance");
+        objectModificationHelper.CancelModifications("Appliance");
     }
 
     public void PreparePurchasingApplianceController(Type classType)
@@ -59,10 +58,16 @@ public class ApplianceObjectController
         objectModificationHelper = objectModificationFactory.GetHelper(classType);
     }
 
-    public void PrepareApplianceForSellingAt(Vector3 inputPosition)
+    public void PrepareApplianceForSellingAt(Vector3 inputPosition, string objectName, string applianceName)
     {
-        //Debug.Log(objectModificationHelper);
-        objectModificationHelper.PrepareObjectForModification(inputPosition, "", "", "Appliance");
+        //try
+        //{
+            objectModificationHelper.PrepareObjectForModification(inputPosition, objectName, applianceName, "Appliance");
+        //}
+        //catch
+        //{
+            //throw new Exception("No component installed at this position.");
+        //}
     }
 
     public void UpdateSystemAttributesToApplianceData()

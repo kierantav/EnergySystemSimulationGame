@@ -52,6 +52,7 @@ public class PowerHelper
     bool isPowerLinesRunning = false;
 
     private bool canRenewableSystemHandleLoad = false;
+    private bool renewablesConnected = false;
 
     float totalOutputRate = 0f;
     public float LoadDiff { get => loadDiff; set => loadDiff = value; }
@@ -62,6 +63,8 @@ public class PowerHelper
     public bool CanRenewableSystemHandleLoad { get => canRenewableSystemHandleLoad; set => canRenewableSystemHandleLoad = value; }
     public bool IsDGRunning { get => isDGRunning; set => isDGRunning = value; }
     public bool IsPowerLinesRunning { get => isPowerLinesRunning; set => isPowerLinesRunning = value; }
+    public float LoadValue { get => loadValue; set => loadValue = value; }
+    public bool RenewablesConnected { get => renewablesConnected; set => renewablesConnected = value; }
 
     public void CalculatePowerOutput(IEnumerable<EnergySystemGeneratorBaseSO> objects, float period, float poa)
     {
@@ -169,7 +172,7 @@ public class PowerHelper
 
         if (isBatteryRunning && isChargeControllerExisted && isInvertorExisted && isInverterSwitchOnBreaker && isInvertorRunning)
         {
-            
+            renewablesConnected = true;
             float batteryChargeRate = GetBatteryChargeRate(renewablesOutputRate);
 
             bool canRenewablesHandleLoad;
@@ -212,6 +215,7 @@ public class PowerHelper
         {
             totalOutputRate = 0f;
             batteryWarningText = "Renewables not connected.";
+            renewablesConnected = false;
             foreach (var obj in objects)
             {
                 if (obj.objectName.Equals("Battery"))
