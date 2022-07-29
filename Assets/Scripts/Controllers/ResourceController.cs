@@ -231,13 +231,20 @@ public class ResourceController : MonoBehaviour, IResourceController
             //Debug.Log("period: " + period);
             powerHelper.CalculateRenewablesOutput(purchasingObjectController.GetAllObjects(), period, currentPoA);
             emissionHelper.CalculateEmissions(purchasingObjectController.GetAllObjects(), period);
+            moneyFromGrid(period);
             //powerHelper.CalculatePowerOutput(purchasingObjectController.GetAllObjects(), period, currentPoA);
         }
         //powerHelper.CalculateSolaPanelToMainLoadOutputRate(purchasingObjectController.GetAllObjects());
     }
 
 
-
+    private void moneyFromGrid(float period)
+    {
+        if (powerHelper.CanRenewableSystemHandleLoad && !powerHelper.IsPowerLinesRunning)
+        {
+            AddMoney((int)(100 * period));
+        }
+    }
 
     #region Level
     private void LevelHelper_OnLevelChanged(object sender, EventArgs e)

@@ -6,7 +6,7 @@ public class EmissionHelper
 {
     private PowerHelper powerHelper;
 
-    // bool isPowerLinesRunning, isDGRunning = false;
+    bool isPowerLinesRunning, isDGRunning = false;
 
     public EmissionHelper(PowerHelper powerHelper)
     {
@@ -73,31 +73,34 @@ public class EmissionHelper
     {
         if (obj.isRunning)
         {
-            //isPowerLinesRunning = true;
+            isPowerLinesRunning = true;
             obj.emissionGeneratedAmount += obj.emissionRate * period;
         } else
         {
-            //isPowerLinesRunning = false;
+            isPowerLinesRunning = false;
         }
     }
     private void CalculateDieselGeneratorEmissions(EnergySystemGeneratorBaseSO obj, float period)
     {
         if (obj.isRunning)
         {
-            //isDGRunning = true;
+            isDGRunning = true;
             obj.emissionGeneratedAmount += obj.emissionRate * period;
         }
         else
-        {
-            //isDGRunning = false;
+        { 
+            isDGRunning = false;
         }
     }
 
     private void CalculateSolarPanelOffset(EnergySystemGeneratorBaseSO obj, float totalSolarPanelOutput)
     {
-        if (powerHelper.RenewablesConnected && powerHelper.LoadValue > 0)
+        if (isPowerLinesRunning || isDGRunning)
         {
-            Debug.Log(totalSolarPanelOutput + " / " + powerHelper.LoadValue);
+            obj.emissionGeneratedAmount = 0f;
+        } else if (powerHelper.RenewablesConnected && powerHelper.LoadValue > 0)
+        {
+            //Debug.Log(totalSolarPanelOutput + " / " + powerHelper.LoadValue);
             obj.emissionGeneratedAmount = (totalSolarPanelOutput / powerHelper.LoadValue) * 100;
         }
     }
@@ -106,7 +109,11 @@ public class EmissionHelper
     {
         //if (powerHelper.CanRenewableSystemHandleLoad && (!isPowerLinesRunning && !isDGRunning))
         //{
-        if (powerHelper.RenewablesConnected)
+        if (isPowerLinesRunning || isDGRunning)
+        {
+            obj.emissionGeneratedAmount = 0f;
+        }
+        else if (powerHelper.RenewablesConnected)
         {
             obj.emissionGeneratedAmount = (obj.powerGeneratedRate / powerHelper.LoadValue) * 100;
         }

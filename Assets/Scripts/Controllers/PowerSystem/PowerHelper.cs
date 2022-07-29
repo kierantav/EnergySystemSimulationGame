@@ -435,7 +435,7 @@ public class PowerHelper
         isDGRunning = false;
         needMoreFuel = false;
         isPowerLinesExisted = false;
-        isPowerLinesRunning = false;
+        //isPowerLinesRunning = false;
     }
 
     // Need to be Refactored
